@@ -1,0 +1,1 @@
+<i class="fas fa-receipt"></i> @include('studentsFinancials.title') مالية الطلاب

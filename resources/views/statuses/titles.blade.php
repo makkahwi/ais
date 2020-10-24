@@ -1,0 +1,1 @@
+@include('statuses.title')es الحالات

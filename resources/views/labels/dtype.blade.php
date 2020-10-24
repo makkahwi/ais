@@ -1,0 +1,1 @@
+Discount Type<br/> نوع الخصم

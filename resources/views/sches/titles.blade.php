@@ -1,0 +1,1 @@
+<i class="fas fa-table"></i> @include('sches.title')s جداول الحصص

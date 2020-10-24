@@ -1,0 +1,81 @@
+html, body {
+    background-color: #fff;
+    font-family: 'Poppins-Regular', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+}
+
+body {
+    background:linear-gradient(-135deg, rgba(0, 67, 148, 0.5), rgba(0, 138, 207, 0.5)),
+        url(../img/BG1.jpg) no-repeat center center fixed; 
+        background-size: cover;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 1%;
+    top: 2%;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+        
+a, span, strong, h1, h2, a:hover {
+    color:#fff;
+}
+
+h1 {
+    font-size: 3.5em
+}
+
+.footer {
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .bigtitle {
+      display: none;
+    }
+}
+
+@media (min-width: 769px) {
+    .smalltitle {
+      display: none;
+    }
+}

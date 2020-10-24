@@ -1,0 +1,1 @@
+@include('results.title')s النتائج

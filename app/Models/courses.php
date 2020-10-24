@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Models;
+
+use Eloquent as Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * Class courses
+ * @package App\Models
+ * @version February 20, 2020, 4:50 pm UTC
+ *
+ * @property string title
+ * @property string code
+ * @property string textbook
+ * @property integer level_id
+ * @property string description
+ * @property integer status_id
+ */
+class courses extends Model
+{
+    use SoftDeletes;
+
+    public $table = 'courses';
+    
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
+
+    protected $dates = ['deleted_at'];
+
+    protected $primaryKey = 'id';
+
+    public $fillable = [
+        'title',
+        'code',
+        'textbook',
+        'level_id',
+        'description',
+        'status_id'
+    ];
+
+    protected $casts = [
+        'id' => 'integer',
+        'title' => 'string',
+        'code' => 'string',
+        'textbook' => 'string',
+        'level_id' => 'integer',
+        'description' => 'string',
+        'status_id' => 'integer'
+    ];
+
+    public static $rules = [
+        'title' => 'required',
+        'code' => 'required',
+        'textbook' => 'required',
+        'level_id' => 'required',
+        'description' => 'required',
+        'status_id' => 'required'
+    ];
+
+    public function level()
+    {
+        return $this->belongsTo(levels::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(statuses::class);
+    }
+
+    public function sches()
+    {
+        return $this->hasMany(sches::class, 'course_id');
+    }
+
+    public function markstypes()
+    {
+        return $this->hasMany(markstypes::class, 'course_id');
+    }
+
+    public function exams()
+    {
+        return $this->hasMany(exams::class, 'course_id');
+    }
+
+}

@@ -1,0 +1,1 @@
+<i class="fas fa-funnel-dollar"></i> @include('studentsFinancialsCategories.title') تصنيفات مالية الطلاب

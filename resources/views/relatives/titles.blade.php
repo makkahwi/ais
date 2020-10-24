@@ -1,0 +1,1 @@
+<i class="fas fa-heart"></i> @include('relatives.title')s الأقارب

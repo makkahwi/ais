@@ -1,0 +1,1 @@
+@include('attendances.title')s الحضور والغياب
