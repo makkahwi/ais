@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-6">
-        <br><h4 style="line-height: 1.5;">Dear Applicant.. Welcome to the online information system of<br><b class="theme-main">Al-Aqsa Integrated School - Malaysia</b></h4>
+        <br><h4 style="line-height: 1.5;">Dear Applicant.. Welcome to the online information system of<br><b class="theme-main">{{ config('app.sname') }}</b></h4>
         <br><h4><u>You can follow your application process through this portal</u></h4>
         <br><h4 style="text-align: justify; line-height: 1.5;">Access to this portal could be done using your school no: <b style="color:red;">{{ Auth::user()->schoolNo }}</b> and <b style="color:red;">applicant passport number</b> as a password</h4>
         <br><h3 style="text-align:center;">Currently, its status is</h3>

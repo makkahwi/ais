@@ -14,7 +14,7 @@
                     <table class="table tableTail" width="100%">
                         <tbody>
                             <tr style="text-align: justify;">
-                                <td><h3 style="line-height: 1.5;">Welcome to online information system of<br>Al-Aqsa Integrated School - Malaysia</h3></td>
+                                <td><h3 style="line-height: 1.5;">Welcome to online information system of<br>{{ config('app.sname') }}</h3></td>
                                 <td width="5%"></td>
                                 <td style="direction:rtl;"><h3 style="line-height: 1.5;">أهلاً بكم في نظام المعلومات الإلكتروني الخاص بـ مدرسة الأقصى التكاملية - ماليزيا</h3></td>
                                 

@@ -101,11 +101,11 @@
 
         <br><br>
 
-        <p class="texts">This is to certify that the above-named is a student of Al-Aqsa Integrated School - Malaysia. Currently, she/he is registered in {{$sem}}, {{$year}} academic session which commenced on {{date("d-m-Y", strtotime($start))}} and will finish on {{date("d-m-Y", strtotime($end))}}.<br><br>The school use both English & Arabic languages as the medium of instruction. It will be very much appreciated if you could render any assistance that she/he may require. Should you need any further information, please email your enquiry to: principal@aqsa.edu.my.</p>
+        <p class="texts">This is to certify that the above-named is a student of {{ config('app.sname') }}. Currently, she/he is registered in {{$sem}}, {{$year}} academic session which commenced on {{date("d-m-Y", strtotime($start))}} and will finish on {{date("d-m-Y", strtotime($end))}}.<br><br>The school use both English & Arabic languages as the medium of instruction. It will be very much appreciated if you could render any assistance that she/he may require. Should you need any further information, please email your enquiry to: principal@aqsa.edu.my.</p>
 
         <br><br><br>
 
-        <p class="texts"><b>THANK YOU</b><br>Academic Management & Admission<br>Al-Aqsa Integrated School - Malaysia<br><br><br></p>
+        <p class="texts"><b>THANK YOU</b><br>Academic Management & Admission<br>{{ config('app.sname') }}<br><br><br></p>
         <p class="sfont">Note: This document was automatically generated through {{ config('app.name') }} https://students.aqsa.edu.my. Kindly refer to school academic management & admission for certifying the letter.</p>
 
     </body>

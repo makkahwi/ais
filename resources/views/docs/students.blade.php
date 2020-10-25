@@ -14,7 +14,7 @@
                     <table class="table tableTail" width="100%">
                         <tbody>
                             <tr style="text-align: justify;">
-                                <td><h3 style="line-height: 1.5;">Welcome to online information system of<br>Al-Aqsa Integrated School - Malaysia</h3></td>
+                                <td><h3 style="line-height: 1.5;">Welcome to online information system of<br>{{ config('app.sname') }}</h3></td>
                                 <td width="5%"></td>
                                 <td style="direction:rtl;"><h3 style="line-height: 1.5;">أهلاً بكم في نظام المعلومات الإلكتروني الخاص بـ مدرسة الأقصى التكاملية - ماليزيا</h3></td>
                                 
@@ -60,7 +60,7 @@
                                 <td style="direction:rtl;"><h4 style="line-height: 1.5;"># استعراض وتنزيل جدول الامتحانات النصفية والنهائية للفصل الدراسي الحالي.</h4></td>
                             </tr>
                             <tr style="text-align: justify;">
-                                <td><h4 style="line-height: 1.5;"># To view & download the final results of each semester / year that you have been in Al-Aqsa Integrated School<span style="color:red;"> - only in case that your financial status is settled -<span></h4></td>
+                                <td><h4 style="line-height: 1.5;"># To view & download the final results of each semester / year that you have been in {{ config('app.sname') }}<span style="color:red;"> - only in case that your financial status is settled -<span></h4></td>
                                 <td></td>
                                 <td style="direction:rtl;"><h4 style="line-height: 1.5;"># استعراض وتنزيل النتائج النهائية لكل فصل دراسي / سنة دراسية خلال وجودكم في مدرسة الأقصى التكاملية<span style="color:red;"> - فقط في حال تمت تسوية المستحقات المالية المترتبة عليكم للمدرسة -<span></h4></td>
                             </tr>

@@ -82,10 +82,11 @@
 <!-- nation Field -->
 <div class="form-group wrap-input100 col-md-6">
     <label for="rnation">@include('labels.nation')@include('layouts.required')</label>
-    <select required class="input100" name="rnation">
+    <input class="input100" list="nations">
+    <datalist  required name="nation" id="nations">
         <option value="">Select a nation...</option>
         @include('layouts.countriesList')
-    </select>
+    </datalist>
 </div>
 
 <!-- ppno Field -->

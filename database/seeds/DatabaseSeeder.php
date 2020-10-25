@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         // Fake Data Factories
 
         /*
-
         factory(App\Models\contacts::class, 100)->create();
         factory(App\Models\attendances::class, 5000)->create();
         factory(App\Models\courses::class, 50)->create();
@@ -32,7 +31,7 @@ class DatabaseSeeder extends Seeder
         factory(App\Models\marks::class, 500)->create();
         factory(App\Models\relatives::class, 50)->create();
         factory(App\Models\staff::class, 100)->create();
-        factory(App\Models\ student::class, 300)->create();
+        factory(App\Models\student::class, 300)->create();
         factory(App\Models\users::class, 400)->create();
 
         try {

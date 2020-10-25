@@ -44,7 +44,7 @@
 
             
         <footer >
-            <strong class="footer">All rights reserved for <a target="_blank" href="https://aqsa.edu.my">Al-Aqsa Integrated School Malaysia</a> © <script>document.write( new Date().getFullYear() );</script> | Built by <a target="_blank" href="https://www.arromi.net">Arromi <i class="fa fa-paint-brush"></i> Cratives</a>
+            <strong class="footer">All rights reserved for <a target="_blank" href="https://aqsa.edu.my">{{ config('app.sname') }}</a> © <script>document.write( new Date().getFullYear() );</script> | Built by <a target="_blank" href="https://www.arromi.net">Arromi <i class="fa fa-paint-brush"></i> Cratives</a>
             [ <a target="_blank" href="https://aqsa.edu.my/website-privacy/">Website Privacy</a> | <a target="_blank" href="https://aqsa.edu.my/personal-data-protection-policy/"> Data Protection</a> | <a target="_blank" href="https://aqsa.edu.my/terms-conditions/"> Terms & Conditions</a> ]</strong>
         </footer>
 

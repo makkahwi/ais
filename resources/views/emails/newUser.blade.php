@@ -9,7 +9,7 @@
     <tr>
         <th>
             <p style="text-align:justify;">Dear Madam / Sir the guardian of school student <b>{{$data['name']}}</b><br>Good Day to you<br><br>This is to notify you that
-            Al-Aqsa Integrated School have built a new students portal to help you following your child's academic
+            {{ config('app.sname') }} have built a new students portal to help you following your child's academic
             performance and some other uses you could see yourself.<br><br><a target="_blank" href="{{ config('app.url') }}">This is the portal URL</a>
             , and you can sign in to our portal using these credentials.<br></p>
         </th>

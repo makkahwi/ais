@@ -2,7 +2,7 @@
 @include('adminlte-templates::common.errors')
 
 <div class="row col-md-6">
-    <h3 style="line-height:1.5;"> {{ Auth::user()->eName }}Welcome to online information system of<br>Al-Aqsa Integrated School - Malaysia</h3><br>
+    <h3 style="line-height:1.5;"> {{ Auth::user()->eName }}Welcome to online information system of<br>{{ config('app.sname') }}</h3><br>
     <h4 style="text-align:justify; line-height:1.5;">You may begin browsing the portal using the menu on your left side (Upper left button for mobile phone)</h4><br>
     <br><br>
     <h4 style="color:red; text-align:justify; line-height:1.5;">Please note that the system is still under testing stage, so in case of having any problems, complaints, comments or you'd like to rate our new portal, please fill up the form below and submit anytime you want</h4><br>
