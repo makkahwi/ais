@@ -69,7 +69,7 @@ class relativesController extends AppBaseController
             $files->move($path, $passport);
             $data += ['passportNewf' => $path.$passport];
         }
-        else {$data += ['passportNewf' => 'None'];}
+        else {$data += ['passportNewf' => $data['passport']];}
 
 
         $splitPath = explode($data['ppno']."_", $data['visa']); // Visa
@@ -80,7 +80,7 @@ class relativesController extends AppBaseController
             $files->move($path, $visa);
             $data += ['visaNewf' => $path.$visa];
         }
-        else {$data += ['visaNewf' => 'None'];}
+        else {$data += ['visaNewf' => $data['visa']];}
 
         $secretary = users::where('role_id', '=', 4)->where('status_id', '=', 2)->get('email');
 

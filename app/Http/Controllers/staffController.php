@@ -46,7 +46,7 @@ class staffController extends AppBaseController
 
         $staff = staff::with('user')->get();
 
-        return view('staff.index',compact('roles', 'status', 'staff'));
+        return view('staff.index',compact('roles', 'statuses', 'staff'));
     }
 
     /**
@@ -58,8 +58,6 @@ class staffController extends AppBaseController
      */
     public function store(Request $request)
     {
-        $this->authorize('create', staff::class);
-
         $splitToday = explode("-",now());
         $year = intdiv($splitToday[0], 100);
         $month = $splitToday[1];
@@ -102,20 +100,21 @@ class staffController extends AppBaseController
             $health = $staffNo . "_" . "Health" . "." . $files->getClientOriginalExtension();
             $files->move($path, $health);
         }
+        else
+            $health = "none";
 
-        $splitname = explode(" ",$request['eName']);
+        $splitname = explode(" ",$request['reName']);
         $name = $splitname[0];
     
-        $re = relatives::firstOrCreate(['eName' => $request['eName'],'aName' => $request['aName']],
+        $re = relatives::firstOrCreate(['eName' => $request['reName'],'aName' => $request['raName']],
             ['name' => $name,
-            'gender' => $request['gender'],
-            'relation' => $request['relation'],
+            'gender' => $request['rgender'],
             'job' => $request['job'],
             'org' => $request['org'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'hAddress' => $request['hAddress'],
-            'wAddress' => $request['wAddress'],
+            'email' => $request['remail'],
+            'phone' => $request['rphone'],
+            'hAddress' => $request['rhAddress'],
+            'wAddress' => $request['rwAddress'],
             'more' => $request['more']]
         );
 
@@ -123,17 +122,16 @@ class staffController extends AppBaseController
             $rel = relatives::orderby('updated_at', 'DESC')->limit(1)->get();
         }
         else {
-            $rel = relatives::where('eName', '=', $request['eName'])
-            ->where('aName', '=', $request['aName'])
-            ->update(['rName' => $rName,
-            'gender' => $request['gender'],
-            'relation' => $request['relation'],
+            $rel = relatives::where('eName', '=', $request['reName'])
+            ->where('aName', '=', $request['raName'])
+            ->update(['name' => $name,
+            'gender' => $request['rgender'],
             'job' => $request['job'],
             'org' => $request['org'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'hAddress' => $request['hAddress'],
-            'wAddress' => $request['wAddress'],
+            'email' => $request['remail'],
+            'phone' => $request['rphone'],
+            'hAddress' => $request['rhAddress'],
+            'wAddress' => $request['rwAddress'],
             'more' => $request['more']]);
 
             $rel = Relatives::orderby('updated_at', 'DESC')->limit(1)->get();
@@ -141,13 +139,17 @@ class staffController extends AppBaseController
 
         contacts::create([
             'schoolNo' => $staffNo,
+            'dob'=>$request['dob'],
+            'gender'=>$request['gender'],
             'email' => $request['email'],
             'phone' => $request['phone'],
             'address' => $request['address'],
             'relative_id' => $rel[0]['id'],
+            'relation' => $request['relation'],
             'nation' => $request['nation'],
             'ppno' => $request['ppno'],
             'ppExpiry' => $request['ppExpiry'],
+            'visaExpiry' => $request['visaExpiry'],
             'photo' => 'docs/staff/'.$staffNo.'-'.$random.'/'.$photo,
             'passport' => 'docs/staff/'.$staffNo.'-'.$random.'/'.$passport,
             'visa' => 'docs/staff/'.$staffNo.'-'.$random.'/'.$visa,
@@ -171,8 +173,6 @@ class staffController extends AppBaseController
             'staffNo'=>$staffNo,
             'eName'=>$request['eName'],
             'aName'=>$request['aName'],
-            'dob'=>$request['dob'],
-            'gender'=>$request['gender'],
         ]);
         
         $data = $request->all();

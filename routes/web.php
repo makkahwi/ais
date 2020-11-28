@@ -6,7 +6,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('verified');
+Route::get('/dashboard', 'HomeController@index')->middleware('verified');
 Route::get('/profile', 'usersController@index')->middleware('verified');
 Route::get('/calculator', ['as' => 'calculator', 'uses' => 'Controller@calculator']);
 

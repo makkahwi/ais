@@ -17,7 +17,7 @@ class CreateMarksTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('studentNo');
-            $table->integer('markValue');
+            $table->float('markValue');
             $table->text('note')->nullable();
             $table->softDeletes();
             $table->timestamps();

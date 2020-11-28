@@ -40,7 +40,7 @@ class marks extends Model
         'id' => 'integer',
         'type_id' => 'integer',
         'studentNo' => 'integer',
-        'markValue' => 'integer',
+        'markValue' => 'float',
         'note' => 'text'
     ];
 

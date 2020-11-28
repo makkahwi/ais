@@ -29,7 +29,7 @@
 <!-- Markvalue Field -->
 <div class="form-group col-md-6">
     <label for="markValue">@include('labels.markv')@include('layouts.required')</label>
-    <input required type="number" min="0" class="form-control" name="markValue" id="markValueEd">
+    <input required type="number" step="0.01" min="0" class="form-control" name="markValue" id="markValueEd">
 </div>
 
 <!-- max Field -->

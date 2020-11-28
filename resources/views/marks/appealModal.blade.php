@@ -68,8 +68,9 @@
         <div class="clearfix bg-danger"></div>
         
         <div class="modal-footer bg-danger">
-          <button type="submit" class="btn btn-success">Send إرسال</button>
+          <button type="submit" class="btn btn-success submitbutton">Send إرسال</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close إغلاق</button>
+          <div class="loader" hidden><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
         </div>
 
       </form>

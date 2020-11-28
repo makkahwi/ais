@@ -1,10 +1,10 @@
 <!-- Logo -->
-<a href="{{ url ('/home') }}" class="logo">
+<a href="{{ url ('/dashboard') }}" class="logo">
     <img style="margin:0% 25% 10% 25%;" src=" {{ asset('img/logo1.png') }}" width="50%">
 </a>
 
-<li class="{{ Request::is('home*') ? 'active' : '' }}">
-    <a href="{{ url ('/home') }}"><i class="fa fa-home"></i> <span>Home الصفحة الرئيسية</span></a>
+<li class="{{ Request::is('dashboard*') ? 'active' : '' }}">
+    <a href="{{ url ('/dashboard') }}"><i class="fa fa-home"></i> <span>Home الصفحة الرئيسية</span></a>
 </li>
     
 @can ('viewAny', 'App\Models\statuses')

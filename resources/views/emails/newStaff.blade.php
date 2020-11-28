@@ -1,5 +1,5 @@
 @component('mail::message')
-<img src="{{ asset('img/wLogo.png') }}" alt="" width="100%">
+<a target="_blank" href="{{config('app.url')}}"><img src="{{ asset('img/wLogo.png') }}" alt="" width="100%"></a>
 
 <hr><br>
 
@@ -87,6 +87,7 @@
         <th>صلاحية جواز السفر</th>
     </tr>
     <tr>
+        <br><br><br>
         <th colspan=3><h2>Emergency Contact Data بيانات الاتصال للطوارئ</h2></th>
     </tr>
     <tr style="background-color:#ffffff; color:#004394;">
@@ -101,7 +102,7 @@
     </tr>
     <tr style="background-color:#ffffff; color:#004394;">
         <th>Gender</th>
-        <th><b>{{$data['rGender']}}</b></th>
+        <th><b>{{$data['rgender']}}</b></th>
         <th>الجنس</th>
     </tr>
     <tr style="background-color:#004394; color:#ffffff;">
@@ -121,12 +122,12 @@
     </tr>
     <tr style="background-color:#ffffff; color:#004394;">
         <th>Email</th>
-        <th><b>{{$data['rEmail']}}</b></th>
+        <th><b>{{$data['remail']}}</b></th>
         <th>البريد الإلكتروني</th>
     </tr>
     <tr style="background-color:#004394; color:#ffffff;">
         <th>Phone No</th>
-        <th><b>{{$data['rPhone']}}</b></th>
+        <th><b>{{$data['rphone']}}</b></th>
         <th>رقم التلفون</th>
     </tr>
     <tr style="background-color:#ffffff; color:#004394;">

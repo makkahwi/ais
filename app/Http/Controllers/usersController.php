@@ -119,7 +119,7 @@ class usersController extends AppBaseController
             $files->move($path, $photo);
             $data += ['photoNewf' => $path.$photo];
         }
-        else {$data += ['photoNewf' => 'None'];}
+        else {$data += ['photoNewf' => $data['photo']];}
 
 
         $splitPath = explode($data['id']."_", $data['passport']); // Passport
@@ -129,7 +129,7 @@ class usersController extends AppBaseController
             $files->move($path, $passport);
             $data += ['passportNewf' => $path.$passport];
         }
-        else {$data += ['passportNewf' => 'None'];}
+        else {$data += ['passportNewf' => $data['passport']];}
 
 
         $splitPath = explode($data['id']."_", $data['visa']); // Visa
@@ -139,7 +139,7 @@ class usersController extends AppBaseController
             $files->move($path, $visa);
             $data += ['visaNewf' => $path.$visa];
         }
-        else {$data += ['visaNewf' => 'None'];}
+        else {$data += ['visaNewf' => $data['visa']];}
 
 
         $splitPath = explode($data['id']."_", $data['doc1']); // Academic_Certificates / School_Certificate
@@ -149,7 +149,7 @@ class usersController extends AppBaseController
             $files->move($path, $doc1);
             $data += ['doc1Newf' => $path.$doc1];
         }
-        else {$data += ['doc1Newf' => 'None'];}
+        else {$data += ['doc1Newf' => $data['doc1']];}
 
 
         $splitPath = explode($data['id']."_", $data['doc2']); // Health_Insurance / Birth_Certificate
@@ -159,7 +159,7 @@ class usersController extends AppBaseController
             $files->move($path, $doc2);
             $data += ['doc2Newf' => $path.$doc2];
         }
-        else {$data += ['doc2Newf' => 'None'];}
+        else {$data += ['doc2Newf' => $data['doc2']];}
 
 
         $splitPath = explode($data['id']."_", $data['doc3']); // Experiance_Certificates
@@ -169,7 +169,7 @@ class usersController extends AppBaseController
             $files->move($path, $doc3);
             $data += ['doc3Newf' => $path.$doc3];
         }
-        else {$data += ['doc3Newf' => 'None'];}
+        else {$data += ['doc3Newf' => $data['doc3']];}
 
 
         $secretary = users::where('role_id', '=', 4)->where('status_id', '=', 2)->get('email');

@@ -7,13 +7,12 @@
         <td>{{ $relative->aName }}</td>
         <td>
             @foreach($relative->contacts as $contact)
-                - {{ $contact->user->schoolNo }} {{ $contact->user->name }}<br>
+                - {{ $contact->relation }} <b>OF</b> {{ $contact->user->schoolNo }} {{ $contact->user->name }}<br>
             @endforeach
         </td>
         <td>{{ $relative->email }}</td>
         <td>{{ $relative->phone }}</td>
         <td>{{ $relative->hAddress }}</td>
-        <td>{{ $relative->nation }}</td>
         <td>
             <div class='btn-group'>
 

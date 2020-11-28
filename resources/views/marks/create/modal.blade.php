@@ -17,8 +17,9 @@
         <div class="clearfix bg-success"></div>
 
         <div class="modal-footer bg-success">
-          <button type="submit" class="btn btn-success">Create إنشاء</button>
+          <button type="submit" class="btn btn-success submitbutton">Create إنشاء</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close إغلاق</button>
+          <div class="loader" hidden><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
         </div>
         
       </form>
@@ -32,7 +33,7 @@
 
         $(document).on('click', '#createmarks', function(data){
 
-            var maxv = 0;
+            var maxv = 100;
 
             var counter = 0;
 

@@ -94,8 +94,8 @@
 <!-- nation Field -->
 <div class="form-group wrap-input100 col-md-6">
     <label for="nation">@include('labels.nation')@include('layouts.required')</label>
-    <input class="input100" list="nations">
-    <datalist  required name="nation" id="nations">
+    <input class="input100" list="nations" name="nation">
+    <datalist  required id="nations">
         <option value="">Select a nation...</option>
         @include('layouts.countriesList')
     </datalist>

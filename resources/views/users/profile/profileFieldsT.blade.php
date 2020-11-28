@@ -136,7 +136,7 @@
     <a data-toggle="modal" data-target="#update-rmodal" id="updater"
     data-id="{{$teacher->staffNo}}" data-status="{{$teacher->user->status->title}}"
     data-ename="{{$relative->eName}}" data-aname="{{$relative->aName}}"
-    data-gender="{{$relative->gender}}" data-relation="{{$relative->relation}}"
+    data-gender="{{$relative->gender}}" data-relation="{{$teacher->user->contact->relation}}"
     data-job="{{$relative->job}}" data-org="{{$relative->org}}"
     data-email="{{$relative->email}}" data-phone="{{$relative->phone}}"
     data-haddress="{{$relative->hAddress}}" data-waddress="{{$relative->wAddress}}"
@@ -169,7 +169,7 @@
 <!-- relation Field -->
 <div class="form-group col-md-4">
     <label for="relation">@include('labels.relation')</label>
-    <input type="text" class="form-control" value="{{$relative->relation}}" readonly>
+    <input type="text" class="form-control" value="{{$teacher->user->contact->relation}}" readonly>
 </div>
 
 <!-- job Field -->

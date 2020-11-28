@@ -50,7 +50,7 @@ class markstypes extends Model
         'course_id' => 'integer',
         'teacher_id' => 'integer',
         'max' => 'integer',
-        'weight' => 'integer',
+        'weight' => 'float',
         'deadline' => 'text',
         'title' => 'string',
         'used' => 'integer'

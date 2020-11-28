@@ -1,5 +1,5 @@
 @component('mail::message')
-<img src="{{ asset('img/wLogo.png') }}" alt="" width="100%">
+<a target="_blank" href="{{config('app.url')}}"><img src="{{ asset('img/wLogo.png') }}" alt="" width="100%"></a>
 
 <hr><br>
 {{-- Greeting --}}

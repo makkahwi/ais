@@ -1,1 +1,1 @@
-{{ config('app.name') }} بوابة طلبة الأقصى
+{{ config('app.name') }} بوابة الأقصى

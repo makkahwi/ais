@@ -52,7 +52,7 @@
                                 <tr>
                                     <td colspan="2">
                                         <div class="flex-center">
-                                            <a href="{{ url ('/home') }}"><img src=" {{ asset('img/logo2.png') }}" width="180"></a>
+                                            <a href="{{ url ('/dashboard') }}"><img src=" {{ asset('img/logo2.png') }}" width="180"></a>
                                         </div>
                                     </td>
                                 </tr>

@@ -49,24 +49,31 @@
 </div>
 
 <!-- nation Field -->
-<div class="form-group wrap-input100 col-md-4">
+<div class="form-group wrap-input100 col-md-6">
     <label for="nation">@include('labels.nation')@include('layouts.required')</label>
-    <select required class="input100" name="nation">
+    <input class="input100" list="nations" name="nation">
+    <datalist  required id="nations">
         <option value="">Select a nation...</option>
         @include('layouts.countriesList')
-    </select>
+    </datalist>
 </div>
 
 <!-- ppno Field -->
-<div class="form-group wrap-input100 col-md-4">
+<div class="form-group wrap-input100 col-md-6">
     <label for="ppno">@include('labels.passno')@include('layouts.required')</label>
     <input required type="text" class="input100" name="ppno">
 </div>
 
 <!-- ppexpiry Field -->
-<div class="form-group wrap-input100 col-md-4">
+<div class="form-group wrap-input100 col-md-6">
     <label for="ppExpiry">@include('labels.ppe')@include('layouts.required')</label>
     <input required type="date" min={{today()}} max="2030-12-31" class="input100" name="ppExpiry" id="ppExpiry">
+</div>
+
+<!-- ppexpiry Field -->
+<div class="form-group wrap-input100 col-md-6">
+    <label for="visaExpiry">@include('labels.ve')@include('layouts.required')</label>
+    <input required type="date" min={{today()}} max="2040-12-31" class="input100" name="visaExpiry" id="visaExpiry">
 </div>
 
 @include('layouts.filesValidation')
@@ -114,19 +121,19 @@
 <!-- ename Field -->
 <div class="form-group wrap-input100 col-md-6">
     <label for="eName">@include('labels.ename')@include('layouts.required')</label>
-    <input required type="text" class="input100" style="text-transform:capitalize;" name="eName">
+    <input required type="text" class="input100" style="text-transform:capitalize;" name="reName">
 </div>
 
 <!-- aname Field -->
 <div class="form-group wrap-input100 col-md-6">
     <label for="aName">@include('labels.aname')@include('layouts.required')</label>
-    <input required type="text" class="input100" style="text-transform:capitalize;" name="aName">
+    <input required type="text" class="input100" style="text-transform:capitalize;" name="raName">
 </div>
 
 <!-- gender Field -->
 <div class="form-group wrap-input100 col-md-6">
     <label for="gender">@include('labels.gender')@include('layouts.required')</label>
-    <select required class="input100" name="gender">
+    <select required class="input100" name="rgender">
         <option value="">Select a Gender...</option>
         <option value="Female أنثى">Female أنثى</option>
         <option value="Male ذكر">Male ذكر</option>
@@ -163,25 +170,25 @@
 <!-- email Field -->
 <div class="form-group wrap-input100 col-md-6">
     <label for="email">@include('labels.email')@include('layouts.required')</label>
-    <input required type="email" class="input100" name="email">
+    <input required type="email" class="input100" name="remail">
 </div>
 
 <!-- phone Field -->
 <div class="form-group wrap-input100 col-md-6">
     <label for="phone">@include('labels.phone')@include('layouts.required')</label>
-    <input required type="text" class="input100" name="phone">
+    <input required type="text" class="input100" name="rphone">
 </div>
 
 <!-- address Field -->
 <div class="form-group wrap-input100 col-md-12">
     <label for="hAddress">@include('labels.address')@include('layouts.required')</label>
-    <textarea required type="text" class="input100" name="hAddress"></textarea>
+    <textarea required type="text" class="input100" name="rhAddress"></textarea>
 </div>
 
 <!-- address Field -->
 <div class="form-group wrap-input100 col-md-12">
     <label for="wAddress">@include('labels.waddress')</label>
-    <textarea type="text" class="input100" name="wAddress"></textarea>
+    <textarea type="text" class="input100" name="rwAddress"></textarea>
 </div>
 
 <!-- more Field -->

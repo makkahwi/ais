@@ -105,7 +105,7 @@
 - Rename `encrypted` to `forceTLS` for Pusher ([#5159](https://github.com/laravel/laravel/pull/5159))
 - Use laravel/tinker v2 ([#5161](https://github.com/laravel/laravel/pull/5161))
 - Use PHPUnit TestCase and in-memory DB ([#5169](https://github.com/laravel/laravel/pull/5169))
-- DRY up path to /home ([#5173](https://github.com/laravel/laravel/pull/5173))
+- DRY up path to /dashboard ([#5173](https://github.com/laravel/laravel/pull/5173))
 - Change some default settings ([f48e2d5](https://github.com/laravel/laravel/commit/f48e2d500cb53cc4a09dfcb40beb0abafd79de4f))
 
 ### Fixed

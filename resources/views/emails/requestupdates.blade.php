@@ -1,5 +1,5 @@
 @component('mail::message')
-<img src="{{ asset('img/wLogo.png') }}" alt="" width="100%">
+<a target="_blank" href="{{config('app.url')}}"><img src="{{ asset('img/wLogo.png') }}" alt="" width="100%"></a>
 
 <hr><br>
 
@@ -252,9 +252,11 @@
             </th>
             <th>
                 <a target="_blank" href="{{config('app.url')}}/{{$data['doc1']}}">Doc 1</a>
+                {{$data['doc1']}}
             </th>
             <th>
                 <a target="_blank" href="{{config('app.url')}}/{{$data['doc1Newf']}}">New Doc 1</a>
+                {{$data['doc1Newf']}}
             </th>
         </tr>
         @if ($data['doc2'] != $data['doc2Newf'])
@@ -267,9 +269,11 @@
             </th>
             <th>
                 <a target="_blank" href="{{config('app.url')}}/{{$data['doc2']}}">Doc 2</a>
+                {{$data['doc2']}}
             </th>
             <th>
                 <a target="_blank" href="{{config('app.url')}}/{{$data['doc2Newf']}}">New Doc 2</a>
+                {{$data['doc2Newf']}}
             </th>
         </tr>
         @if ($data['doc3'] != $data['doc3Newf'])
@@ -282,9 +286,11 @@
             </th>
             <th>
                 <a target="_blank" href="{{config('app.url')}}/{{$data['doc3']}}">Doc 3</a>
+                {{$data['doc3']}}
             </th>
             <th>
                 <a target="_blank" href="{{config('app.url')}}/{{$data['doc3Newf']}}">New Doc 3</a>
+                {{$data['doc3Newf']}}
             </th>
         </tr>
     </tbody>
