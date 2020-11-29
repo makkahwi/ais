@@ -72,7 +72,7 @@ class markstypesPolicy
     public function delete(User $user)
     {
         return in_array($user->role_id, [
-            1,
+            1, 2, 3,
         ]);
     }
 
