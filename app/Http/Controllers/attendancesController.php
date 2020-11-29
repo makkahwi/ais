@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 
 use App\Models\attendances;
-use App\Models\Sems;
+use App\Models\sems;
 use App\Models\student;
 use App\Models\classrooms;
 
@@ -43,11 +43,11 @@ class attendancesController extends AppBaseController
     public function index(Request $request)
     {
 
-        $currentSem = Sems::with('year')
+        $currentSem = sems::with('year')
         ->where('start', '<=', today())
         ->where('end', '>=', today())->limit(1)->get();
 
-        $sems = Sems::with('year')->get();
+        $sems = sems::with('year')->get();
         
         $classrooms = Classrooms::with('level')
         ->where('status_id', '=', 2)->get();

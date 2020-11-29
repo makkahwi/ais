@@ -46,7 +46,7 @@ class staffController extends AppBaseController
 
         $staff = staff::with('user')->get();
 
-        return view('staff.index',compact('roles', 'statuses', 'staff'));
+        return view('staff.index',compact('statuses', 'staff'));
     }
 
     /**

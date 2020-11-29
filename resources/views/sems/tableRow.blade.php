@@ -1,8 +1,8 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=1}}{{$today=today()}}</p>
         
 @foreach($sems as $sem)
     @if ($sem->deleted_at == NULL)  <!-- Not to show soft deleted records ---------------->
-        @if($sem->start <= today() && $sem->end >= today())
+        @if($sem->start <= $today && $sem->end >= $today)
         <tr class="theme-main" style="font-weight:600;">
         @else
         <tr>

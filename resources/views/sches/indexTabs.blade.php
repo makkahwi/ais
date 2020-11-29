@@ -12,7 +12,7 @@
             @foreach($classrooms as $classroom)
                 @can('viewClassrooms', [App\Models\classrooms::class, $classroom])
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#{{$classroom->title}}C">{{$classroom->title}}</a>
+                        <a class="nav-link" data-toggle="pill" href="#{{$classroom->id}}C">{{$classroom->title}}</a>
                     </li>
                 @endcan
             @endforeach
@@ -26,7 +26,7 @@
 
             @foreach($classrooms as $classroom)
                 @can('viewClassrooms', [App\Models\classrooms::class, $classroom])
-                    <div class="box tab-pane container" id="{{$classroom->title}}C">
+                    <div class="box tab-pane container" id="{{$classroom->id}}C">
                         <br>
                         @include('sches.table')
                     </div>
