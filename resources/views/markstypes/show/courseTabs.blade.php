@@ -5,11 +5,13 @@
     </li>
 
     @foreach($classroom->level->courses as $course)
+        @if ($course->status_id == 2)
         @can('view', [App\Models\courses::class, $course])
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#{{$course->id}}N">{{$course->title}}</a>
             </li>
         @endcan
+        @endif
     @endforeach
 </ul>
 
@@ -20,11 +22,13 @@
     </div>
 
     @foreach($classroom->level->courses as $course)
+        @if ($course->status_id == 2)
         @can('view', [App\Models\courses::class, $course])
             <div class="box tab-pane container" id="{{$course->id}}N">
                 <br>
                 @include('markstypes.show.table')
             </div>
         @endcan
+        @endif
     @endforeach
 </div>

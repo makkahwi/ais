@@ -6,10 +6,10 @@
             <span class="sr-only">Toggle navigation</span>
         </a>
 
-        <a href="{{ url ('/notifications') }}" class="bell">
+        <!-- <a href="{{ url ('/notifications') }}" class="bell">
             <span><i class="fa fa-bell"></i></span>
             <div class="pull-right"><div style="position: absolute; padding:3px; border-radius:100%; background-color: red;"></div></div>
-        </a>
+        </a> -->
 
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">

@@ -39,7 +39,8 @@ class HomeController extends Controller
 
         foreach ($users as $u)
             if($u['email'] != "principal@aqsa.edu.my")
-                Mail::to($u['email'])->send(new newUser($u));
+                if($u['role_id'] == 7)
+                    Mail::to($u['email'])->send(new newUser($u));
 
         Flash::success('All Students\' were notified of system launching');
         

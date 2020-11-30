@@ -56,6 +56,10 @@
                     <div class="top-right links">
                         @auth
                             <a class="btn py-3 px-5 mt-1 text-light" href="{{ url('/dashboard') }}"><b>Account Home صفحة النظام الرئيسية</b></a>
+                            <a class="btn py-3 px-5 mt-1 text-light" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><b>Logout تسجيل الخروج</b></a>
+                            <form id="logout-form" action="{{ url('/logout') }}" method="post" style="display: none;">
+                                @csrf
+                            </form>
                         @else
                             <a class="btn py-3 px-5 mt-1 text-light" href="{{ route('login') }}"><b>Login تسجيل الدخول</b></a>
 
@@ -88,6 +92,7 @@
                     @if (Route::has('login'))
                         @auth
                             <li><a href="{{ url('/dashboard') }}">Account Home صفحة النظام الرئيسية</a></li>
+                            <li><a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout تسجيل الخروج</a></li>
                         @else
                             <li><a href="{{ route('login') }}">Login تسجيل الدخول</a></li>
 

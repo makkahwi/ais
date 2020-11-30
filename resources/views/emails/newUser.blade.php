@@ -10,14 +10,14 @@
         <th>
             <p style="text-align:justify;">Dear Madam / Sir the guardian of school student <b>{{$data['name']}}</b><br>Good Day to you<br><br>This is to notify you that
             {{ config('app.sname') }} have built a new students portal to help you following your child's academic
-            performance and some other uses you could see yourself.<br><br><a target="_blank" href="{{ config('app.url') }}">This is the portal URL</a>
+            performance and some other uses you could see yourself.<br><br><a target="_blank" href="http://students.aqsa.edu.my">This is the portal URL</a>
             , and you can sign in to our portal using these credentials.<br></p>
         </th>
         <th style="width:20%;"></th>
         <th>
             <p style="text-align:justify;">عزيزنا ولي الأمر الطالب(ة) بالمدرسة<br><b>{{$data['name']}}</b><br>طاب يومكم<br><br>هذا الإيميل لإبلاغكم بأن
             مدرسة الأقصى التكاملية قامت ببناء بوابة جديدة للطلاب لتساعدكم في متابعة أداء أبنائكم الأكاديمي
-            وبعض الأمور الأخرى التي يمكنكم الاطلاع عليها داخل البوابة.<br><br><a target="_blank" href="{{ config('app.url') }}">هذا هو رابط البوابة</a>,
+            وبعض الأمور الأخرى التي يمكنكم الاطلاع عليها داخل البوابة.<br><br><a target="_blank" href="http://students.aqsa.edu.my">هذا هو رابط البوابة</a>,
             يمكنكم تسجيل الدخول إلى النظام عبر معلومات الدخول التالية<br></p>
         </th>
     </tr>

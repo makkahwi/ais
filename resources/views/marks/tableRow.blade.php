@@ -4,7 +4,23 @@
     <td>{{ $mark->type->course->title }}</td>
     <td>{{ $mark->type->title }}</td>
     <td>{{ $mark->student->user->name }}</td>
+    @if ($mark->type->classroom->level_id < 4 || $mark->type->classroom->level_id == 13)
+        @if($mark->markValue >= 90)
+            <td>Excellent ممتاز</td>
+        @elseif($mark->markValue >= 80)
+            <td>Very good جيد جداً</td>
+        @elseif($mark->markValue >= 70)
+            <td>Good جيد</td>
+        @elseif($mark->markValue >= 60)
+            <td>Average متوسط</td>
+        @elseif($mark->markValue >= 50)
+            <td>Satisfactory مقبول</td>
+        @else
+            <td>Failed راسب</td>
+        @endif
+    @else
     <td class="table-column">{{ $mark->markValue }} / {{ $mark->type->max }}</td>
+    @endif
     <td class="table-column">{{ $mark->note }}</td>
     <td>
         <div class='btn-group'>

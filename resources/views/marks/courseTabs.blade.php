@@ -22,11 +22,13 @@
     </div>
 
     @foreach($classroom->level->courses as $course)
+        @if ($course->status_id == 2)
         @can('view', [App\Models\courses::class, $course])
             <div class="box tab-pane container" id="{{$course->id}}CC">
                 <br>
                 @include('marks.typeTabs')
             </div>
         @endcan
+        @endif
     @endforeach
 </div>
