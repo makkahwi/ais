@@ -35,7 +35,7 @@ class relativesController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $relatives = relatives::with('contacts')->get();
+        $relatives = relatives::with('contacts.user')->get();
 
         return view('relatives.index',compact('relatives'));
     }

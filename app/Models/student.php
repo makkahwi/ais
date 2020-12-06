@@ -79,9 +79,14 @@ class student extends Model
         return $this->hasMany(marks::class);
     }
 
-    public function financials()
+    public function dues()
     {
         return $this->hasMany(studentsFinancials::class, 'studentNo', 'studentNo');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(studentsPayments::class, 'studentNo', 'studentNo');
     }
     
 }

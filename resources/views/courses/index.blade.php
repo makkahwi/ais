@@ -41,6 +41,17 @@
 @section('content')
     <div class="box box-primary">
         <div class="box-body">
+        
+        	<table class="text-danger text-justify">
+            	<tr>
+                	<th>
+                    	Dear Parents, please note that some courses are deactivated because of CMCO & Study from Home status. Those courses will not be part of the students evaluation this semester.
+                	</th>
+                	<th>
+                    	الأعزاء أولياء الأمور, نرجو أخذ العلم بأن بعض المواد الدراسية تم تعطيلها هذا الفصل بسبب ظروف قانون تحديد الحركة المطبق في ماليزيا. هذه المواد الدراسية لن تكون جزءاً من تقييم الطلاب خلال هذا الفصل الدراسي.
+                	</th>
+            	</tr>
+        	</table>
 
             @include('courses.indexTabs')
 

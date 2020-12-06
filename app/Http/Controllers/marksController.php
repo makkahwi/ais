@@ -54,7 +54,7 @@ class marksController extends AppBaseController
         ->where('end', '>=', today())->limit(1)->get();
 
         $levels = Levels::all();
-        $classrooms = Classrooms::with('level')->get();
+        $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user', 'level.courses.markstypes.marks.type.course', 'level.courses.markstypes.marks.type.classroom', 'level.courses.markstypes.marks.type.sem.year')->get();
         $courses = Courses::all();
 
         return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));

@@ -5,15 +5,15 @@
     <td>{{ $mark->type->title }}</td>
     <td>{{ $mark->student->user->name }}</td>
     @if ($mark->type->classroom->level_id < 4 || $mark->type->classroom->level_id == 13)
-        @if($mark->markValue >= 90)
+        @if($mark->markValue/$mark->type->max*100 >= 90)
             <td>Excellent ممتاز</td>
-        @elseif($mark->markValue >= 80)
+        @elseif($mark->markValue/$mark->type->max*100 >= 80)
             <td>Very good جيد جداً</td>
-        @elseif($mark->markValue >= 70)
+        @elseif($mark->markValue/$mark->type->max*100 >= 70)
             <td>Good جيد</td>
-        @elseif($mark->markValue >= 60)
+        @elseif($mark->markValue/$mark->type->max*100 >= 60)
             <td>Average متوسط</td>
-        @elseif($mark->markValue >= 50)
+        @elseif($mark->markValue/$mark->type->max*100 >= 50)
             <td>Satisfactory مقبول</td>
         @else
             <td>Failed راسب</td>
@@ -29,7 +29,7 @@
             <button data-toggle="modal" data-target="#show-modal" id="showing" data-mark="{{$mark->type->title}}" data-sem="{{ $mark->type->sem->title }} | {{ $mark->type->sem->year->title }}" data-class="{{$mark->type->classroom->title}}" data-course="{{$mark->type->course->title}}" data-student="{{$mark->student->user->name}}" data-markv="{{$mark->markValue}}" data-fmark="{{$mark->type->max}}" data-note="{{$mark->note}}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
 
             @can('update', App\Models\marks::class)
-                @if($editby < $mark->created_at)
+                @if(Auth::user()->role_id <6 || $editby < $mark->created_at)
 
                     <!-- Editing Button-->
                     <button data-toggle="modal" data-target="#edit-modal" id="editing" data-id="{{$mark->id}}" data-type="{{$mark->type_id}}" data-sem="{{ $mark->type->sem_id }}" data-level="{{$mark->type->classroom->level_id}}" data-class="{{$mark->type->classroom_id}}" data-course="{{$mark->type->course_id}}" data-student="{{$mark->studentNo}}" data-markv="{{$mark->markValue}}" data-fmark="{{$mark->type->max}}" data-note="{{$mark->note}}" class='btn btn-warning btn-xs'><i class="fa fa-edit"></i></button>

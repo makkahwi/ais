@@ -7,7 +7,7 @@
 
         <div class="modal-body bg-warning">
             <input type="hidden" name="id" id="idEd">
-            @include('studentsFinancials.edit.fields')
+            @include('studentsFinancials.dues.edit.fields')
         </div>
 
 @endsection

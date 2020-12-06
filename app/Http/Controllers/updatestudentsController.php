@@ -17,7 +17,7 @@ use App\Models\status;
 use App\Models\levels;
 use App\Models\classrooms;
 
-use DB;
+
 
 class updatestudentsController extends AppBaseController
 {

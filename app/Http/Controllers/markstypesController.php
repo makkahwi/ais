@@ -24,7 +24,7 @@ use App\Models\marksTypes;
 
 use App\Models\sches;
 
-use DB;
+
 
 class markstypesController extends AppBaseController
 {
@@ -43,6 +43,8 @@ class markstypesController extends AppBaseController
      *
      * @return Response
      */
+
+     /*
 
     public function index(Request $request)
     {
@@ -148,9 +150,9 @@ class markstypesController extends AppBaseController
     {
         $input = $request->all();
 
-        $typeName = $request['name1'].' '.$request['name2'].' '.$request['name3'];
+        $title = $request['name1'].' '.$request['name2'].' '.$request['name3'];
 
-        $input += ['typeName'=>$typeName];
+        $input += ['title'=>$title];
 
         $markstypes = $this->markstypesRepository->create($input);
 

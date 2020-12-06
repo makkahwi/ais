@@ -19,7 +19,7 @@
         @can('delete', App\Models\markstypes::class)
 
             <!-- Deleting Button-->
-            <button data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$type->id}}" data-title="{{$type->course->title}}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
+            <button data-dismiss="modal" data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$type->id}}" data-title="{{$type->title}} - {{$type->course->title}}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
 
         @endcan
     </th>

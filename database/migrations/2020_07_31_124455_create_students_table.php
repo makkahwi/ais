@@ -19,6 +19,9 @@ class CreateStudentsTable extends Migration
             $table->string('eName');
             $table->string('aName');
             $table->unsignedBigInteger('classroom_id');
+            $table->string('sponsor');
+            $table->string('tuitiondiscounts');
+            $table->integer('tuitionfreq')->default(1);
             $table->boolean('financial')->default(false);
             $table->boolean('trans');
             $table->unsignedBigInteger('visa_id');

@@ -10,9 +10,7 @@
         </tfoot>
 
         <tbody>
-        
             @include('students.tableRow')
-            
         </tbody>
     </table>
 </div>

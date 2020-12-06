@@ -85,4 +85,14 @@ class sems extends Model
         return $this->hasMany(attendances::class);
     }
     
+    public function dues()
+    {
+        return $this->hasMany(studentsFinancials::class);
+    }
+    
+    public function payments()
+    {
+        return $this->hasMany(studentsPayments::class);
+    }
+    
 }

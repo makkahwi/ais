@@ -1,6 +1,6 @@
 <div class="table-responsive">
 
-    @include('studentsFinancials.create.fields')
+    @include('studentsFinancials.dues.create.fields')
 
     <table class="table" width="100%" id="studentsFinancials-create-table">
         <thead>
@@ -35,7 +35,7 @@
 
             counter++;
 
-            $('#financelist').append('@include("studentsFinancials.create.fieldsN")')
+            $('#financelist').append('@include("studentsFinancials.dues.create.fieldsN")')
 
             $('#notes').empty();
             for( var i = 0; i < list.length; i++){

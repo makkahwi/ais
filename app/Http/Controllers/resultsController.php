@@ -22,7 +22,7 @@ use App\Models\levels;
 use App\Models\courses;
 use App\Models\student;
 
-use DB;
+
 
 class resultsController extends AppBaseController
 {

@@ -21,7 +21,7 @@
         </th>
         <th></th>
         <th>
-            <p>Semester: <b>{{$data['semId']}}</b></p>
+            <p>Semester: <b>{{$data['sem_id']}}</b></p>
         </th>
     </tr>
     <tr>

@@ -19,6 +19,7 @@ use App\Models\sems;
 use App\Models\staff;
 use App\Models\statuses;
 use App\Models\student;
+use App\Models\studentsPayments;
 use App\Models\studentsFinancials;
 use App\Models\studentsFinancialsCategories;
 use App\Models\studentsFinancialsDiscounts;
@@ -42,6 +43,7 @@ use App\Policies\semsPolicy;
 use App\Policies\staffPolicy;
 use App\Policies\statusesPolicy;
 use App\Policies\studentsPolicy;
+use App\Policies\studentsPaymentsPolicy;
 use App\Policies\studentsFinancialsPolicy;
 use App\Policies\studentsFinancialsCategoriesPolicy;
 use App\Policies\studentsFinancialsDiscountsPolicy;
@@ -76,6 +78,7 @@ class AuthServiceProvider extends ServiceProvider
         staff::class => staffPolicy::class,
         statuses::class => statusesPolicy::class,
         student::class => studentsPolicy::class,
+        studentsPayments::class => studentsPaymentsPolicy::class,
         studentsFinancials::class => studentsFinancialsPolicy::class,
         studentsFinancialsCategories::class => studentsFinancialsCategoriesPolicy::class,
         studentsFinancialsDiscounts::class => studentsFinancialsDiscountsPolicy::class,

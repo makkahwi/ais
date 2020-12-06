@@ -46,7 +46,7 @@ class studentsFinancialsPolicy
     public function create(User $user)
     {
         return in_array($user->role_id, [
-            1, 2, 3, 5, 7, 8
+            1, 2, 3, 5,
         ]);
     }
 

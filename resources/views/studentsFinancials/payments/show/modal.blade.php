@@ -2,7 +2,7 @@
 
   <form action="{{route('confLetter')}}">
 
-    @include('studentsFinancials.show.fields')
+    @include('studentsFinancials.payments.show.fields')
 
   </form>
 

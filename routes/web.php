@@ -36,6 +36,7 @@ Route::resource('sFinancials', 'studentsFinancialsController')->middleware(['ver
 Route::resource('sfCategories', 'studentsFinancialsCategoriesController')->middleware(['verified', 'can:viewAny, App\Models\studentsFinancialsCategories']);
 Route::resource('sfDiscounts', 'studentsFinancialsDiscountsController')->middleware(['verified', 'can:viewAny, App\Models\studentsFinancialsDiscounts']);
 Route::resource('batches', 'batchesController')->middleware(['verified', 'can:viewAny, App\Models\batches']);
+Route::resource('sPayments', 'studentsPaymentsController')->middleware(['verified', 'can:viewAny, App\Models\studentsPayments']);
 
 // Dynmic Depndant Fields
 Route::get('/dynamicClassroom', ['as' => 'dynamicClassroom', 'uses' => 'schesController@dynamicClassroom']);

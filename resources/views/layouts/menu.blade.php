@@ -140,7 +140,7 @@
     @endcan
 
 
-@can ('viewAny', 'App\Models\staff')
+@can ('viewAny', 'App\Models\student')
 
 <li class="treeview {{ Request::is('students*') ? 'active' : '' }} {{ Request::is('relatives*') ? 'active' : '' }} {{ Request::is('staff*') ? 'active' : '' }} {{ Request::is('applicants*') ? 'active' : '' }}">
     <a href="#">

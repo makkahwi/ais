@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Notifications\Notification;
 use App\Notifications\newExam;
 
-use DB;
+
 
 class sendNewExamNotification
 {

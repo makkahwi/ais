@@ -4,7 +4,7 @@
 
     @csrf
     <div class="modal-body bg-success">
-      @include('studentsFinancials.create.fields')
+      @include('studentsFinancials.payments.create.fields')
     </div>
 
 @endsection
@@ -14,53 +14,53 @@
 
     var oriamount, discount, distype, discharge, finamount;
 
-    $('#levelCr').on('change',function(e){
+    $('#levelPaymentCr').on('change',function(e){
             
       console.log(e);
 
       var level_id = e.target.value;
 
-      $('#classroomCr').empty();
-      $('#studentNoCr').empty();
-      $('#studentNoCr').append('<option value="">Choose a classroom first</option>')
+      $('#classroomPaymentCr').empty();
+      $('#studentNoPaymentCr').empty();
+      $('#studentNoPaymentCr').append('<option value="">Choose a classroom first</option>')
       $.get('dynamicClassroom?level_id='+ level_id, function(data){
         console.log(data);
         
-        $('#classroomCr').append('<option value="">Select a Classroom...</option>')
+        $('#classroomPaymentCr').append('<option value="">Select a Classroom...</option>')
         $.each(data, function(index, clas){
-          $('#classroomCr').append('<option value="'+clas.id+'">'+clas.title+'</option>')
+          $('#classroomPaymentCr').append('<option value="'+clas.id+'">'+clas.title+'</option>')
         });
       });
         
     });
 
-    $('#classroomCr').on('change',function(e){
+    $('#classroomPaymentCr').on('change',function(e){
 
       console.log(e);
 
       var classroom_id = e.target.value;
 
-      $('#studentNoCr').empty();
+      $('#studentNoPaymentCr').empty();
       $.get('dynamicStudents?classroom_id='+classroom_id, function(data){
         console.log(data);
 
-        $('#studentNoCr').append('<option value="">Select a Student...</option>')
+        $('#studentNoPaymentCr').append('<option value="">Select a Student...</option>')
         $.each(data, function(index, student){
-          $('#studentNoCr').append('<option value="'+student.studentNo+'">'+student.studentNo+' | '+student.user.name+'</option>')
+          $('#studentNoPaymentCr').append('<option value="'+student.studentNo+'">'+student.studentNo+' | '+student.user.name+'</option>')
         });
       });
 
     });
 
-    $('#category_idCr').on('change',function(e){
+    $('#category_idPaymentCr').on('change',function(e){
 
       console.log(e);
 
       var category_id = e.target.value;
 
-      $('#categoryamountCr').val('');
-      $('#discountamountCr').val('');
-      $('#discount_idCr').val('0');
+      $('#categoryamountPaymentCr').val('');
+      $('#discountamountPaymentCr').val('');
+      $('#discount_idPaymentCr').val('0');
       distype = 0;
       discount = 0;
       $.get('dynamicSFCategory?category_id='+category_id, function(data){
@@ -68,25 +68,25 @@
 
         $.each(data, function(index, category){
           oriamount = category.amount;
-          $('#categoryamountCr').val(oriamount)
+          $('#categoryamountPaymentCr').val(oriamount)
         });
         
-        $('#finalAmountCr').val(oriamount);
+        $('#finalAmountPaymentCr').val(oriamount);
       });
       
 
     });
 
-    $('#discount_idCr').on('change',function(e){
+    $('#discount_idPaymentCr').on('change',function(e){
 
       console.log(e);
 
       var discount_id = e.target.value;
 
-      $('#discountamountCr').val('');
+      $('#discountamountPaymentCr').val('');
 
       if (discount_id == 0)
-        $('#finalAmountCr').val(oriamount);
+        $('#finalAmountPaymentCr').val(oriamount);
       
       else {
         $.get('dynamicSFDiscount?discount_id='+discount_id, function(data){
@@ -95,17 +95,17 @@
           $.each(data, function(index, discoun){
             discount = discoun.amount;
             distype = discoun.type;
-            $('#discountamountCr').val(discount+' ('+distype+')');
+            $('#discountamountPaymentCr').val(discount+' ('+distype+')');
           });
 
           if (distype == 'Fixed Amount'){
             finamount = oriamount - discount;
-            $('#finalAmountCr').val(finamount);
+            $('#finalAmountPaymentCr').val(finamount);
           }
           else if (distype == 'Percentage') {
             discharge = oriamount * discount / 100;
             finamount = oriamount-discharge;
-            $('#finalAmountCr').val(finamount);
+            $('#finalAmountPaymentCr').val(finamount);
           }
         });
       }

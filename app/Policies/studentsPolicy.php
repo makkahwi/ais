@@ -20,7 +20,7 @@ class studentsPolicy
     {
         if ($user->status_id == 2)
             return in_array($user->role_id, [
-                1, 2, 3, 4, 6
+                1, 2, 3, 4, 5, 6
             ]);
     }
 

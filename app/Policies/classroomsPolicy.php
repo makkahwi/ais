@@ -48,7 +48,7 @@ class classroomsPolicy
      */
     public function viewClassrooms(User $user, classrooms $classrooms)
     {
-        if (in_array($user->role_id, [1, 2, 3]))
+        if (in_array($user->role_id, [1, 2, 3, 4, 5]))
             return $classrooms;
         else if ($user->role_id == 7 && $user->student->classroom_id == $classrooms->id)
                 return $classrooms; 
@@ -66,7 +66,7 @@ class classroomsPolicy
      */
     public function viewStudents(User $user, classrooms $classrooms)
     {
-        if (in_array($user->role_id, [1, 2, 3]))
+        if (in_array($user->role_id, [1, 2, 3, 4, 5]))
             return $classrooms;
         else if ($classrooms->supervisor_id == $user->schoolNo)
             return $classrooms;
@@ -89,7 +89,7 @@ class classroomsPolicy
      */
     public function viewStudentsContacts(User $user, classrooms $classrooms)
     {
-        if (in_array($user->role_id, [1, 2, 3]))
+        if (in_array($user->role_id, [1, 2, 3, 4, 5]))
             return $classrooms;
         else if ($classrooms->supervisor_id == $user->schoolNo)
             return $classrooms;

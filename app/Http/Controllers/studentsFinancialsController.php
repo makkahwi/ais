@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\newUser;
+use App\Models\users;
+
 use App\Models\sems;
 use App\Models\levels;
 use App\Models\statuses;
@@ -24,6 +28,15 @@ class studentsFinancialsController extends AppBaseController
 
     public function index(Request $request)
     {
+//     	$users = users::all();
+
+//         foreach ($users as $u)
+//             if($u['email'] == "somia.alomrany@gmail.com")
+//                 if($u['role_id'] == 7)
+//                     Mail::to($u['email'])->send(new newUser($u));
+
+//         Flash::success('All Students\' were notified of system launching');
+    
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
         ->where('end', '>=', today())->limit(1)->get();
@@ -36,7 +49,7 @@ class studentsFinancialsController extends AppBaseController
         $sfCategories = studentsFinancialsCategories::all();
         $sfDiscounts = studentsFinancialsDiscounts::all();
 
-        $classrooms = classrooms::with('level')
+        $classrooms = classrooms::with('level', 'students.dues', 'students.payments')
         ->orderBy('status_id', 'desc')
         ->orderBy('level_id', 'asc')
         ->orderBy('title', 'asc')

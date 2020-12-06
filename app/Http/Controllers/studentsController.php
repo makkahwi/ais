@@ -56,7 +56,7 @@ class studentsController extends AppBaseController
         $statuses = statuses::all();
         $levels = Levels::all();
         $relatives = relatives::all();
-        $classrooms = Classrooms::with('students')->get();
+        $classrooms = Classrooms::with('students', 'students.user.contact.relative', 'students.user.status', 'students.classroom.level')->get();
 
         return view('students.index', compact('currentSem', 'statuses', 'levels', 'classrooms', 'relatives'));
     }

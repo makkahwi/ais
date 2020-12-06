@@ -4,18 +4,14 @@
     <td>{{ $course->textbook }}</td>
     <td>{{ $course->level->title }}</td>
     <td class="table-column">{{ $course->description }}</td>
+               
+    @if($course->status_id == 2)
+        <td style="background-color:green; color:white;">                    
+    @else
+        <td style="background-color:red; color:white;"> 
+    @endif
 
-    @can('update', App\Models\courses::class)
-                
-        @if($course->status_id == 2)
-            <td style="background-color:green; color:white;">                    
-        @else
-            <td style="background-color:red; color:white;"> 
-        @endif
-                                
         {{ $course->status->title }}</td>
-
-    @endcan
                                 
     <td>
         <div class='btn-group'>

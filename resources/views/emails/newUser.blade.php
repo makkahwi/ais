@@ -10,14 +10,14 @@
         <th>
             <p style="text-align:justify;">Dear Madam / Sir the guardian of school student <b>{{$data['name']}}</b><br>Good Day to you<br><br>This is to notify you that
             {{ config('app.sname') }} have built a new students portal to help you following your child's academic
-            performance and some other uses you could see yourself.<br><br><a target="_blank" href="http://students.aqsa.edu.my">This is the portal URL</a>
+            performance and some other uses you could see yourself.<br><br><a target="_blank" href="{{ config('app.url') }}">This is the portal URL</a>
             , and you can sign in to our portal using these credentials.<br></p>
         </th>
         <th style="width:20%;"></th>
         <th>
             <p style="text-align:justify;">عزيزنا ولي الأمر الطالب(ة) بالمدرسة<br><b>{{$data['name']}}</b><br>طاب يومكم<br><br>هذا الإيميل لإبلاغكم بأن
             مدرسة الأقصى التكاملية قامت ببناء بوابة جديدة للطلاب لتساعدكم في متابعة أداء أبنائكم الأكاديمي
-            وبعض الأمور الأخرى التي يمكنكم الاطلاع عليها داخل البوابة.<br><br><a target="_blank" href="http://students.aqsa.edu.my">هذا هو رابط البوابة</a>,
+            وبعض الأمور الأخرى التي يمكنكم الاطلاع عليها داخل البوابة.<br><br><a target="_blank" href="{{ config('app.url') }}">هذا هو رابط البوابة</a>,
             يمكنكم تسجيل الدخول إلى النظام عبر معلومات الدخول التالية<br></p>
         </th>
     </tr>
@@ -46,8 +46,12 @@
         <th></th>
         <th><br><br>بعد تسجيل الدخول, ستجدون في القائمة الرئيسية في البوابة خيار يسمى "دليل النظام". يمنكم بدء استشكاف البوابة بزيارة تلك الصفحة وقراءة محتواها الذي يشمل بعض الشرح والتوضيح لخصائص البوابة.<br><br>نرجو أخذ العلم بأن ما تم إطلاقه الآن من خصائص في النظام هو مرحلة أولى, وسيتبع ذلك مراحل أخرى من البيانات والخصائص داخل نفس النظام. يمكنكم التعرف على تلك الخصائص التي ستتوفر لاحقاً من خلال القائمة الرئيسية في البوابة, تحت خيار "خصائص ستتوفر قريباً".<br><br></th>
     </tr>
+    <tr>
+        <th><br><br>Please note this email address is for temporary use, for any cvommunication with school please email us @ principal@aqsa.edu.my<br><br></th>
+        <th></th>
+        <th><br><br>نرجو الملاحظة بان عنوان البريد المستخدم لارسال هذه الرسالة اليكم هو عنوان مؤقثت. للتواصل مع المدرسة, بامكانكم المراسة على الايميل principal@aqsa.edu.my<br><br></th>
+    </tr>
 </table>
-
 <br><br>
 
 <p style="text-align: justify;">You may recieve this email multiple times this week. So please ignore them (if they have the same title / subject) and we aplogize for that inconvenience in advance.<br></p>
