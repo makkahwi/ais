@@ -38,7 +38,7 @@
             var level_id = document.getElementById("level_idCrH").value;
                 
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                console.log(data);
+                ;
 
                 $('#course_idCr'+count+'').empty();
 
@@ -79,13 +79,13 @@
 
         $('#level_idCrH').on('change',function(e){ // Dynamic Courses Change ///////////////////
             
-            console.log(e);
+            
 
             var level_id = e.target.value;
 
             $('#classroom_idCrH').empty();
             $.get('dynamicClassroom?level_id='+ level_id, function(data){
-                console.log(data);
+                ;
 
                 $('#classroom_idCrH').append('<option value="">Select a Classroom...</option>')
                 $.each(data, function(index, classroom){
@@ -94,7 +94,7 @@
             });
             
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                    console.log(data);
+                    ;
 
                 for (var i = 0; i <= count; i++) {
 

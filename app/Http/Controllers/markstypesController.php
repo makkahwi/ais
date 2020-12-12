@@ -172,19 +172,19 @@ class markstypesController extends AppBaseController
 
     public function update(Request $request) // Updating with Modal
      {
-         $mark = markstypes::findOrFail($request->markId);
+        $mark = markstypes::findOrFail($request->markId);
 
-         if (empty($mark)) {
-             Flash::error('The mark was not found بيانات العلامة المطلوبة غير موجودة');
+        if (empty($mark)) {
+            Flash::error('The mark was not found بيانات العلامة المطلوبة غير موجودة');
 
-             return redirect(route('marks.index'));
-         }
-        
-         $mark->update($request->all());
+            return redirect(route('marks.index'));
+        }
+    
+        $mark->update($request->all());
 
-         Flash::success('The mark was updated successfully تم تحديث بيانات العلامة بنجاح');
+        Flash::success('The mark was updated successfully تم تحديث بيانات العلامة بنجاح');
 
-         return redirect(route('marks.index'));
+        return redirect(route('marks.index'));
      }
 
     /**
@@ -197,19 +197,21 @@ class markstypesController extends AppBaseController
      * @return Response
      */
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+        $id = $request['id'];
+        
         $markstypes = $this->markstypesRepository->find($id);
 
         if (empty($markstypes)) {
-            Flash::error('The mark was not found بيانات العلامة المطلوبة غير موجودة');
+            Flash::error('The mark category was not found بيانات العلامة المطلوبة غير موجودة');
 
             return redirect(route('marks.index'));
         }
 
         $this->markstypesRepository->delete($id);
 
-        Flash::success('The mark was deleted successfully تم حذف بيانات العلامة بنجاح');
+        Flash::success('The mark category was deleted successfully تم حذف بيانات العلامة بنجاح');
 
         return redirect(route('marks.index'));
     }

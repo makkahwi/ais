@@ -32,7 +32,7 @@
         var course_id = $(this).data('course');
         
         $.get('dynamicCourse?level_id='+level_id, function(data){
-          console.log(data);
+          ;
 
           $('#course_idEd').empty();
 

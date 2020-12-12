@@ -14,7 +14,7 @@
 
     $('#type').on('change',function(e){+
 
-      console.log(e);
+      
 
       var type = e.target.value;
 

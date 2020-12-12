@@ -51,4 +51,9 @@ class studentsFinancialsCategories extends Model
     {
         return $this->belongsTo(levels::class);
     }
+
+    public function batch()
+    {
+        return $this->belongsTo(batches::class);
+    }
 }

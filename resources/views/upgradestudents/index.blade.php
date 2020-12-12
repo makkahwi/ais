@@ -47,8 +47,6 @@
 
         $('.financial').on('change',function(e){
 
-            console.log(e);
-
             var financial = e.target.value;
 
             var studentNo = $(this).parent().parent().find('#studentNo').val();
@@ -65,8 +63,6 @@
 
         $('.classroomId').on('change',function(e){
 
-            console.log(e);
-
             var classroom = e.target.value;
 
             var studentNo = $(this).parent().parent().find('#studentNo').val();
@@ -82,8 +78,6 @@
         });
 
         $('.statusId').on('change',function(e){
-
-            console.log(e);
 
             var status = e.target.value;
 

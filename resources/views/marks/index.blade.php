@@ -12,9 +12,11 @@
     @include('marks.titles')
 @endsection
 
-@section('deleteModal')
-    <form method="post" action="{{ route ('marks.destroy', 1) }}">
-@endsection
+@can('delete', App\Models\markstypes::class)
+    @section('deleteModal')
+        <form method="post" action="{{ route ('markstypes.destroy', 1) }}">
+    @endsection
+@endcan
 
 @section('header')
     @can('create', App\Models\markstypes::class)

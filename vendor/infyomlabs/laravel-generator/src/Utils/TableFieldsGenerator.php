@@ -2,7 +2,7 @@
 
 namespace InfyOm\Generator\Utils;
 
-
+use DB;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Column;
 use Illuminate\Support\Str;

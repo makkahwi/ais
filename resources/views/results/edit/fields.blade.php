@@ -79,13 +79,13 @@
 
         $('#level_idEd').on('change',function(e){
             
-            console.log(e);
+            
 
             var level_id = e.target.value;
 
             $('#course_idEd').empty();
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                console.log(data);
+                ;
                 
                 $('#course_idEd').append('<option value="">Select a Course...</option>')
                 $.each(data, function(index, cour){
@@ -98,13 +98,13 @@
 
         $('#level_idEd').on('change',function(e){
             
-            console.log(e);
+            
 
             var level_id = e.target.value;
 
             $('#classroom_idEd').empty();
             $.get('dynamicClassroom?level_id='+ level_id, function(data){
-                console.log(data);
+                ;
                 
                 $('#classroom_idEd').append('<option value="">Select a Classroom...</option>')
                 $.each(data, function(index, clas){
@@ -117,13 +117,13 @@
 
         $('#classroom_idEd').on('change',function(e){
             
-            console.log(e);
+            
 
             var classroom_id = e.target.value;
 
             $('#student_idEd').empty();
             $.get('dynamicStudentMark?classroom_id='+classroom_id, function(data){
-                console.log(data);
+                ;
 
                 $('#student_idEd').append('<option value="">Select a Student...</option>')
                 $.each(data, function(index, student){

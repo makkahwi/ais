@@ -48,8 +48,6 @@
 
         $('.levelId').on('change',function(e){
 
-            console.log(e);
-
             var level = e.target.value - 1;
             
             var studentNo = $(this).parent().parent().find('#oldStudentNo').val();

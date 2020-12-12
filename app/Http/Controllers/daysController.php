@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\newUser;
+use App\Models\users;
+
 use App\Models\sems;
 use App\Models\days;
 
@@ -33,6 +37,15 @@ class daysController extends AppBaseController
 
     public function index(Request $request)
     {
+//     	$users = users::all();
+
+//         foreach ($users as $u)
+//             if($u['email'] == "Afnany98@gmail.com")
+//                 if($u['role_id'] == 7)
+//                     Mail::to($u['email'])->send(new newUser($u));
+
+//         Flash::success('All Students\' were notified of system launching');
+    
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
         ->where('end', '>=', today())->limit(1)->get();

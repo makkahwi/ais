@@ -24,6 +24,8 @@ class studentsPayments extends Model
         'studentNo',
         'amount',
         'method',
+        'receipt',
+        'receiptNo',
         'note',
     ];
 
@@ -34,6 +36,8 @@ class studentsPayments extends Model
         'studentNo' => 'integer',
         'amount' => 'integer',
         'method' => 'string',
+        'receipt' => 'string',
+        'receiptNo' => 'string',
         'note' => 'string',
     ];
 

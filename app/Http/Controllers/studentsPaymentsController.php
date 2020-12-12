@@ -8,6 +8,7 @@ use Response;
 use Flash;
 
 use App\Models\sems;
+use App\Models\studentsPayments;
 
 class studentsPaymentsController extends Controller
 {
@@ -31,7 +32,7 @@ class studentsPaymentsController extends Controller
 
         studentsPayments::create($request->all());
         
-        Flash::success('Student '+$request['schoolNo']+' payment data was saved successfully<br><br>تم حفظ بيانات الدفعة المالية للطالب '+$request['schoolNo']+' بنجاح');
+        Flash::success('Student '.$request['studentNo'].' payment data was saved successfully<br><br>تم حفظ بيانات الدفعة المالية للطالب '.$request['studentNo'].' بنجاح');
 
         return redirect(route('sFinancials.index'));
     }

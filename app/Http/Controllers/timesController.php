@@ -33,6 +33,7 @@ class timesController extends AppBaseController
 
     public function index(Request $request)
     {
+    
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
         ->where('end', '>=', today())->limit(1)->get();

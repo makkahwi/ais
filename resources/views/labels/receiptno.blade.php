@@ -1,0 +1,1 @@
+Receipt No<br> رقم الوصل

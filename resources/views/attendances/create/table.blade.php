@@ -34,7 +34,7 @@
 
         $('#classroom_idCrH').on('change',function(e){
 
-            console.log(e);
+            
 
             var classroom_id = e.target.value;
 
@@ -42,7 +42,7 @@
 
             $('#attendanceslist').empty();
             $.get('dynamicStudents?classroom_id='+classroom_id, function(data){
-                console.log(data);
+                ;
 
                 $.each(data, function(index, student){
                     ++counter

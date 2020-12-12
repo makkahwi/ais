@@ -20,6 +20,8 @@ class CreateStudentsPaymentsTable extends Migration
             $table->unsignedBigInteger('studentNo');
             $table->integer('amount');
             $table->string('method');
+            $table->string('receipt')->nullable();
+            $table->string('receiptNo')->nullable();
             $table->string('note')->nullable();
             $table->softDeletes();
             $table->timestamps();

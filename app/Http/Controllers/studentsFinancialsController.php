@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
-use Illuminate\Support\Facades\Mail;
-use App\Mail\newUser;
 use App\Models\users;
 
 use App\Models\sems;
@@ -28,15 +26,7 @@ class studentsFinancialsController extends AppBaseController
 
     public function index(Request $request)
     {
-//     	$users = users::all();
-
-//         foreach ($users as $u)
-//             if($u['email'] == "somia.alomrany@gmail.com")
-//                 if($u['role_id'] == 7)
-//                     Mail::to($u['email'])->send(new newUser($u));
-
-//         Flash::success('All Students\' were notified of system launching');
-    
+    	    
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
         ->where('end', '>=', today())->limit(1)->get();
@@ -67,9 +57,45 @@ class studentsFinancialsController extends AppBaseController
     {
         $this->authorize('create', studentsFinancials::class);
 
-        studentsFinancials::create($request->all());
+        $list = $request['list'];
+
+        $successful = [];
+
+        $failure = [];
         
-        Flash::success('The financial data was saved successfully<br><br>تم حفظ البيانات المالية بنجاح');
+        foreach($list as $y) {
+            
+            $time_id = $request['time_id'.$y];
+            $course_id = $request['course_id'.$y];
+            $teacher_id = $request['teacher_id'.$y];
+
+            $sches = sches::firstOrCreate(['sem_id' => $request['sem_id'], 'classroom_id' => $request['classroom_id'],
+            'day_id' => $request['day_id'], 'time_id' => $time_id, 'status_id' => $request['status_id']],
+            ['course_id' => $course_id, 'teacher_id' => $teacher_id]);
+    
+            if($sches->wasRecentlyCreated){
+                array_push($successful, $time_id);
+            }
+            else {
+                array_push($failure, $time_id);
+            }
+        }
+
+        if(empty($failure)){
+            Flash::success('All Class(es) were saved successfully<br><br>تم حفظ كل بيانات الحصة / الحصص الدراسية بنجاح');
+        }
+        elseif (empty($successful)){
+            Flash::error('All Class(es) data clashes with existed ones<br><br>كل بيانات الحصة / الحصص الدراسية المدخلة تتعارض مع بيانات موجودة بالفعل');
+        }
+        else {
+            Flash::success('Class(es) '.implode(' & ', $successful).' were saved successfully<br><br>تم حفظ بيانات الحصة / الحصص الدراسية '.implode(' و ', $successful).' بنجاح');
+
+            Flash::error('Class(es) '.implode(' & ', $failure).' data clashes with existed ones<br><br>بيانات الحصة / الحصص الدراسية '.implode(' و ', $failure).' المدخلة تتعارض مع بيانات موجودة بالفعل');
+        }
+
+        // studentsFinancials::create($request->all());
+        
+        // Flash::success('The financial data was saved successfully<br><br>تم حفظ البيانات المالية بنجاح');
 
         return redirect(route('sFinancials.index'));
     }

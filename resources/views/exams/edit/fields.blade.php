@@ -53,13 +53,13 @@
 
         $('#levelEd').on('change',function(e){
             
-            console.log(e);
+            
 
             var level_id = e.target.value;
 
             $('#courseEd').empty();
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                console.log(data);
+                ;
 
                 $('#courseEd').append('<option value="">Select a Coures...</option>')
                 $.each(data, function(index, cour){

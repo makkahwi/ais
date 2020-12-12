@@ -1,6 +1,6 @@
 @section('crModalForm')
 
-  <form action="{{ route ('sFinancials.store') }}" method="post">
+  <form action="{{ route ('sPayments.store') }}" method="post">
 
     @csrf
     <div class="modal-body bg-success">
@@ -16,7 +16,7 @@
 
     $('#levelPaymentCr').on('change',function(e){
             
-      console.log(e);
+      
 
       var level_id = e.target.value;
 
@@ -24,7 +24,7 @@
       $('#studentNoPaymentCr').empty();
       $('#studentNoPaymentCr').append('<option value="">Choose a classroom first</option>')
       $.get('dynamicClassroom?level_id='+ level_id, function(data){
-        console.log(data);
+        ;
         
         $('#classroomPaymentCr').append('<option value="">Select a Classroom...</option>')
         $.each(data, function(index, clas){
@@ -36,13 +36,13 @@
 
     $('#classroomPaymentCr').on('change',function(e){
 
-      console.log(e);
+      
 
       var classroom_id = e.target.value;
 
       $('#studentNoPaymentCr').empty();
       $.get('dynamicStudents?classroom_id='+classroom_id, function(data){
-        console.log(data);
+        ;
 
         $('#studentNoPaymentCr').append('<option value="">Select a Student...</option>')
         $.each(data, function(index, student){
@@ -54,7 +54,7 @@
 
     $('#category_idPaymentCr').on('change',function(e){
 
-      console.log(e);
+      
 
       var category_id = e.target.value;
 
@@ -64,7 +64,7 @@
       distype = 0;
       discount = 0;
       $.get('dynamicSFCategory?category_id='+category_id, function(data){
-        console.log(data);
+        ;
 
         $.each(data, function(index, category){
           oriamount = category.amount;
@@ -79,7 +79,7 @@
 
     $('#discount_idPaymentCr').on('change',function(e){
 
-      console.log(e);
+      
 
       var discount_id = e.target.value;
 
@@ -90,7 +90,7 @@
       
       else {
         $.get('dynamicSFDiscount?discount_id='+discount_id, function(data){
-          console.log(data);
+          ;
 
           $.each(data, function(index, discoun){
             discount = discoun.amount;
