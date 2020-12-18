@@ -18,7 +18,7 @@ class CreateStudentsPaymentsTable extends Migration
             $table->unsignedBigInteger('sem_id');
             $table->date('date');
             $table->unsignedBigInteger('studentNo');
-            $table->integer('amount');
+            $table->float('amount');
             $table->string('method');
             $table->string('receipt')->nullable();
             $table->string('receiptNo')->nullable();

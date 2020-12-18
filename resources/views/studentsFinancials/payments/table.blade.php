@@ -11,9 +11,8 @@
 
         <tbody>
             
-            <p hidden>{{ $total = 0 }}</p>
-
             <p hidden>{{$c=1}}</p>
+            <p hidden>{{ $total = 0 }}</p>
 
             @foreach($student->payments as $payment)
                 @can('view', [App\Models\studentsPayments::class, $payment])

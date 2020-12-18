@@ -4,9 +4,12 @@
     @can('view', [App\Models\studentsFinancialsDiscounts::class, $discount])
         <tr>
             <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
-            <td>{{ $discount->type }}</td>
             <td>{{ $discount->title }}</td>
-            <td>{{ $discount->amount }}</td>
+            @if($discount->type == "Fixed Amount")
+                <td>RM{{ $discount->amount }}</td>
+            @else
+                <td>{{ $discount->amount }}%</td>
+            @endif
 
             @can('update', [App\Models\studentsFinancialsDiscounts::class, $discount])
                 <td>

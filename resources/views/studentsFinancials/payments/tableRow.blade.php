@@ -3,7 +3,6 @@
 <td>{{ $payment->studentNo }} {{ $payment->student->user->name }}</td>
 <td>RM{{ $payment->amount }}</td>
 <td>{{ $payment->method }}</td>
-<td>{{ $payment->receipt }}</td>
 <td>{{ $payment->receiptNo }}</td>
 <td>{{ $payment->note }}</td>
 
@@ -14,8 +13,8 @@
             <!-- Showing Button-->
             <button data-toggle="modal" data-target="#show-modal" id="showing" data-sem="{{ $payment->sem->title }}, {{ $payment->sem->year->title }}" data-sno="{{ $payment->studentNo }} {{ $payment->student->user->name }}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
 
-            <!-- Printing Button-->
-            <button data-toggle="modal" data-target="#print-modal" id="printing" class='btn btn-success btn-xs'><i class="fas fa-file-invoice-dollar"></i></button>
+            <!-- Download Receipt Button-->
+            <a href="{{$payment->receipt}}" download class='btn btn-success btn-xs'><i class="fas fa-file-invoice-dollar"></i></a>
 
             <!-- Editing Button-->
             <button data-toggle="modal" id="editing" data-target="#edit-modal" id="editing" data-id="{{ $payment->id }}" data-sem="{{ $payment->sem_id }}" data-sno="{{ $payment->studentNo }}" data-category="{{ $payment->category_id }}" data-discount="{{ $payment->discount_id }}" data-discharge="@if($payment->discount_id){{ $payment->discount->amount }}@endif" data-final="{{ $payment->finalAmount }}" class='btn btn-warning btn-xs'><i class="fa fa-edit"></i></button>

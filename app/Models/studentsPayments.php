@@ -34,7 +34,7 @@ class studentsPayments extends Model
         'sem_id' => 'integer',
         'date' => 'date',
         'studentNo' => 'integer',
-        'amount' => 'integer',
+        'amount' => 'float',
         'method' => 'string',
         'receipt' => 'string',
         'receiptNo' => 'string',

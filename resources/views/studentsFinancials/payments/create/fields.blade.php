@@ -43,13 +43,13 @@
 </div>
 
 <!-- Amount Field -->
-<div class="form-group col-md-6">
+<div class="form-group col-md-4">
     <label for="amount">@include('labels.amount')@include('layouts.required')</label>
-    <input required type="number" class="form-control" name="amount" id="amountPaymentCr" placeholder="RM">
+    <input required type="number" min="0" step="0.01" class="form-control" name="amount" id="amountPaymentCr" placeholder="RM">
 </div>
 
 <!-- Method Field -->
-<div class="form-group col-md-6">
+<div class="form-group col-md-4">
     <label for="method">@include('labels.method')@include('layouts.required')</label>
     <select required class="form-control" name="method" id="methodPaymentCr">
         <option value="">Choose a category</option>
@@ -59,15 +59,9 @@
     </select>
 </div>
 
-<!-- Receipt Field -->
-<div class="form-group col-md-6">
-    <label for="receipt">@include('labels.receipt')</label>
-    <input type="file" class="form-control" name="receipt" id="receiptPaymentCr" placeholder="RM">
-</div>
-
 <!-- Receipt No Field -->
-<div class="form-group col-md-6">
-    <label for="receiptNo">@include('labels.receiptno')</label>
+<div class="form-group col-md-4">
+    <label for="receiptNo">@include('labels.receiptNo')</label>
     <input type="text" class="form-control" name="receiptNo" id="receiptNoPaymentCr">
 </div>
 

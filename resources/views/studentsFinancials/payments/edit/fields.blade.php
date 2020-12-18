@@ -36,7 +36,7 @@
 <div class="form-group col-md-6">
     <label for="discount_id">@include('labels.dtitle')</label>
     <select required class="form-control" name="discount_id" id="discount_idEd">
-        <option value="0">Choose a discount</option>
+        <option value="0">No Discount</option>
 
         @foreach ($sfDiscounts as $discount)
             <option value="{{$discount->id}}">{{ $discount->title }}</option>

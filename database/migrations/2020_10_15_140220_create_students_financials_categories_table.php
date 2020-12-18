@@ -18,7 +18,7 @@ class CreateStudentsFinancialsCategoriesTable extends Migration
             $table->unsignedBigInteger('batch_id');
             $table->string('frequency');
             $table->string('title');
-            $table->integer('amount');
+            $table->float('amount');
             $table->unsignedBigInteger('level_id');
             $table->softDeletes();
             $table->timestamps();

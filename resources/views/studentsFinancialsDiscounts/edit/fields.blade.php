@@ -1,15 +1,5 @@
-<!-- Type Field -->
-<div class="form-group col-md-6">
-    <label for="type">@include('labels.dtype')@include('layouts.required')</label>
-    <select required class="form-control" name="type" id="typeEd">
-        <option value="">Choose a type</option>
-        <option value="Fixed Amount">Fixed Amount</option>
-        <option value="Percentage">Percentage</option>
-    </select>
-</div>
-
 <!-- Title Field -->
-<div class="form-group col-md-6">
+<div class="form-group col-md-12">
     <label for="title">@include('labels.dtitle')@include('layouts.required')</label>
     <select required class="form-control" name="title" id="titleEd">
         <option value="">Choose a title</option>
@@ -23,6 +13,16 @@
         <option value="Hafez">Hafez</option>
         <option value="Waive">Waive</option>
         <option value="Custom">Custom</option>
+    </select>
+</div>
+
+<!-- Type Field -->
+<div class="form-group col-md-6">
+    <label for="type">@include('labels.dtype')@include('layouts.required')</label>
+    <select required class="form-control" name="type" id="typeEd">
+        <option value="">Choose a type</option>
+        <option value="Fixed Amount">Fixed Amount (in RM)</option>
+        <option value="Percentage">Percentage (%)</option>
     </select>
 </div>
 

@@ -58,40 +58,20 @@ class studentsFinancialsController extends AppBaseController
         $this->authorize('create', studentsFinancials::class);
 
         $list = $request['list'];
-
-        $successful = [];
-
-        $failure = [];
         
         foreach($list as $y) {
             
-            $time_id = $request['time_id'.$y];
-            $course_id = $request['course_id'.$y];
-            $teacher_id = $request['teacher_id'.$y];
+            $category_id = $request['category_id'.$y];
+            $discount_id = $request['discount_id'.$y];
+            $finalAmount = $request['finalAmount'.$y];
 
-            $sches = sches::firstOrCreate(['sem_id' => $request['sem_id'], 'classroom_id' => $request['classroom_id'],
-            'day_id' => $request['day_id'], 'time_id' => $time_id, 'status_id' => $request['status_id']],
-            ['course_id' => $course_id, 'teacher_id' => $teacher_id]);
-    
-            if($sches->wasRecentlyCreated){
-                array_push($successful, $time_id);
-            }
-            else {
-                array_push($failure, $time_id);
-            }
+            $studentsFinancials = studentsFinancials::create(['sem_id' => $request['sem_id'],
+            'studentNo' => $request['studentNo'], 'category_id' => $category_id,
+            'discount_id' => $discount_id, 'finalAmount' => $finalAmount]);
+
         }
 
-        if(empty($failure)){
-            Flash::success('All Class(es) were saved successfully<br><br>تم حفظ كل بيانات الحصة / الحصص الدراسية بنجاح');
-        }
-        elseif (empty($successful)){
-            Flash::error('All Class(es) data clashes with existed ones<br><br>كل بيانات الحصة / الحصص الدراسية المدخلة تتعارض مع بيانات موجودة بالفعل');
-        }
-        else {
-            Flash::success('Class(es) '.implode(' & ', $successful).' were saved successfully<br><br>تم حفظ بيانات الحصة / الحصص الدراسية '.implode(' و ', $successful).' بنجاح');
-
-            Flash::error('Class(es) '.implode(' & ', $failure).' data clashes with existed ones<br><br>بيانات الحصة / الحصص الدراسية '.implode(' و ', $failure).' المدخلة تتعارض مع بيانات موجودة بالفعل');
-        }
+        Flash::success('All financial due(s) were saved successfully<br><br>تم حفظ كل بيانات المستحقات المالية بنجاح');
 
         // studentsFinancials::create($request->all());
         

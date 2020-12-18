@@ -32,7 +32,7 @@ class studentsFinancials extends Model
         'studentNo' => 'integer',
         'category_id' => 'integer',
         'discount_id' => 'integer',
-        'finalAmount' => 'integer',
+        'finalAmount' => 'float',
     ];
 
     public static $rules = [

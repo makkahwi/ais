@@ -5,7 +5,6 @@
     <th>@include('labels.name')</th>
     <th>@include('labels.amount')</th>
     <th>@include('labels.method')</th>
-    <th>@include('labels.receipt')</th>
     <th>@include('labels.receiptNo')</th>
     <th>@include('labels.note')</th>
     <th>@include('labels.action')</th>

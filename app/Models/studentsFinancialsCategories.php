@@ -31,7 +31,7 @@ class studentsFinancialsCategories extends Model
         'batch_id' => 'integer',
         'frequency' => 'string',
         'title' => 'string',
-        'amount' => 'integer',
+        'amount' => 'float',
         'level_id' => 'integer',
     ];
 

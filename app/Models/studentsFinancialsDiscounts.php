@@ -28,7 +28,7 @@ class studentsFinancialsDiscounts extends Model
         'id' => 'integer',
         'type' => 'string',
         'title' => 'string',
-        'amount' => 'integer',
+        'amount' => 'float',
     ];
 
     public static $rules = [

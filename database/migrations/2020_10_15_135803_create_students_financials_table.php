@@ -19,7 +19,7 @@ class CreateStudentsFinancialsTable extends Migration
             $table->unsignedBigInteger('studentNo');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('discount_id');
-            $table->integer('finalAmount');
+            $table->float('finalAmount');
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('sem_id')->references('id')->on('sems')->onDelete('cascade');
