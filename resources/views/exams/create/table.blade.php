@@ -40,7 +40,7 @@
             var level_id = document.getElementById("level_idCrH").value;
                 
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                ;
+              
 
                 $('#course_idCr'+count+'').empty();
 
@@ -86,7 +86,7 @@
             var level_id = e.target.value;
             
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                    ;
+                  
 
                 for (var i = 0; i <= count; i++) {
 

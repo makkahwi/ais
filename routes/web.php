@@ -9,6 +9,7 @@ Auth::routes(['verify' => true]);
 Route::get('/dashboard', 'HomeController@index')->middleware('verified');
 Route::get('/profile', 'usersController@index')->middleware('verified');
 Route::get('/calculator', ['as' => 'calculator', 'uses' => 'Controller@calculator']);
+Route::get('/calculation', ['as' => 'calculation', 'uses' => 'Controller@calculation']);
 
 Route::resource('years', 'yearsController')->middleware(['verified', 'can:viewAny, App\Models\years']);
 Route::resource('attendances', 'attendancesController')->middleware(['verified', 'can:viewAny, App\Models\attendances']);
@@ -72,6 +73,8 @@ Route::post('/resultstore', ['as' => 'resultstore', 'uses' => 'resultsController
 
 // PDF Generators
 Route::get('/studentConf', ['as' => 'confLetter', 'uses' => 'studentsController@confLetter']);
+Route::get('/sfStatement', ['as' => 'sfStatement', 'uses' => 'studentsFinancialsController@sfStatement']);
+Route::get('/sfReports', ['as' => 'sfReports', 'uses' => 'studentsFinancialsController@sfReports'])->middleware(['verified', 'can:reports, App\Models\studentsFinancials']);
 
 // New Student Registeration
 Route::post('newStudentRegister', 'studentsController@store');

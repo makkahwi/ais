@@ -1,1 +1,1 @@
-Fees Calculator
+Calculator

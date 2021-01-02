@@ -12,11 +12,9 @@
 @push('scripts') <!-- Update Current Data /////////////////////////////////////////// -->
   <script type="text/javascript">
 
-    var oriamount, discount, distype, discharge, finamount;
+    var discharge, finalamount;
 
     $('#levelCr').on('change',function(e){
-            
-      ;
 
       var level_id = e.target.value;
 
@@ -24,7 +22,6 @@
       $('#studentNoCr').empty();
       $('#studentNoCr').append('<option value="">Choose a classroom first</option>')
       $.get('dynamicClassroom?level_id='+ level_id, function(data){
-        ;
         
         $('#classroomCr').append('<option value="">Select a Classroom...</option>')
         $.each(data, function(index, clas){
@@ -36,13 +33,10 @@
 
     $('#classroomCr').on('change',function(e){
 
-      ;
-
       var classroom_id = e.target.value;
 
       $('#studentNoCr').empty();
       $.get('dynamicStudents?classroom_id='+classroom_id, function(data){
-        ;
 
         $('#studentNoCr').append('<option value="">Select a Student...</option>')
         $.each(data, function(index, student){
@@ -52,64 +46,46 @@
 
     });
 
-    $('#category_idCr').on('change',function(e){
+    $(document).ready(function() {
 
-      ;
+      $(document).on('change', '.category_idCr', function(e) {
 
-      var category_id = e.target.value;
+        var category_id = e.target.value;
 
-      $('#categoryamountCr').val('');
-      $('#discountamountCr').val('');
-      $('#discount_idCr').val('0');
-      distype = 0;
-      discount = 0;
-      $.get('dynamicSFCategory?category_id='+category_id, function(data){
-        ;
+        $(this).parent().parent().find('#categoryamountCr').val('');
+        $(this).parent().parent().find('#discount_idCr').val('0');
+        $(this).parent().parent().find('#discountamountCr').val(0);
 
-        $.each(data, function(index, category){
-          oriamount = category.amount;
-          $('#categoryamountCr').val(oriamount)
+        $.get('dynamicSFCategory?category_id='+category_id, function(data){
+          $.each(data, function(index, category){
+            finalamount = category.amount;
+          });
         });
         
-        $('#finalAmountCr').val(oriamount);
+        $(this).parent().parent().find('#categoryamountCr').val(finalamount);
+        $(this).parent().parent().find('#finalAmountCr').val(finalamount);
+
       });
-      
 
-    });
+      $(document).on('change', '.discount_idCr', function(e) {
 
-    $('#discount_idCr').on('change',function(e){
+        var discount_id = e.target.value;
 
-      ;
+        $(this).parent().parent().find('#discountamountCr').val(0);
 
-      var discount_id = e.target.value;
-
-      $('#discountamountCr').val('');
-
-      if (discount_id == 0)
-        $('#finalAmountCr').val(oriamount);
-      
-      else {
         $.get('dynamicSFDiscount?discount_id='+discount_id, function(data){
-          ;
-
-          $.each(data, function(index, discoun){
-            discount = discoun.amount;
-            distype = discoun.type;
-            $('#discountamountCr').val(discount+' ('+distype+')');
+          $.each(data, function(index, discount){
+            if(discount.type == "Fixed Amount")
+              discharge = discount.amount;
+            else
+              discharge = finalamount*discount.amount/100
           });
-
-          if (distype == 'Fixed Amount'){
-            finamount = oriamount - discount;
-            $('#finalAmountCr').val(finamount);
-          }
-          else if (distype == 'Percentage') {
-            discharge = oriamount * discount / 100;
-            finamount = oriamount-discharge;
-            $('#finalAmountCr').val(finamount);
-          }
         });
-      }
+        
+        $(this).parent().parent().find('#discountamountCr').val(discharge);
+        $(this).parent().parent().find('#finalAmountCr').val(finalamount-discharge);
 
+      });
     });
 
   </script>

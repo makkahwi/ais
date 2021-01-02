@@ -1,1 +1,1 @@
-<i class="fas fa-calculator"></i> @include('calculator.title')s حساب الرسوم الدراسية
+<i class="fas fa-calculator"></i> @include('calculator.title') الحاسبة

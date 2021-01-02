@@ -1,1 +1,1 @@
-Students Financial Discounts
+Discounts

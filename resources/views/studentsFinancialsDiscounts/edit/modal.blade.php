@@ -20,6 +20,7 @@
         $("#idEd").val($(this).data('id'));
         $("#typeEd").val($(this).data('type'));
         $("#titleEd").val($(this).data('title'));
+        $("#descriptionEd").val($(this).data('description'));
         $("#amountEd").val($(this).data('amount'));
 
       })

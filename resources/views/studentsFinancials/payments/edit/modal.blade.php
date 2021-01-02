@@ -1,12 +1,12 @@
 @section('edModalForm')
       
-    <form action="{{ route ('students.update', 1) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route ('sPayments.update', 1) }}" method="post" enctype="multipart/form-data">
 
         @csrf
         @method('patch')
 
         <div class="modal-body bg-warning">
-            <input type="hidden" name="id" id="idEd">
+            <input type="hidden" name="id" id="idPaymentEd">
             @include('studentsFinancials.payments.edit.fields')
         </div>
 
@@ -16,15 +16,16 @@
     <script type="text/javascript">
 
     $(document).on('click', '#editing', function(data){
-
-        $("#idEd").val($(this).data('id'));
-        $("#sem_idEd").val($(this).data('sem'));
-        $("#studentNoEd").val($(this).data('sno'));
-        $("#category_idEd").val($(this).data('category'));
-        $("#categoryamountEd").val($(this).data('oriamount'));
-        $("#discount_idEd").val($(this).data('discount'));
-        $("#discountamountEd").val($(this).data('discharge'));
-        $("#finalAmountEd").val($(this).data('final'));
+        
+        $("#idPaymentEd").val($(this).data('id'));
+        $("#sem_idPaymentEd").val($(this).data('sem'));
+        $("#datePaymentEd").val($(this).data('date'));
+        $("#studentNoPaymentEd").val($(this).data('student'));
+        $("#amountPaymentEd").val($(this).data('amount'));
+        $("#methodPaymentEd").val($(this).data('method'));
+        $("#receiptNoPaymentEd").val($(this).data('receiptno'));
+        $("#notePaymentEd").val($(this).data('note'));
+        $("#receiptPaymentEd").val($(this).data('receipt'));
 
       })
 

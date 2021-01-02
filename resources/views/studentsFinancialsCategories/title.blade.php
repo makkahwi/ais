@@ -1,1 +1,1 @@
-Students Financial Categories
+Categories

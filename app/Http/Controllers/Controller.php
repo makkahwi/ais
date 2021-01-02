@@ -8,11 +8,14 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Response;
+use Flash;
+use PDF;
 
 use App\Models\sches;
 use App\Models\sems;
 use App\Models\years;
 use App\Models\levels;
+use App\Models\batches;
 use App\Models\courses;
 use App\Models\studentsFinancialsCategories;
 use App\Models\studentsFinancialsDiscounts;
@@ -121,20 +124,144 @@ class Controller extends BaseController
         return Response::json($discount);
     }
 
-    public function emailUsers(){ // Dynamic Course Show ///////////////////////////////////////////
+    public function calculator(){ 
 
-        $users = users::all();
+        $batches = batches::orderBy('batch', 'DESC')->get();
 
-        foreach ($users as $u)
-            Mail::to($u['email'])->subject('Portal Announcement')->send(new newUser($u->all()));
+        $levels = levels::all();
 
-        Flash::success('All new Emails have been notified');
+        $discounts = studentsFinancialsDiscounts::all();
 
-        return view('home');
+        return view('calculator.index', compact('batches', 'levels', 'discounts'));
     }
 
-    public function calculator(){ // Dynamic Course Show ///////////////////////////////////////////
+    public function calculation(Request $request){ 
 
-        return view('calculator.index');
+        if ($request['studentNo']) {
+            $ori = strval($request['studentNo']);
+            $med = $ori[0].$ori[1].$ori[2];
+            $final = (int)$med;
+        }
+        elseif ($request['batch']) {
+            $final = $request['batch'];
+        }
+        else {
+            Flash::error('You Should insert student no or choose a batch to proceed<br><br>يجب أدخال رقم الطالب أو اختيار الدفعة لإتمام العملية');
+            return redirect(route('calculator'));
+        }
+
+        $batches = batches::orderBy('batch', 'desc')->get();
+        
+        foreach ($batches as $batch){
+            if ($final >= $batch['batch']){
+                $bat = $batch;
+                break;
+            }
+        }
+
+        $feesList = array();
+        $discountsList = array();
+
+        $Semesterly = studentsFinancialsCategories::
+            where(function ($query) use ($request) {
+                $query->where('level_id', '=', $request['level'])
+                    ->orWhere('level_id', '=', 0);
+            })
+            ->where('batch_id', '=', $bat['id'])
+            ->where('frequency', '=', 'Semesterly')
+            ->get();
+
+        foreach ($Semesterly as $semesterFees)
+            array_push($feesList, ["Title" => $semesterFees['title'], "Amount" => $semesterFees['amount']]);
+
+        $newStudent = $request['newStudent'];
+
+        $sem = $request['sem'];
+
+        if ($newStudent == 1) {
+            $firstTimes = studentsFinancialsCategories::
+                where(function ($query) use ($request) {
+                    $query->where('level_id', '=', $request['level'])
+                        ->orWhere('level_id', '=', 0);
+                })
+                ->where('batch_id', '=', $bat['id'])
+                ->where('frequency', '=', 'One-time')
+                ->get();
+
+            foreach ($firstTimes as $firstTime)
+                array_push($feesList, ["Title" => $firstTime['title'], "Amount" => $firstTime['amount']]);
+
+            $yearly = studentsFinancialsCategories::
+                where(function ($query) use ($request) {
+                    $query->where('level_id', '=', $request['level'])
+                        ->orWhere('level_id', '=', 0);
+                })
+                ->where('batch_id', '=', $bat['id'])
+                ->where('frequency', '=', 'Yearly')
+                ->where('Title', '!=', 'Visa Renewal')
+                ->get();
+
+            foreach ($yearly as $yearfees)
+                array_push($feesList, ["Title" => $yearfees['title'], "Amount" => $yearfees['amount']]);
+        }
+        elseif ($sem == 1) {
+
+            $yearly = studentsFinancialsCategories::
+                where(function ($query) use ($request) {
+                    $query->where('level_id', '=', $request['level'])
+                        ->orWhere('level_id', '=', 0);
+                })
+                ->where('batch_id', '=', $bat['id'])
+                ->where('frequency', '=', 'Yearly')
+                ->get();
+
+            foreach ($yearly as $yearfees)
+                array_push($feesList, ["Title" => $yearfees['title'], "Amount" => $yearfees['amount']]);
+            
+        }
+
+        $transporation = $request['transporation'];
+        $visa = $request['visa'];
+
+        if ($transporation) {
+            $trans = studentsFinancialsCategories::
+                where(function ($query) use ($request) {
+                    $query->where('level_id', '=', $request['level'])
+                        ->orWhere('level_id', '=', 0);
+                })
+                ->where('batch_id', '=', $bat['id'])
+                ->where('title', '=', 'Transportation')
+                ->first();
+
+            array_push($feesList, ["Title" => $trans['title'], "Amount" => $trans['amount']*4]);
+        }
+
+        if ($request['discounts']) {
+
+            $tution = studentsFinancialsCategories::where('batch_id', '=', $bat['id'])
+                ->where('title', '=', 'Tuition Fees')
+                ->where('level_id', '=', $request['level'])
+                ->first();
+
+            foreach ($request['discounts'] as $discount) {
+                $discount = studentsFinancialsDiscounts::where('title', '=', $discount)
+                    ->first();
+
+                if ($discount['type'] == "Percentage")
+                    $discounted = $tution['amount'] * $discount['amount'] / 100;
+                else
+                    $discounted = $discount['amount'];
+
+                array_push($discountsList, ["Title" => $discount['title'],"Amount" => $discounted]);
+            }
+        }
+
+        $level = levels::where('id', '=', $request['level'])->first();
+
+        $data = ["feesList" => $feesList, "discountsList" => $discountsList, "batch" => $bat, "level" => $level, "sem" => $sem, "newStudent" => $newStudent, "visa" => $visa];
+
+        $pdf = PDF::loadView('studentsFinancials.studentsFeesCalculator', $data);
+
+        return $pdf->download('Student Fees Calculator.pdf');
     }
 }

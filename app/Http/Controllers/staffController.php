@@ -59,7 +59,7 @@ class staffController extends AppBaseController
     public function store(Request $request)
     {
         $splitToday = explode("-",now());
-        $year = intdiv($splitToday[0], 100);
+        $year = ($splitToday[0] % 100);
         $month = $splitToday[1];
         $serial = mt_rand(10, 99);
 
@@ -238,7 +238,7 @@ class staffController extends AppBaseController
         }
 
         $splitToday = explode("-",today());
-        $year = intdiv($splitToday[0], 100);
+        $year = ($splitToday[0] % 100);
         $month = $splitToday[1];
         $serial = mt_rand(100, 999);
 

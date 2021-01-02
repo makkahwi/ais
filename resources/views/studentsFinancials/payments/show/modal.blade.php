@@ -13,13 +13,13 @@
 
       $(document).on('click', '#showing', function(data){
 
-        $("#sem_idSw").val($(this).data('sem'));
-        $("#studentNoSw").val($(this).data('sno'));
-        $("#category_idSw").val($(this).data('category'));
-        $("#categoryamountSw").val($(this).data('oriamount'));
-        $("#discount_idSw").val($(this).data('discount'));
-        $("#discountamountSw").val($(this).data('discharge'));
-        $("#finalamountSw").val($(this).data('oriamount')+' - '+$(this).data('discharge')+' = '+$(this).data('final'));
+        $("#sem_idPaymentSw").val($(this).data('sem'));
+        $("#datePaymentSw").val($(this).data('date'));
+        $("#studentNoPaymentSw").val($(this).data('student'));
+        $("#amountPaymentSw").val($(this).data('amount'));
+        $("#methodPaymentSw").val($(this).data('method'));
+        $("#receiptNoPaymentSw").val($(this).data('receiptno'));
+        $("#notePaymentSw").val($(this).data('note'));
 
       })
 

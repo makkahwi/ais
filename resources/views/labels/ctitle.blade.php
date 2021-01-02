@@ -1,1 +1,1 @@
-Category Title<br/> عنوان التصنيف
+Due Category<br/> تصنيف المستحق

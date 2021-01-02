@@ -1,0 +1,1 @@
+<i class="fas fa-file-invoice-dollar"></i> @include('studentsFinancialReports.title') التقارير

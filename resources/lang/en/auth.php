@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records, please double check<br>هذه البيانات لا تتطابق مع سجلاتنا, نرجو التحقق من صحة البيانات',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.<br>If you forgot your password, click Forgot Password link below',
+    'failed' => 'Entered School No / Password combination is wrong, please double check<br>الرقم المدرسي أو كلمة المرور المدخلة غير صحيحة, نرجو التحقق من صحة البيانات',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.<br>If you forgot your password, click "Forgot Password" link below',
 
 ];

@@ -24,7 +24,7 @@
       $('#studentNoPaymentCr').empty();
       $('#studentNoPaymentCr').append('<option value="">Choose a classroom first</option>')
       $.get('dynamicClassroom?level_id='+ level_id, function(data){
-        ;
+      
         
         $('#classroomPaymentCr').append('<option value="">Select a Classroom...</option>')
         $.each(data, function(index, clas){
@@ -42,7 +42,7 @@
 
       $('#studentNoPaymentCr').empty();
       $.get('dynamicStudents?classroom_id='+classroom_id, function(data){
-        ;
+      
 
         $('#studentNoPaymentCr').append('<option value="">Select a Student...</option>')
         $.each(data, function(index, student){
@@ -54,8 +54,6 @@
 
     $('#category_idPaymentCr').on('change',function(e){
 
-      
-
       var category_id = e.target.value;
 
       $('#categoryamountPaymentCr').val('');
@@ -63,9 +61,8 @@
       $('#discount_idPaymentCr').val('0');
       distype = 0;
       discount = 0;
-      $.get('dynamicSFCategory?category_id='+category_id, function(data){
-        ;
 
+      $.get('dynamicSFCategory?category_id='+category_id, function(data){
         $.each(data, function(index, category){
           oriamount = category.amount;
           $('#categoryamountPaymentCr').val(oriamount)
@@ -73,13 +70,10 @@
         
         $('#finalAmountPaymentCr').val(oriamount);
       });
-      
 
     });
 
     $('#discount_idPaymentCr').on('change',function(e){
-
-      
 
       var discount_id = e.target.value;
 
@@ -90,7 +84,7 @@
       
       else {
         $.get('dynamicSFDiscount?discount_id='+discount_id, function(data){
-          ;
+        
 
           $.each(data, function(index, discoun){
             discount = discoun.amount;

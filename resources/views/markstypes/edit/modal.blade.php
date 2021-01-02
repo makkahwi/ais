@@ -23,7 +23,7 @@
             var course = $(this).data('course');
 
             $.get('dynamicClassroom?level_id='+level, function(data){
-                ;
+              
 
                 $('#classroom_idTypeEd').empty();
                 $.each(data, function(index, clas){
@@ -33,7 +33,7 @@
             });
 
             $.get('dynamicCourse?level_id='+level, function(data){
-                ;
+              
 
                 $('#course_idTypeEd').empty();
                 $.each(data, function(index, cou){

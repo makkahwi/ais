@@ -44,7 +44,7 @@
 
             $('#level_idCrH').empty();
             $.get('dynamictitle?level_id='+ level_id, function(data){
-                ;
+              
 
                 $.each(data, function(index, leve){
                     $('#level_idCrH').append('<option value="'+leve.id+'">'+leve.title+'</option>')
@@ -53,7 +53,7 @@
 
             $('#classroom_idCrH').empty();
             $.get('dynamicClassroom?level_id='+ level_id, function(data){
-                ;
+              
 
                 $.each(data, function(index, clas){
                     if (clas.id == classroom)
@@ -65,7 +65,7 @@
             $('#maxCrH').empty();
             $('#semIdCrH').empty();
             $.get('dynamicMarkType?course_id='+course, function(data){
-                ;
+              
 
                 $.each(data, function(index, type){
                   if (type.id == marktype)
@@ -82,7 +82,7 @@
             $.get('dynamicStudents?classroom_id='+classroom, function(data){
 
                 counter = 0;
-                ;
+              
 
                 $.each(data, function(index, student){
                     ++counter
@@ -95,7 +95,7 @@
 
             $('#course_idCrH').empty();
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                ;
+              
 
                 $.each(data, function(index, cours){
                     if (cours.id == course)

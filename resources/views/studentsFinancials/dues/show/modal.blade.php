@@ -1,4 +1,4 @@
-@section('swModalForm')
+@section('swBigModalForm')
 
   <form action="{{route('confLetter')}}">
 
@@ -11,15 +11,15 @@
 @push('scripts') <!-- Show Current Data /////////////////////////////////////////// -->
     <script type="text/javascript">
 
-      $(document).on('click', '#showing', function(data){
+      $(document).on('click', '#show', function(data){
 
-        $("#sem_idSw").val($(this).data('sem'));
-        $("#studentNoSw").val($(this).data('sno'));
-        $("#category_idSw").val($(this).data('category'));
-        $("#categoryamountSw").val($(this).data('oriamount'));
-        $("#discount_idSw").val($(this).data('discount'));
-        $("#discountamountSw").val($(this).data('discharge'));
-        $("#finalamountSw").val($(this).data('oriamount')+' - '+$(this).data('discharge')+' = '+$(this).data('final'));
+        $("#sem_idDueSw").val($(this).data('sem'));
+        $("#studentNoDueSw").val($(this).data('sno'));
+        $("#category_idDueSw").val($(this).data('category'));
+        $("#categoryamountDueSw").val($(this).data('oriamount'));
+        $("#discount_idDueSw").val($(this).data('discount'));
+        $("#discountamountDueSw").val($(this).data('discharge'));
+        $("#finalamountDueSw").val($(this).data('oriamount')+' - '+$(this).data('discharge')+' = '+$(this).data('final'));
 
       })
 

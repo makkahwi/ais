@@ -66,14 +66,11 @@
     <script type="text/javascript">
 
         $('#classroom_id').on('change',function(e){
-            
-            
 
             var classroom_id = e.target.value;
 
             $('#student_id').empty();
             $.get('dynamicStudentMark?sclassroom_id='+classroom_id, function(data){
-                ;
 
                 $.each(data, function(index, studen){
                     if (studen.sStatus == 2) // Active Ones Only to Show //////////////////////
@@ -84,14 +81,11 @@
         });
 
         $('#classroom_id').on('change',function(e){
-            
-            
 
             var classroom_id = e.target.value;
 
             $('#course_id').empty();
             $.get('dynamicCourse?classroom_id='+classroom_id, function(data){
-                ;
 
                 $.each(data, function(index, cour){
                     if (cour.status_id == 2) // Active Ones Only to Show //////////////////////

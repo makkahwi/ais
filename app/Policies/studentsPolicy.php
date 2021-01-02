@@ -33,9 +33,9 @@ class studentsPolicy
      */
     public function view(User $user, student $student)
     {
-        if ($student->user->status_id == 2)
+        if ($user->schoolNo == $student->studentNo && $student->user->status_id == 2)
             return $student;
-        else if (in_array($user->role_id, [1, 2, 3]))
+        else if (in_array($user->role_id, [1, 2, 3, 5]))
             return $student;
     }
 

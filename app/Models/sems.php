@@ -87,12 +87,12 @@ class sems extends Model
     
     public function dues()
     {
-        return $this->hasMany(studentsFinancials::class);
+        return $this->hasMany(studentsFinancials::class, 'sem_id');
     }
     
     public function payments()
     {
-        return $this->hasMany(studentsPayments::class);
+        return $this->hasMany(studentsPayments::class, 'sem_id');
     }
     
 }

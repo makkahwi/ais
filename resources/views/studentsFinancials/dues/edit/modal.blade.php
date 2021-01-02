@@ -1,12 +1,12 @@
-@section('edModalForm')
+@section('edBigModalForm')
       
-    <form action="{{ route ('students.update', 1) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route ('sFinancials.update', 1) }}" method="post" enctype="multipart/form-data">
 
         @csrf
         @method('patch')
 
         <div class="modal-body bg-warning">
-            <input type="hidden" name="id" id="idEd">
+            <input type="hidden" name="id" id="idDueEd">
             @include('studentsFinancials.dues.edit.fields')
         </div>
 
@@ -15,16 +15,16 @@
 @push('scripts') <!-- Update Current Data /////////////////////////////////////////// -->
     <script type="text/javascript">
 
-    $(document).on('click', '#editing', function(data){
+    $(document).on('click', '#edit', function(data){
 
-        $("#idEd").val($(this).data('id'));
-        $("#sem_idEd").val($(this).data('sem'));
-        $("#studentNoEd").val($(this).data('sno'));
-        $("#category_idEd").val($(this).data('category'));
-        $("#categoryamountEd").val($(this).data('oriamount'));
-        $("#discount_idEd").val($(this).data('discount'));
-        $("#discountamountEd").val($(this).data('discharge'));
-        $("#finalAmountEd").val($(this).data('final'));
+        $("#idDueEd").val($(this).data('id'));
+        $("#sem_idDueEd").val($(this).data('sem'));
+        $("#studentNoDueEd").val($(this).data('sno'));
+        $("#category_idDueEd").val($(this).data('category'));
+        $("#categoryamountDueEd").val($(this).data('oriamount'));
+        $("#discount_idDueEd").val($(this).data('discount'));
+        $("#discountamountDueEd").val($(this).data('discharge'));
+        $("#finalAmountDueEd").val($(this).data('final'));
 
       })
 

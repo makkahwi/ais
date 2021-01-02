@@ -26,7 +26,7 @@
             <button class="btn btn-warning pull-right submitbutton" type="submit"><i class="fas fa-print"></i> Download<br>Confirmation Letter</button>
             <h1 style="text-align:center;"><div class="loader" hidden><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div></h1>
     	@else
-    		<div style="padding: 3%;"><h6 class="text-danger text-justify">To Download Confirmation Letter, your financials should be settled</h6></div>
+    		<div style="padding: 0 2% 0 2%;"><h6 class="text-danger text-justify">To Download Student Confirmation Letter, your financials should be settled</h6></div>
         @endif
     </div>
 

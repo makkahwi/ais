@@ -10,7 +10,7 @@
         $('#yearesults').on('click', function(){
 
             $.get('currentSem', function(data1){
-                ;
+              
                 $.each(data1, function(index1, sem){
 
                     $.get('alllevels', function(data2){

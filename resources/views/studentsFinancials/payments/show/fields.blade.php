@@ -1,41 +1,41 @@
 <!-- Sem Field -->
 <div class="form-group col-md-6">
     <label for="sem_id">@include('labels.semester')</label>
-    <input readonly class="form-control" name="sem_id" id="sem_idSw">
+    <input readonly class="form-control" name="sem_id" id="sem_idPaymentSw">
+</div>
+
+<!-- date Field -->
+<div class="form-group col-md-6">
+    <label for="date">@include('labels.date')</label>
+    <input readonly class="form-control" name="date" id="datePaymentSw">
 </div>
 
 <!-- studentNo Field -->
 <div class="form-group col-md-6">
     <label for="studentNo">@include('labels.sno')</label>
-    <input readonly class="form-control" name="studentNo" id="studentNoSw">
+    <input readonly class="form-control" name="studentNo" id="studentNoPaymentSw">
 </div>
 
-<!-- category Field -->
+<!-- Amount Field -->
 <div class="form-group col-md-6">
-    <label for="category_id">@include('labels.ctitle')</label>
-    <input readonly class="form-control" name="category_id" id="category_idSw">
+    <label for="amount">@include('labels.amount')</label>
+    <input readonly class="form-control" name="amount" id="amountPaymentSw">
 </div>
 
-<!-- category amount Field -->
+<!-- Method Field -->
 <div class="form-group col-md-6">
-    <label for="categoryamount">@include('labels.amount')</label>
-    <input readonly class="form-control" name="categoryamount" id="categoryamountSw">
+    <label for="method">@include('labels.method')</label>
+    <input readonly class="form-control" name="method" id="methodPaymentSw">
 </div>
 
-<!-- discount Field -->
+<!-- Receipt No Field -->
 <div class="form-group col-md-6">
-    <label for="discount_id">@include('labels.dtitle')</label>
-    <input readonly class="form-control" name="discount_id" id="discount_idSw">
+    <label for="receiptNo">@include('labels.receiptNo')</label>
+    <input readonly class="form-control" name="receiptNo" id="receiptNoPaymentSw">
 </div>
 
-<!-- discount amount Field -->
-<div class="form-group col-md-6">
-    <label for="discountamount">@include('labels.amount')</label>
-    <input readonly class="form-control" name="discountamount" id="discountamountSw">
-</div>
-
-<!-- final Amount Field -->
+<!-- Note Field -->
 <div class="form-group col-md-12">
-    <label for="finalAmount">@include('labels.famount')</label>
-    <input readonly class="form-control" name="finalAmount" id="finalamountSw">
+    <label for="note">@include('labels.note')</label>
+    <input readonly class="form-control" name="note" id="notePaymentSw">
 </div>

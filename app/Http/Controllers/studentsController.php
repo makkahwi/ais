@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatestudentsRequest;
 use App\Repositories\studentsRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -89,7 +90,7 @@ class studentsController extends AppBaseController
 
         $ref = Referances::create([
             'type' => 'SCL',
-            'ref' => 'AIS-SCL-'.intdiv($splitToday[0], 100).$splitToday[1].$splitDate[0].'-'.$count
+            'ref' => 'AIS-SCL-'.($splitToday[0] % 100).$splitToday[1].$splitDate[0].'-'.$count
         ]);
 
         $data += ['ref' => $ref['ref']];
@@ -99,6 +100,11 @@ class studentsController extends AppBaseController
         $pdf = PDF::loadView('users.profile.studentConfirmationLetter', $data);
 
         $path = 'docs/letters/SCL/';
+
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path);
+        }
+
         $pdf->save($path.$ref['ref'].'.pdf');
 
         return $pdf->download($student.' - Student Confirmation Letter.pdf');
@@ -119,7 +125,7 @@ class studentsController extends AppBaseController
         $splitSem = explode(" ",$request['semName']);
         $sem = $splitSem[1];
 
-        $year = intdiv($request['yearName'], 100);
+        $year = ($request['yearName'] % 100);
         
         $serial = mt_rand(100, 999);
 

@@ -283,7 +283,7 @@
 
 @can ('viewAny', 'App\Models\studentsFinancials')
 
-<li class="treeview {{ Request::is('sFinancials*') ? 'active' : '' }} {{ Request::is('sfCategories*') ? 'active' : '' }} {{ Request::is('sfDiscounts*') ? 'active' : '' }} {{ Request::is('calculator*') ? 'active' : '' }}">
+<li class="treeview {{ Request::is('sFinancials*') ? 'active' : '' }} {{ Request::is('sfCategories*') ? 'active' : '' }} {{ Request::is('sfDiscounts*') ? 'active' : '' }} {{ Request::is('sfReports*') ? 'active' : '' }} {{ Request::is('calculator*') ? 'active' : '' }}">
     <a href="#">
         <i class="fa fa-wallet"></i>
         <span>Financials الشؤون المالية</span>
@@ -313,6 +313,14 @@
 
             <li class="{{ Request::is('sfDiscounts*') ? 'active' : '' }}">
                 <a href="{{ url ('/sfDiscounts') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialsDiscounts.titles')</span></a>
+            </li>
+
+        @endcan
+
+        @can ('reports', 'App\Models\studentsFinancials')
+
+            <li class="{{ Request::is('sfReports*') ? 'active' : '' }}">
+                <a href="{{ url ('/sfReports') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialReports.titles')</span></a>
             </li>
 
         @endcan

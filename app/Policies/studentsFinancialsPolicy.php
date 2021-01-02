@@ -19,7 +19,7 @@ class studentsFinancialsPolicy
     public function viewAny(User $user)
     {
         return in_array($user->role_id, [
-            1, 5,
+            1, 5
         ]);
     }
 
@@ -75,6 +75,19 @@ class studentsFinancialsPolicy
     {
         return in_array($user->role_id, [
             1,
+        ]);
+    }
+
+    /**
+     * Determine whether the user can view financial reports.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function reports(User $user)
+    {
+        return in_array($user->role_id, [
+            1, 5
         ]);
     }
 

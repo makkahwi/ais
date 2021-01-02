@@ -42,7 +42,7 @@
 
             $('#attendanceslist').empty();
             $.get('dynamicStudents?classroom_id='+classroom_id, function(data){
-                ;
+              
 
                 $.each(data, function(index, student){
                     ++counter

@@ -39,7 +39,7 @@
 
             $('#level_idType').empty();
             $.get('dynamictitle?level_id='+ level_id, function(data){
-                ;
+              
 
                 $.each(data, function(index, leve){
                     $('#level_idType').append('<option value="'+leve.id+'">'+leve.title+'</option>')
@@ -48,7 +48,7 @@
 
             $('#classroom_idType').empty();
             $.get('dynamicClassroom?level_id='+ level_id, function(data){
-                ;
+              
 
                 $.each(data, function(index, clas){
                     if (clas.id == classroom)
@@ -58,7 +58,7 @@
 
             $('#course_idType').empty();
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                ;
+              
 
                 $.each(data, function(index, cours){
                     if (cours.id == course)

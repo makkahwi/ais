@@ -17,6 +17,7 @@ class CreateStudentsFinancialsDiscountsTable extends Migration
             $table->bigIncrements('id');
             $table->string('type');
             $table->string('title');
+            $table->text('description');
             $table->float('amount');
             $table->softDeletes();
             $table->timestamps();

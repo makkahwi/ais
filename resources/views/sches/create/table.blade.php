@@ -38,7 +38,7 @@
             var level_id = document.getElementById("level_idCrH").value;
                 
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                ;
+              
 
                 $('#course_idCr'+count+'').empty();
 
@@ -85,7 +85,7 @@
 
             $('#classroom_idCrH').empty();
             $.get('dynamicClassroom?level_id='+ level_id, function(data){
-                ;
+              
 
                 $('#classroom_idCrH').append('<option value="">Select a Classroom...</option>')
                 $.each(data, function(index, classroom){
@@ -94,7 +94,7 @@
             });
             
             $.get('dynamicCourse?level_id='+level_id, function(data){
-                    ;
+                  
 
                 for (var i = 0; i <= count; i++) {
 

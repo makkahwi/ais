@@ -29,7 +29,7 @@
         var student = $(this).data('student');
 
         $.get('dynamicMarkTypesUsed?course_id='+course_id, function(data){
-          ;
+        
 
           $('#typenameEd').empty();
           $.each(data, function(index, typ){
@@ -39,7 +39,7 @@
         });
 
         $.get('dynamicClassroom?level_id='+ level_id, function(data){
-          ;
+        
 
           $('#classroom_idEd').empty();
           $.each(data, function(index, clas){
@@ -49,7 +49,7 @@
         });
 
         $.get('dynamicCourse?level_id='+level_id, function(data){
-            ;
+          
 
             $('#course_idEd').empty();
             $.each(data, function(index, cou){
@@ -59,7 +59,7 @@
         });
 
         $.get('dynamicStudents?classroom_id='+classroom, function(data){
-          ;
+        
 
           $('#student_idEd').empty();
           $.each(data, function(index, stu){

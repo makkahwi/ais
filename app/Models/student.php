@@ -76,7 +76,7 @@ class student extends Model
 
     public function marks()
     {
-        return $this->hasMany(marks::class);
+        return $this->hasMany(marks::class, 'studentNo', 'studentNo');
     }
 
     public function dues()

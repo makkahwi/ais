@@ -1,7 +1,7 @@
 <!-- Sem Field -->
 <div class="form-group col-md-6">
     <label for="sem_id">@include('labels.semester')@include('layouts.required')</label>
-    <select readonly class="form-control" name="sem_id" id="sem_idEd">
+    <select readonly class="form-control" name="sem_id" id="sem_idPaymentEd">
         @foreach ($cnSem as $sem)
             <option value="{{$sem->id}}">{{$sem->title}}, {{$sem->year->title}}</option>
         @endforeach
@@ -11,47 +11,46 @@
 <!-- studentNo Field -->
 <div class="form-group col-md-6">
     <label for="studentNo">@include('labels.sno')@include('layouts.required')</label>
-    <input readonly class="form-control" name="studentNo" id="studentNoEd">
+    <input readonly class="form-control" name="studentNo" id="studentNoPaymentEd">
 </div>
 
-<!-- category Field -->
+<!-- date Field -->
 <div class="form-group col-md-6">
-    <label for="category_id">@include('labels.ctitle')@include('layouts.required')</label>
-    <select required class="form-control" name="category_id" id="category_idEd">
+    <label for="date">@include('labels.date')@include('layouts.required')</label>
+    <input required type="date" max={{today()}} class="form-control" name="date" id="datePaymentEd">
+</div>
+
+<!-- Amount Field -->
+<div class="form-group col-md-6">
+    <label for="amount">@include('labels.amount')@include('layouts.required')</label>
+    <input required type="number" min="0" step="0.01" class="form-control" name="amount" id="amountPaymentEd" placeholder="RM">
+</div>
+
+<!-- Method Field -->
+<div class="form-group col-md-6">
+    <label for="method">@include('labels.method')@include('layouts.required')</label>
+    <select required class="form-control" name="method" id="methodPaymentEd">
         <option value="">Choose a category</option>
-
-        @foreach ($sfCategories as $category)
-            <option value="{{$category->id}}">{{$category->title}} | @if( !empty($category->level->title) ){{ $category->level->title }}@else All Levels @endif</option>
-        @endforeach
+        <option value="Cash">Cash</option>
+        <option value="Cheque">Cheque</option>
+        <option value="Bank Trasnfer">Bank Trasnfer</option>
     </select>
 </div>
 
-<!-- category amount Field -->
+<!-- Receipt No Field -->
 <div class="form-group col-md-6">
-    <label for="categoryamount">@include('labels.amount')</label>
-    <input readonly class="form-control" name="categoryamount" id="categoryamountEd">
+    <label for="receiptNo">@include('labels.receiptNo')</label>
+    <input type="text" class="form-control" name="receiptNo" id="receiptNoPaymentEd">
 </div>
 
-<!-- discount Field -->
-<div class="form-group col-md-6">
-    <label for="discount_id">@include('labels.dtitle')</label>
-    <select required class="form-control" name="discount_id" id="discount_idEd">
-        <option value="0">No Discount</option>
-
-        @foreach ($sfDiscounts as $discount)
-            <option value="{{$discount->id}}">{{ $discount->title }}</option>
-        @endforeach
-    </select>
+<!-- Note Field -->
+<div class="form-group col-md-12">
+    <label for="note">@include('labels.note')</label>
+    <input type="text" class="form-control" name="note" id="notePaymentEd">
 </div>
 
-<!-- discount amount Field -->
-<div class="form-group col-md-6">
-    <label for="discountamount">@include('labels.amount')</label>
-    <input readonly class="form-control" name="discountamount" id="discountamountEd">
-</div>
-
-<!-- final Amount Field -->
-<div class="form-group col-md-6">
-    <label for="finalAmount">@include('labels.famount')@include('layouts.required')</label>
-    <input required type="number" class="form-control" name="finalAmount" id="finalAmountEd">
+<!-- Receipt Field -->
+<div class="form-group col-md-12">
+    <label for="receipt">@include('labels.receipt')</label>
+    <input readonly type="text" class="form-control" name="receipt" id="receiptPaymentEd">
 </div>

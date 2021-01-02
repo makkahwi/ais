@@ -11,6 +11,10 @@
     <li class="nav-item">
         <a class="nav-link" data-toggle="pill" href="#{{$student->studentNo}}-payments">Payments المدفوعات</a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#{{$student->studentNo}}-total">Total الاجمالي</a>
+    </li>
 </ul>
 
 <!-- Tab panes -->
@@ -27,5 +31,10 @@
     <div class="box tab-pane container" id="{{$student->studentNo}}-payments">
         <br>
         @include('studentsFinancials.payments.table')
+    </div>
+
+    <div class="box tab-pane container" id="{{$student->studentNo}}-total">
+        <br>
+        @include('studentsFinancials.total')
     </div>
 </div>

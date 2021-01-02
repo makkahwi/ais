@@ -37,7 +37,7 @@ class studentsFinancialsCategoriesController extends AppBaseController
 
         $statuses = statuses::all();
 
-        $batches = batches::orderby('batch', 'desc')->get();
+        $batches = batches::with('categories')->orderby('batch', 'desc')->get();
 
         $studentsFinancialsCategories = studentsFinancialsCategories::all();
 

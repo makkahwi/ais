@@ -21,6 +21,7 @@ class studentsFinancialsDiscounts extends Model
     public $fillable = [
         'type',
         'title',
+        'description',
         'amount',
     ];
 
@@ -28,12 +29,14 @@ class studentsFinancialsDiscounts extends Model
         'id' => 'integer',
         'type' => 'string',
         'title' => 'string',
+        'description' => 'string',
         'amount' => 'float',
     ];
 
     public static $rules = [
         'type' => 'required',
         'title' => 'required',
+        'description' => 'required',
         'amount' => 'required',
     ];
 

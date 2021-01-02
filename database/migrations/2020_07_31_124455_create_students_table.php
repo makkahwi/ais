@@ -24,7 +24,6 @@ class CreateStudentsTable extends Migration
             $table->integer('tuitionfreq')->default(1);
             $table->boolean('financial')->default(false);
             $table->boolean('trans');
-            $table->unsignedBigInteger('visa_id');
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('studentNo')->references('schoolNo')->on('users')->onDelete('cascade');
