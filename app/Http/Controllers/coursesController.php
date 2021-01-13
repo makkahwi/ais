@@ -41,7 +41,7 @@ class coursesController extends AppBaseController
 
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
 
         $levels = levels::with('courses')->get();
         

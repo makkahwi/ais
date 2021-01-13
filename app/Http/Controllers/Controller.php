@@ -15,6 +15,7 @@ use App\Models\sches;
 use App\Models\sems;
 use App\Models\years;
 use App\Models\levels;
+use App\Models\student;
 use App\Models\batches;
 use App\Models\courses;
 use App\Models\studentsFinancialsCategories;
@@ -111,6 +112,37 @@ class Controller extends BaseController
         $category_id = $request['category_id'];
 
         $category = studentsFinancialsCategories::where('id', '=', $category_id)->get();
+
+        return Response::json($category);
+    }
+
+    public function dynamicFCategoryOfStudent(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
+
+        $studentNo = $request['studentNo'];
+
+        $ori = strval($studentNo);
+        $med = $ori[0].$ori[1].$ori[2];
+        $final = (int)$med;
+
+        $batches = batches::orderBy('batch', 'desc')->get();
+        
+        foreach ($batches as $batch){
+            if ($final >= $batch['batch']){
+                $bat = $batch;
+                break;
+            }
+        }
+
+        $student = student::with('classroom')->where('studentNo', $studentNo)->first();
+        $level = $student['classroom']['level_id'];
+
+        $category = studentsFinancialsCategories::with('batch', 'level')
+        ->where(function ($query) use ($level) {
+            $query->where('level_id', '=', $level)
+                ->orWhere('level_id', '=', 0);
+        })
+        ->where('batch_id', '=', $bat['id'])
+        ->get();
 
         return Response::json($category);
     }

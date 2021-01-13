@@ -11,8 +11,8 @@ use Flash;
 use PDF;
 
 use App\Models\sems;
-use App\Models\Student;
-use App\Models\Referances;
+use App\Models\student;
+use App\Models\referances;
 use App\Models\studentsPayments;
 use App\Models\studentsFinancials;
 
@@ -27,7 +27,7 @@ class studentsPaymentsController extends Controller
     {    
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
 
         return view('studentsFinancials.index', compact('currentSem'));
     }
@@ -44,7 +44,7 @@ class studentsPaymentsController extends Controller
 
         $splitDate = explode(" ",$splitToday[2]);
 
-        $referances = Referances::where('created_at', '>=', today())
+        $referances = referances::where('created_at', '>=', today())
                                 ->orderby('created_at', 'desc')->where('type', '=', 'SPR')
                                 ->first();
 
@@ -56,14 +56,14 @@ class studentsPaymentsController extends Controller
             $count = $splitRef[3]+1;
         }
 
-        $ref = Referances::create([
+        $ref = referances::create([
             'type' => 'SPR',
             'ref' => 'AIS-SPR-'.($splitToday[0] % 100).$splitToday[1].$splitDate[0].'-'.$count
         ]);
 
         $data += ['ref' => $ref['ref']];
 
-        $student = Student::where('studentNo', '=', $data['studentNo'])->get('eName');
+        $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
 
         $data += ['name' => $student[0]['eName']];
 
@@ -114,7 +114,7 @@ class studentsPaymentsController extends Controller
 
         $path = 'docs/students/payment_receipts/'.$data['studentNo'].'/';
 
-        $student = Student::where('studentNo', '=', $data['studentNo'])->get('eName');
+        $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
 
         $data += ['name' => $student[0]['eName']];
 
@@ -148,7 +148,7 @@ class studentsPaymentsController extends Controller
         }
 
         if ($pTotal >= $fTotal) {
-            Student::where('studentNo', $studentNo)->first()->update(array('financial' => 1));
+            student::where('studentNo', $studentNo)->first()->update(array('financial' => 1));
         }
             
     }

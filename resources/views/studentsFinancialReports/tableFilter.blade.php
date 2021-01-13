@@ -56,3 +56,38 @@
       <input required type="date" max={{today()}} class="form-control date-filter">
     </th>
 </tr>
+
+
+@push('scripts') 
+  <script type="text/javascript">
+    $('.level-filter').on('change',function(e){ // Dynamic Classroom Change ///////////////////
+
+      var level = e.target.value;
+
+      $('.classroom-filter').empty();
+      $('.classroom-filter').append('<option value="">Select a Classroom...</option>')
+      $('.student-filter').empty();
+      $('.student-filter').append('<option value="">Select a Classroom first...</option>')
+
+      $.get('dynamicClassroomByTitle?level='+ level, function(data){
+        $.each(data, function(index, clas){
+          $('.classroom-filter').append('<option value="'+clas.title+'">'+clas.title+'</option>')
+        });
+      });
+    });
+
+    $('.classroom-filter').on('change',function(e){ // Dynamic Classroom Change ///////////////////
+
+      var classroom = e.target.value;
+
+      $('.student-filter').empty();
+      $('.student-filter').append('<option value="">Select a Student...</option>')
+
+      $.get('dynamicStudentsByTitle?classroom='+ classroom, function(data){
+        $.each(data, function(index, student){
+          $('.student-filter').append('<option value="'+student.studentNo+' | '+student.user.name+'">'+student.studentNo+' | '+student.user.name+'</option>')
+        });
+      });
+    });
+  </script>
+@endpush

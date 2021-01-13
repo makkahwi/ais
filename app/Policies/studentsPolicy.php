@@ -73,7 +73,35 @@ class studentsPolicy
      * @param  \App\Models\student  $student
      * @return mixed
      */
+    public function updateFinancial(User $user)
+    {
+        return in_array($user->role_id, [
+            1, 5
+        ]);
+    }
+
+    /**
+     * Determine whether the user can update the student.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Models\student  $student
+     * @return mixed
+     */
     public function upgrade(User $user)
+    {
+        return in_array($user->role_id, [
+            1, 2, 3, 5
+        ]);
+    }
+
+    /**
+     * Determine whether the user can update the student.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Models\student  $student
+     * @return mixed
+     */
+    public function upgradeStudents(User $user)
     {
         return in_array($user->role_id, [
             1, 2, 3

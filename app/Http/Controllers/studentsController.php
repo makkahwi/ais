@@ -52,7 +52,7 @@ class studentsController extends AppBaseController
     {
         $currentSem = Sems::with('year')
         ->where('start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
 
         $statuses = statuses::all();
         $levels = Levels::all();
@@ -203,7 +203,7 @@ class studentsController extends AppBaseController
         );
 
         if($re->wasRecentlyCreated){
-            $rel = relatives::orderby('relatives.updated_at', 'DESC')->limit(1)->get();
+            $rel = relatives::orderby('relatives.updated_at', 'DESC')->first();
         }
         else {
             $rel = relatives::where('nation', '=', $request['rnation'])
@@ -225,7 +225,7 @@ class studentsController extends AppBaseController
             'passport' => $rpath.$rPassport,
             'visa' => $rpath.$rVisa]);
 
-            $rel = relatives::orderby('relatives.updated_at', 'DESC')->limit(1)->get();
+            $rel = relatives::orderby('relatives.updated_at', 'DESC')->first();
         }
         
         contacts::create([

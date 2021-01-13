@@ -66,7 +66,7 @@ class schesController extends AppBaseController
 
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
 
         $csem = $currentSem->get('sem_id');
 
@@ -74,7 +74,7 @@ class schesController extends AppBaseController
         ->where('end', '>=', today())->get();
 
         $nextSem = sems::with('year')
-        ->where('start', '>', today())->limit(1)->get();
+        ->where('start', '>', today())->first();
 
         $nsem = $nextSem->get('sem_id');
 
@@ -109,6 +109,17 @@ class schesController extends AppBaseController
         $level_id = $request->get('level_id');
 
         $classroom = Classrooms::where('level_id', '=', $level_id)->where('status_id', '=', 2)->get();
+
+        return Response::json($classroom);
+    }
+
+    public function dynamicClassroomByTitle(Request $request){ // Dynamic Classroom Show ///////////////////////////////////////////
+
+        $level = $request->get('level');
+
+        $level_id = levels::where('title', '=', $level)->first();
+
+        $classroom = Classrooms::where('level_id', '=', $level_id['id'])->where('status_id', '=', 2)->get();
 
         return Response::json($classroom);
     }

@@ -30,7 +30,7 @@
 
 <!-- studentNo Field -->
 <div class="form-group col-md-3">
-    <label for="studentNo">@include('labels.sno')@include('layouts.required')</label>
+    <label for="studentNo">@include('labels.student')@include('layouts.required')</label>
     <select required class="form-control" name="studentNo" id="studentNoCr">
         <option value="">Choose a classroom first</option>
     </select>

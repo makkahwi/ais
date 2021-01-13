@@ -41,14 +41,19 @@ Route::resource('sPayments', 'studentsPaymentsController')->middleware(['verifie
 
 // Dynmic Depndant Fields
 Route::get('/dynamicClassroom', ['as' => 'dynamicClassroom', 'uses' => 'schesController@dynamicClassroom']);
+Route::get('/dynamicClassroomByTitle', ['as' => 'dynamicClassroomByTitle', 'uses' => 'schesController@dynamicClassroomByTitle']);
 Route::get('/dynamicCourse', ['as' => 'dynamicCourse', 'uses' => 'schesController@dynamicCourse']);
 Route::get('/dynamicStudents', ['as' => 'dynamicStudents', 'uses' => 'marksController@dynamicStudents']);
+Route::get('/dynamicStudentsByTitle', ['as' => 'dynamicStudentsByTitle', 'uses' => 'marksController@dynamicStudentsByTitle']);
+
 Route::get('/dynamicMarkType', ['as' => 'dynamicMarkType', 'uses' => 'marksController@dynamicMarkType']);
 Route::get('/dynamicMarkTypeUsed', ['as' => 'dynamicMarkTypeUsed', 'uses' => 'marksController@dynamicMarkTypeUsed']);
 Route::get('/dynamicMarkTypesUsed', ['as' => 'dynamicMarkTypesUsed', 'uses' => 'marksController@dynamicMarkTypesUsed']);
 Route::get('/dynamicMarkT', ['as' => 'dynamicMarkT', 'uses' => 'markstypesController@dynamicMarkT']);
+
 Route::get('/dynamicSFCategory', ['as' => 'dynamicSFCategory', 'uses' => 'Controller@dynamicSFCategory']);
 Route::get('/dynamicSFDiscount', ['as' => 'dynamicSFDiscount', 'uses' => 'Controller@dynamicSFDiscount']);
+Route::get('/dynamicFCategoryOfStudent', ['as' => 'dynamicFCategoryOfStudent', 'uses' => 'Controller@dynamicFCategoryOfStudent']);
 
 Route::get('/dynamicCoursesOfTeacher', ['as' => 'dynamicCoursesOfTeacher', 'uses' => 'Controller@dynamicCoursesOfTeacher']);
 Route::get('/dynamicClassroomsOfSupervisor', ['as' => 'dynamicClassroomsOfSupervisor', 'uses' => 'Controller@dynamicClassroomsOfSupervisor']);
@@ -59,6 +64,8 @@ Route::get('/dynamictitle', ['as' => 'dynamictitle', 'uses' => 'Controller@dynam
 Route::get('/financialUpdate', ['as' => 'financialUpdate', 'uses' => 'upgradestudentsController@financialUpdate']);
 Route::get('/classroomUpdate', ['as' => 'classroomUpdate', 'uses' => 'upgradestudentsController@classroomUpdate']);
 Route::get('/statusUpdate', ['as' => 'statusUpdate', 'uses' => 'upgradestudentsController@statusUpdate']);
+Route::get('/sponsorUpdate', ['as' => 'sponsorUpdate', 'uses' => 'upgradestudentsController@sponsorUpdate']);
+Route::get('/tuitionfreqUpdate', ['as' => 'tuitionfreqUpdate', 'uses' => 'upgradestudentsController@tuitionfreqUpdate']);
 Route::get('/studentNoUpdate', ['as' => 'studentNoUpdate', 'uses' => 'upgradestudentsController@studentNoUpdate']);
 Route::get('/applicantUpdate', ['as' => 'applicantUpdate', 'uses' => 'upgradestudentsController@update']);
 

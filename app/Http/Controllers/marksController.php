@@ -51,10 +51,10 @@ class marksController extends AppBaseController
 
         $currentSem = Sems::with('year')
         ->where('sems.start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
 
         $levels = Levels::all();
-        $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user', 'level.courses.markstypes.marks.type.course', 'level.courses.markstypes.marks.type.classroom', 'level.courses.markstypes.marks.type.sem.year')->get();
+        $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user', 'level.courses.markstypes.sem.year')->get();
         $courses = Courses::all();
 
         return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
@@ -66,6 +66,20 @@ class marksController extends AppBaseController
 
         $students = student::with('user')
         ->where('classroom_id', '=', $classroom_id)
+        ->get();
+
+        return Response::json($students);
+        
+    }
+
+    public function dynamicStudentsByTitle(Request $request){ // Dynamic Classroom Show ///////////////////////////////////////////
+
+        $classroom = $request->get('classroom');
+
+        $classroom_id = classrooms::where('title', '=', $classroom)->first();
+
+        $students = student::with('user')
+        ->where('classroom_id', '=', $classroom_id['id'])
         ->get();
 
         return Response::json($students);

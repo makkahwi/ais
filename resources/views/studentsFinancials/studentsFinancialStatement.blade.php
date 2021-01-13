@@ -74,13 +74,38 @@
                 <td>Sponser: </td>
                 <td>{{$student['sponsor']}}</td>
             </tr>
+            <tr class="sfont">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Tuition Fees Payment Frequancy: </td>
+                <td>
+                    @if ($student['tuitionfreq'])
+                        Monthly
+                    @else
+                        Semesterly
+                    @endif
+                </td>
+            </tr>
+            <tr class="sfont">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Transportation: </td>
+                <td>
+                    @if ($student['trans'])
+                        School Bus
+                    @else
+                        Own Transportation
+                    @endif
+                </td>
+            </tr>
         </table>
 
         <br><br>
 
         <table class="table table-bordered" width="100%">
             <tr class="text-center">
-                <td rowspan="3">Semester</td>
                 <td colspan="5">Dues</td>
                 <td colspan="2">Payments</td>
             </tr>
@@ -96,49 +121,67 @@
                 <td>Title</td>
                 <td>Amount <p hidden>{{$paymentsTotal=0}}</p></td>
             </tr>
-            @foreach($payments as $payment)
+            @foreach($sems as $sem)
                 <tr>
-                    <td>{{$payment->sem['title']}}, {{$payment->sem->year['title']}}</td>
-                    <td colspan="5"></td>
-                    <td>{{$payment['date']->format('d M Y')}}</td>
-                    <td>{{$payment['amount']}} <p hidden>{{$paymentsTotal+=$payment['amount']}}</p></td>
+                    <td colspan="7"><b>{{$sem['title']}}, {{$sem->year['title']}}</b><p hidden>{{$semPayments=0, $semDues=0}}</p></td>
                 </tr>
-            @endforeach
-            @foreach($dues as $due)
-                <tr>
-                    <td>{{$due->sem['title']}}, {{$due->sem->year['title']}}</td>
-                    <td>{{$due->category['title']}}</td>
-                    <td>{{$due->category['amount']}}</td>
-                    <td>{{$due->discount['title']}}</td>
-                    <td>
-                        @if($due->discount['type'])
-                            @if($due->discount['type'] == "Percentage")
-                                {{$due->discount['amount']}}%
-                            @else
-                                RM{{$due->discount['amount']}}
-                            @endif
+                @if ($sem->payments_count > $sem->dues_count)
+                    <p hidden>{{$count=$sem->payments_count}}</p>
+                @else
+                    <p hidden>{{$count=$sem->dues_count}}</p>
+                @endif
+
+                @for ($i = 0; $i < $count; $i++)
+                    <tr>
+                        @if ($i < $sem->dues_count)
+                            <td>{{$sem->dues[$i]->category['title']}}</td>
+                            <td>RM{{$sem->dues[$i]->category['amount']}}</td>
+                            <td>{{$sem->dues[$i]->discount['title']}}</td>
+                            <td>
+                                @if($sem->dues[$i]->discount['type'])
+                                    @if($sem->dues[$i]->discount['type'] == "Percentage")
+                                        {{$sem->dues[$i]->discount['amount']}}%
+                                    @else
+                                        RM{{$sem->dues[$i]->discount['amount']}}
+                                    @endif
+                                @endif
+                            </td>
+                            <td>RM{{$sem->dues[$i]->finalAmount}} <p hidden>{{$semDues+=$sem->dues[$i]->finalAmount}}{{$duesTotal+=$sem->dues[$i]->finalAmount}}</p></td>
+                        @else
+                            <td colspan="5"></td>
                         @endif
-                    </td>
-                    <td>{{$due->finalAmount}} <p hidden>{{$duesTotal+=$due->finalAmount}}</p></td>
-                    <td colspan="2"></td>
+                        @if ($i < $sem->payments_count)
+                            <td>{{$sem->payments[$i]['date']->format('d M Y')}}</td>
+                            <td>RM{{$sem->payments[$i]['amount']}} <p hidden>{{$semPayments+=$sem->payments[$i]['amount']}}{{$paymentsTotal+=$sem->payments[$i]['amount']}}</p></td>
+                        @else
+                            <td colspan="2"></td>
+                        @endif
+                    </tr>
+                @endfor
+                <tr>
+                    <td colspan="3">{{$sem['title']}}, {{$sem->year['title']}} Totals</td>
+                    <td>Dues</td>
+                    <td>RM{{$semDues}}</td>
+                    <td>Payments</td>
+                    <td>RM{{$semPayments}}</td>
                 </tr>
             @endforeach
                 <tr>
-                    <td colspan="4"></td>
-                    <td>Total</td>
-                    <td>{{$duesTotal}}</td>
-                    <td>Total</td>
-                    <td>{{$paymentsTotal}}</td>
+                    <td colspan="3">All Semesters Totals</td>
+                    <td>Dues</td>
+                    <td>RM{{$duesTotal}}</td>
+                    <td>Payments</td>
+                    <td>RM{{$paymentsTotal}}</td>
                 </tr>
                 <tr>
-                    <td colspan="4"></td>
+                    <td colspan="3"></td>
                     <td colspan="2"><h4>Grand Total</h4></td>
                     @if($duesTotal > $paymentsTotal)
-                        <td colspan="2" class="text-danger"><h4> Debt of
+                        <td colspan="2" class="text-danger"><h4> Debt
                     @else
-                        <td colspan="2" class="text-success"><h4> Credit of
+                        <td colspan="2" class="text-success"><h4> Credit
                     @endif
-                            {{$duesTotal-$paymentsTotal}}</h4>
+                            of RM{{$duesTotal-$paymentsTotal}}</h4>
                         </td>
                 </tr>
         </table>

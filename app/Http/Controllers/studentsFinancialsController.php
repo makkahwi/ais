@@ -32,7 +32,7 @@ class studentsFinancialsController extends AppBaseController
     	    
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
         
         $levels = levels::all();
 
@@ -112,7 +112,7 @@ class studentsFinancialsController extends AppBaseController
 
         $s = $request['id'];
 
-        $student = student::where('studentNo', '=', $request['id'])->with('classroom.level','user.contact','user.status')->first();
+        $student = student::where('studentNo', '=', $s)->with('classroom.level','user.contact','user.status')->first();
 
         if (empty($student)) {
             Flash::error('The student data was not found<br><br>بيانات الطالب غير موجودة');
@@ -120,8 +120,18 @@ class studentsFinancialsController extends AppBaseController
             return redirect(route('sFinancials.index'));
         }
 
-        $dues = studentsFinancials::where('studentNo', '=', $request['id'])->with('sem.year', 'category', 'discount')->get();
-        $payments = studentsPayments::where('studentNo', '=', $request['id'])->with('sem.year')->get();
+        $sems = sems::whereHas('payments')->with('year', 'dues.category', 'dues.discount')
+        ->with(['payments' => function($q) use ($s){
+            $q->where('studentNo', '=', $s);}])
+        ->orWhereHas('dues')->with(['dues' => function($a) use ($s){
+            $a->where('studentNo', '=', $s);}])
+        ->withCount(['payments' => function($q) use ($s){
+            $q->where('studentNo', '=', $s);}])
+        ->withCount(['dues' => function($q) use ($s){
+            $q->where('studentNo', '=', $s);}])
+        ->get();
+
+        // return $sems;
 
         // $semesters = sems::with('dues', 'payments')->get();
 
@@ -166,7 +176,7 @@ class studentsFinancialsController extends AppBaseController
         ->where('start', '<=', today())
         ->where('end', '>=', today())->first();
         
-        $data = ["student" => $student, "dues" => $dues, "payments" => $payments, "currentSem" => $currentSem];
+        $data = ["student" => $student, "sems" => $sems, "currentSem" => $currentSem];
 
         $pdf = PDF::loadView('studentsFinancials.studentsFinancialStatement', $data)->setPaper('a4', 'landscape');
 
@@ -178,7 +188,7 @@ class studentsFinancialsController extends AppBaseController
     	    
         $currentSem = sems::with('year')
         ->where('start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
         
         $levels = levels::with('classrooms.students.user', 'classrooms.students.dues.sem.year',
                         'classrooms.students.dues.category', 'classrooms.students.dues.discount',

@@ -119,7 +119,7 @@ class staffController extends AppBaseController
         );
 
         if($re->wasRecentlyCreated){
-            $rel = relatives::orderby('updated_at', 'DESC')->limit(1)->get();
+            $rel = relatives::orderby('updated_at', 'DESC')->first();
         }
         else {
             $rel = relatives::where('eName', '=', $request['reName'])
@@ -134,7 +134,7 @@ class staffController extends AppBaseController
             'wAddress' => $request['rwAddress'],
             'more' => $request['more']]);
 
-            $rel = Relatives::orderby('updated_at', 'DESC')->limit(1)->get();
+            $rel = Relatives::orderby('updated_at', 'DESC')->first();
         }
 
         contacts::create([

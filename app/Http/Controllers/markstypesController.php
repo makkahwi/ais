@@ -74,7 +74,7 @@ class markstypesController extends AppBaseController
         )
         ->join('years', 'years.yearId', '=', 'sems.yearId')
         ->where('sems.startDate', '<=', $today)
-        ->where('sems.endDate', '>=', $today)->limit(1)->get();
+        ->where('sems.endDate', '>=', $today)->first();
 
         $students = DB::table('users')->select( 
             'students.*',

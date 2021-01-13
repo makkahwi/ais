@@ -22,6 +22,41 @@
 @endsection
 
 @section('dataTableFilters')
+    $('.sem-filter').change(function(){
+        table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
+    });
+    $('.record-filter').change(function(){
+        table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
+    });
+    $('.level-filter').change(function(){
+        table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
+    });
+    $('.classroom-filter').change(function(){
+        table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
+    });
+    $('.student-filter').change(function(){
+        table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
+    });
+    $('.due-filter').change(function(){
+        table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
+    });
+    $('.discount-filter').change(function(){
+        table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
+    });
 @endsection
 
 @section('dataTableOptions')

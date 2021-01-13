@@ -37,6 +37,19 @@
 
             $('#financelist').append('@include("studentsFinancials.dues.create.fieldsN")')
 
+            var studentNo = document.getElementById("studentNoCr").value;
+
+            $('#category_idCr'+count+'').empty();
+            $.get('dynamicFCategoryOfStudent?studentNo='+studentNo, function(data){
+                $('#category_idCr'+count+'').append('<option value="">Select a Category...</option>')
+                $.each(data, function(index, category){
+                if (category.level)
+                    $('#category_idCr'+count+'').append('<option value="'+category.id+'">Batch '+category.batch.batch+' | '+category.title+' | '+category.level.title+'</option>')
+                else
+                    $('#category_idCr'+count+'').append('<option value="'+category.id+'">Batch '+category.batch.batch+' | '+category.title+' | All Levels</option>')
+                });
+            });
+
             $('#notes').empty();
             for( var i = 0; i < list.length; i++){
                 $('#notes').append('<input hidden type="checkbox" checked name="list[]" value="'+list[i]+'">');

@@ -50,14 +50,20 @@
             var financial = e.target.value;
 
             var studentNo = $(this).parent().parent().find('#studentNo').val();
+            var $updateConfirmation = $(this).parent().parent().find('#financialUpdateConfirmation');
 
-            $(this).parent().parent().find('#financialUpdateConfirmation').empty();
+            $updateConfirmation.empty();
 
             $.get('financialUpdate?financial='+financial+'&studentNo='+studentNo, function(data){
-                $(this).parent().parent().find('#financialUpdateConfirmation').append('@include("layouts.updated")');
+                $.each(data, function(index, done){
+                    if (done)
+                        $updateConfirmation.append('@include("layouts.updated")');
+                    else
+                        $updateConfirmation.append('@include("layouts.failed")');
+                });
             });
             
-            $(this).parent().parent().find('#financialUpdateConfirmation').append('@include("layouts.updated")');
+            $updateConfirmation.append('@include("layouts.updated")');
 
         });
 
@@ -67,13 +73,20 @@
 
             var studentNo = $(this).parent().parent().find('#studentNo').val();
 
-            $(this).parent().parent().find('#classroomUpdateConfirmation').empty();
+            var $updateConfirmation = $(this).parent().parent().find('#classroomUpdateConfirmation');
+
+            $updateConfirmation.empty();
 
             $.get('classroomUpdate?classroom='+classroom+'&studentNo='+studentNo, function(data){
-                $(this).parent().parent().find('#classroomUpdateConfirmation').append('@include("layouts.updated")');
+                $.each(data, function(index, done){
+                    if (done)
+                        $updateConfirmation.append('@include("layouts.updated")');
+                    else
+                        $updateConfirmation.append('@include("layouts.failed")');
+                });
             });
             
-            $(this).parent().parent().find('#classroomUpdateConfirmation').append('@include("layouts.updated")');
+            $updateConfirmation.append('@include("layouts.updated")');
 
         });
 
@@ -83,13 +96,66 @@
 
             var studentNo = $(this).parent().parent().find('#studentNo').val();
 
-            $(this).parent().parent().find('#statusUpdateConfirmation').empty();
+            var $updateConfirmation = $(this).parent().parent().find('#statusUpdateConfirmation');
+            
+            $updateConfirmation.empty();
 
             $.get('statusUpdate?status='+status+'&studentNo='+studentNo, function(data){
-                $(this).parent().parent().find('#statusUpdateConfirmation').append('@include("layouts.updated")');
+                $.each(data, function(index, done){
+                    if (done)
+                        $updateConfirmation.append('@include("layouts.updated")');
+                    else
+                        $updateConfirmation.append('@include("layouts.failed")');
+                });
             });
             
-            $(this).parent().parent().find('#statusUpdateConfirmation').append('@include("layouts.updated")');
+            $updateConfirmation.append('@include("layouts.updated")');
+
+        });
+
+        $('.sponsor').on('change',function(e){
+
+            var sponsor = e.target.value;
+
+            var studentNo = $(this).parent().parent().find('#studentNo').val();
+
+            var $updateConfirmation = $(this).parent().parent().find('#sponsorUpdateConfirmation');
+            
+            $updateConfirmation.empty();
+
+            $.get('sponsorUpdate?sponsor='+sponsor+'&studentNo='+studentNo, function(data){
+                $.each(data, function(index, done){
+                    if (done)
+                        $updateConfirmation.append('@include("layouts.updated")');
+                    else
+                        $updateConfirmation.append('@include("layouts.failed")');
+                });
+            });
+            
+            $updateConfirmation.append('@include("layouts.updated")');
+
+        });
+
+        $('.tuitionfreq').on('change',function(e){
+
+            var tuitionfreq = e.target.value;
+
+            var studentNo = $(this).parent().parent().find('#studentNo').val();
+
+            var $updateConfirmation = $(this).parent().parent().find('#tuitionfreqUpdateConfirmation');
+            
+            $updateConfirmation.empty();
+
+            $.get('tuitionfreqUpdate?tuitionfreq='+tuitionfreq+'&studentNo='+studentNo, function(data){
+                $.each(data, function(index, done){
+                    if (done)
+                        $updateConfirmation.append('@include("layouts.updated")');
+                    else
+                        $updateConfirmation.append('@include("layouts.failed")');
+                });
+            });
+            
+            $updateConfirmation.append('@include("layouts.updated")');
 
         });
 

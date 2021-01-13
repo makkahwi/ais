@@ -53,7 +53,7 @@ class usersController extends AppBaseController
 
         $currentSem = Sems::with('year')
         ->where('sems.start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
 
         $applicants = student::with('classroom', 'user')->get();
 

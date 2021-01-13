@@ -22,6 +22,7 @@ use App\Models\statuses;
 use App\Models\levels;
 use App\Models\sems;
 use App\Models\classrooms;
+use App\Models\studentsFinancialsDiscounts;
 
 class upgradestudentsController extends AppBaseController
 {
@@ -43,22 +44,19 @@ class upgradestudentsController extends AppBaseController
 
     public function index(Request $request)
     {
-
-        $statuses = statuses::where('id', '<', 6)->get();
-        $levels = Levels::all();
         $marks = marks::all();
-        $classrooms = Classrooms::with('students')->where('status_id', '=', 2)->orderBy('level_id', 'desc')->get();
+        $statuses = statuses::where('id', '<', 6)->get();
+        $classrooms = Classrooms::with('students.user.contact')->where('status_id', '=', 2)->orderBy('level_id', 'desc')->get();
         $classroomss = Classrooms::where('status_id', '=', 2)->orderBy('level_id', 'asc')->get();
 
         $currentSem = Sems::with('year')
         ->where('sems.start', '<=', today())
-        ->where('end', '>=', today())->limit(1)->get();
+        ->where('end', '>=', today())->first();
 
-        $students = student::with('classroom', 'user')
-        ->orderBy('eName', 'asc')
-        ->get();
+        $studentsFinancialsDiscounts = studentsFinancialsDiscounts::all();
 
-        return view('upgradestudents.index', compact('students', 'statuses', 'levels', 'classrooms', 'classroomss', 'marks', 'currentSem'));
+        return view('upgradestudents.index', compact('statuses', 'classrooms', 'classroomss',
+                                            'marks', 'currentSem', 'studentsFinancialsDiscounts'));
     }
 
     /**
@@ -165,6 +163,8 @@ class upgradestudentsController extends AppBaseController
 
     public function financialUpdate(Request $request)
     {
+        $this->authorize('updateFinancial', student::class);
+
         $financial = $request['financial'];
 
         $studentNo = $request['studentNo'];
@@ -183,6 +183,8 @@ class upgradestudentsController extends AppBaseController
 
     public function classroomUpdate(Request $request)
     {
+        $this->authorize('upgradeStudents', student::class);
+
         $classroom = $request['classroom'];
 
         $studentNo = $request['studentNo'];
@@ -201,6 +203,8 @@ class upgradestudentsController extends AppBaseController
 
     public function statusUpdate(Request $request)
     {
+        $this->authorize('upgradeStudents', student::class);
+
         $status = $request['status'];
 
         $studentNo = $request['studentNo'];
@@ -211,6 +215,46 @@ class upgradestudentsController extends AppBaseController
             $student->update(['status_id' => $status, 'leaveDate' => NULL, 'role_id' => 7]);
         else
             $student->update(['status_id' => $status, 'leaveDate' => today()]);
+
+        if ($student->wasChanged())
+            $done = 1;
+        else
+            $done = 0;
+
+        return Response::json($done);
+    }
+
+    public function sponsorUpdate(Request $request)
+    {
+        $this->authorize('updateFinancial', student::class);
+
+        $sponsor = $request['sponsor'];
+
+        $studentNo = $request['studentNo'];
+
+        $student = student::where('studentNo', '=', $studentNo);
+        
+        $student->update(['sponsor' => $sponsor]);
+
+        if ($student->wasChanged())
+            $done = 1;
+        else
+            $done = 0;
+
+        return Response::json($done);
+    }
+
+    public function tuitionfreqUpdate(Request $request)
+    {
+        $this->authorize('updateFinancial', student::class);
+
+        $tuitionfreq = $request['tuitionfreq'];
+
+        $studentNo = $request['studentNo'];
+
+        $student = student::where('studentNo', '=', $studentNo);
+        
+        $student->update(['tuitionfreq' => $tuitionfreq]);
 
         if ($student->wasChanged())
             $done = 1;

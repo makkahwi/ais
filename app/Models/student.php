@@ -39,9 +39,11 @@ class student extends Model
         'eName',
         'aName',
         'classroom_id',
+        'sponsor',
+        'tuitiondiscounts',
+        'tuitionfreq',
         'financial',
-        'trans',
-        'visa_id'
+        'trans'
     ];
 
     protected $casts = [
@@ -50,9 +52,11 @@ class student extends Model
         'eName' => 'string',
         'aName' => 'string',
         'classroom_id' => 'integer',
-        'financial' => 'integer',
-        'trans' => 'integer',
-        'visa_id' => 'integer'
+        'sponsor' => 'string',
+        'tuitiondiscounts' => 'string',
+        'tuitionfreq' => 'boolean',
+        'financial' => 'boolean',
+        'trans' => 'boolean'
     ];
 
     public static $rules = [
@@ -60,6 +64,9 @@ class student extends Model
         'eName' => 'required',
         'aName' => 'required',
         'classroom_id' => 'required',
+        'sponsor' => 'required',
+        'tuitiondiscounts' => 'required',
+        'tuitionfreq' => 'required',
         'financial' => 'required',
         'trans' => 'required',
     ];

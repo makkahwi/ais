@@ -1,7 +1,8 @@
 <!-- Title Field -->
 <div class="form-group col-md-12">
     <label for="title">@include('labels.dtitle')@include('layouts.required')</label>
-    <select required class="form-control" name="title" id="title">
+    <input class="form-control" list="title" name="title">
+    <datalist required id="title">
         <option value="">Choose a title</option>
         <option value="First Sibiling">First Sibiling</option>
         <option value="Second Sibiling">Second Sibiling</option>
@@ -12,8 +13,7 @@
         <option value="Orphans">Orphans</option>
         <option value="Hafez">Hafez</option>
         <option value="Waive">Waive</option>
-        <option value="Custom">Custom</option>
-    </select>
+    </datalist>
 </div>
 
 <!-- description Field -->
