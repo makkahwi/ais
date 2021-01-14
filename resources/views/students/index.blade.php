@@ -34,7 +34,7 @@
 @endcan
 
 @section('header')
-    @foreach ($currentSem as $sem) {{$sem->title}}, {{$sem->year->title}} @endforeach
+    {{$currentSem->title}}, {{$currentSem->year->title}}
 @endsection
 
 @section('content')

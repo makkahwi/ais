@@ -45,6 +45,13 @@ class resultsController extends AppBaseController
     public function index(Request $request)
     {
 
+        $students = student::
+        with(['classroom.level.courses.markstypes.marks' => function($q) {
+            $q->where('studentNo', '=', 19100137);}])
+        ->get();
+
+        return $students;
+
         $editby = date("Y-m-d H:i:s", strtotime('-1 day', strtotime(now())));
 
         $currentSem = sems::with('year')
@@ -57,6 +64,38 @@ class resultsController extends AppBaseController
         $courses = courses::all();
 
         return view('results.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
+    }
+
+    /**
+     * Store a newly created marks in storage.
+     *
+     * @param CreatemarksRequest $request
+     *
+     * @return Response
+     */
+
+    public function generate(CreatemarksRequest $request)
+    {
+        $this->authorize('generate', marks::class);
+
+        $students = student::with('classroom.level')->all();
+
+        return $students;
+
+        $classroom = $request['classroom'];
+
+        $currentSem = sems::
+        where('start', '<=', today())
+        ->where('end', '>=', today())
+        ->first();
+
+        $marks = markstypes::where('sem_id', '=', $currentSem['id']);
+
+        $marks = $this->marksRepository->create($input);
+
+        Flash::success('The results of '.$classroom.' were created successfully<br><br> تم إصدار النتائج للصف الدراسي'.$classroom.' بنجاح');
+
+        return redirect(route('results.index'));
     }
 
     /**

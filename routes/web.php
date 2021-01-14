@@ -30,7 +30,7 @@ Route::resource('exams', 'examsController')->middleware(['verified', 'can:viewAn
 Route::resource('applicants', 'applicantsController')->middleware(['verified', 'can:viewAny, App\Models\student']);
 Route::resource('upgradestudents', 'upgradestudentsController')->middleware(['verified', 'can:upgrade, App\Models\student']);
 Route::resource('relatives', 'relativesController')->middleware(['verified', 'can:viewAny, App\Models\relatives']);
-Route::resource('results', 'resultsController')->middleware(['verified', 'can:viewAny, App\Models\roles']);
+Route::resource('results', 'resultsController')->middleware('verified');
 Route::resource('notifications', 'notificationsController')->middleware('verified');
 Route::resource('staff', 'staffController')->middleware(['verified', 'can:viewAny, App\Models\staff']);
 Route::resource('sFinancials', 'studentsFinancialsController')->middleware(['verified', 'can:viewAny, App\Models\studentsFinancials']);

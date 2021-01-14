@@ -50,7 +50,7 @@ class studentsController extends AppBaseController
 
     public function index(Request $request)
     {
-        $currentSem = Sems::with('year')
+        $currentSem = sems::with('year')
         ->where('start', '<=', today())
         ->where('end', '>=', today())->first();
 

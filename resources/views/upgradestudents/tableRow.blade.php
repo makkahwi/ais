@@ -9,12 +9,12 @@
             @can('updateFinancial', App\Models\student::class)
                 <td>
                     <select required class="form-control sponsor" name="sponsor" id="sponsor">
-                        @if ($student->sponsor != "Self-Sponsor")
-                            <option value="Self-Sponsor">Self-sponser</option>
-                            <option value="Scholarship" selected>Scholarship</option>
-                        @else
+                        @if ($student->sponsor != "Scholarship")
                             <option value="Self-Sponsor" selected>Self-sponser</option>
                             <option value="Scholarship">Scholarship</option>
+                        @else
+                            <option value="Self-Sponsor">Self-sponser</option>
+                            <option value="Scholarship" selected>Scholarship</option>
                         @endif
                     </select>
                     <p id="sponsorUpdateConfirmation"></p>
@@ -22,7 +22,7 @@
                 <td>
                     <select class="form-control discounts" name="discounts" id="discounts" multiple>
                         @foreach($studentsFinancialsDiscounts as $discount)
-                            @if ($student->tuitiondiscounts != "null")
+                            @if ($student->tuitiondiscounts && $student->tuitiondiscounts != "null")
                                 @if (array_search($discount->id, json_decode($student->tuitiondiscounts), true))
                                     <option selected value="{{$discount->id}}">{{$discount->title}} | @if($discount->type == "Percentage"){{$discount->amount}}% @else RM{{$discount->amount}} @endif</option>
                                 @else

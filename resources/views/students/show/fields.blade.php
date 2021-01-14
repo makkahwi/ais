@@ -9,12 +9,10 @@
     <div class="form-group col-md-2">
         <label for="matricNoSw">@include('labels.matricno')</label>
         <input type="number" min="0" class="form-control" name="schoolNo" id="matricNoSw" readonly>
-        @foreach($currentSem as $sem)
-        <input hidden name="sem" value="{{$sem->title}}">
-        <input hidden name="year" value="{{$sem->year->title}}">
-        <input hidden name="start" value="{{$sem->start}}">
-        <input hidden name="end" value="{{$sem->end}}">
-        @endforeach
+        <input hidden name="sem" value="{{$currentSem->title}}">
+        <input hidden name="year" value="{{$currentSem->year->title}}">
+        <input hidden name="start" value="{{$currentSem->start}}">
+        <input hidden name="end" value="{{$currentSem->end}}">
     </div>
 
     <!-- Sstatus Field -->

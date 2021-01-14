@@ -128,13 +128,11 @@
 
         @endcan
 
-        @can ('viewAny', 'App\Models\roles')
 
             <li class="{{ Request::is('results*') ? 'active' : '' }}">
                 <a href="{{ route('results.index') }}"><i class="fa fa-times"></i> <span>@include('results.titles')</span></a>
             </li>
 
-        @endcan
 
     </ul>
     @endcan

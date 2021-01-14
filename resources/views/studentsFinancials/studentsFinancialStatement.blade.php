@@ -177,12 +177,10 @@
                     <td colspan="3"></td>
                     <td colspan="2"><h4>Grand Total</h4></td>
                     @if($duesTotal > $paymentsTotal)
-                        <td colspan="2" class="text-danger"><h4> Debt
+                        <td colspan="2" class="text-danger"><h4> Debt of RM{{$duesTotal-$paymentsTotal}}</h4></td>
                     @else
-                        <td colspan="2" class="text-success"><h4> Credit
+                        <td colspan="2" class="text-success"><h4> Credit of RM{{$paymentsTotal-$duesTotal}}</h4></td>
                     @endif
-                            of RM{{$duesTotal-$paymentsTotal}}</h4>
-                        </td>
                 </tr>
         </table>
 
