@@ -1,5 +1,5 @@
 @if (Auth::user()->role_id < 6)
-@include('users.title') المستخدمون
+<i class="fas fa-users"></i> @include('users.title') المستخدمون
 @else
-@include('users.title') الملف الشخصي
+<i class="fas fa-user"></i> @include('users.title') الملف الشخصي
 @endif

@@ -1,1 +1,1 @@
-<i class="fas fa-highlighter"></i> @include('marks.title')s العلامات الدراسية
+<i class="fas fa-poll"></i> @include('marks.title')s العلامات الدراسية

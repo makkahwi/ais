@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('title')
-    @include('students.title')
+  @include('students.title')
 @endsection
 
 @section('modal.title')
-    @include('students.title')
+  @include('students.title')
 @endsection
 
 @section('header.title')
-    @include('students.titles')
+  @include('students.titles')
 @endsection
 
 @section('dataTableTitle')
@@ -28,25 +28,25 @@
 @endsection
 
 @can('delete', App\Models\student::class)
-    @section('deleteModal')
-        <form method="post" action="{{ route ('students.destroy', 1) }}">
-    @endsection
+  @section('deleteModal')
+    <form method="post" action="{{ route ('students.destroy', 1) }}">
+  @endsection
 @endcan
 
 @section('header')
-    {{$currentSem->title}}, {{$currentSem->year->title}}
+  {{$currentSem ->title}}, {{$currentSem ->year->title}}
 @endsection
 
 @section('content')
     
-    @include('students.indexTabs')
+  @include('students.indexTabs')
 
-    @include('students.show.modal')
+  @include('students.show.modal')
 
-    @can('update', App\Models\student::class)
+  @can('update', App\Models\student::class)
 
-        @include('students.edit.modal')
+    @include('students.edit.modal')
 
-    @endcan
+  @endcan
 
 @endsection

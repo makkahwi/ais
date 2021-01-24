@@ -337,22 +337,22 @@ class staffController extends AppBaseController
      */
     public function destroy(Request $request)
     {
-        $this->authorize('delete', staff::class);
+      $this->authorize('delete', staff::class);
 
-        $id = $request['id'];
-        
-        $staff = $this->staffRepository->find($id);
+      $id = $request['id'];
+      
+      $staff = $this->staffRepository->find($id);
 
-        if (empty($staff)) {
-            Flash::error('Staff not found');
+      if (empty($staff)) {
+          Flash::error('Staff not found');
 
-            return redirect(route('staff.index'));
-        }
+          return redirect(route('staff.index'));
+      }
 
-        $this->staffRepository->delete($id);
+      $this->staffRepository->delete($id);
 
-        Flash::success('Staff deleted successfully.');
+      Flash::success('Staff deleted successfully.');
 
-        return redirect(route('staff.index'));
+      return redirect(route('staff.index'));
     }
 }

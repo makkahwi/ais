@@ -13,51 +13,50 @@ use Flash;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Show the application dashboard.
+   *
+   * @return \Illuminate\Http\Response
+   */
 
-    public function index()
-    {
+  public function index()
+  {
 
-        /*
+    /*
 
-        $users = users::all();
+    $users = users::all();
 
-        foreach ($users as $u)
-            if($u['email'] != "principal@aqsa.edu.my")
-                if($u['role_id'] == 7)
-                    Mail::to($u['email'])->send(new newUser($u));
+    foreach ($users as $u)
+        if($u['email'] != "principal@aqsa.edu.my")
+            if($u['role_id'] == 7)
+                Mail::to($u['email'])->send(new newUser($u));
 
-        Flash::success('All Students\' were notified of system launching');
-        
-        */
+    Flash::success('All Students\' were notified of system launching');
+    
+    */
 
-        return view('home.index');
-    }
+    return view('home.index');
+  }
 
-    public function evaluate(Request $request)
-    {
+  public function evaluate(Request $request)
+  {
+    $data = $request->all();
 
-        $data = $request->all();
+    Mail::to('arromi.creatives@gmail.com')->send(new evaluationEmail($data));
 
-        Mail::to('arromicreatives@gmail.com')->send(new evaluationEmail($data));
+    Flash::success('The evaluation was sent successfully<br><br>تم إرسال بيانات التقييم بنجاح');
 
-        Flash::success('The evaluation was sent successfully<br><br>تم إرسال بيانات التقييم بنجاح');
-
-        return view('home.index');
-    }
+    return view('home.index');
+  }
 }

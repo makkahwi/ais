@@ -14,112 +14,112 @@ use App\Models\years;
 
 class yearsController extends AppBaseController
 {
-    /** @var  yearsRepository */
-    private $yearsRepository;
+  /** @var  yearsRepository */
+  private $yearsRepository;
 
-    public function __construct(yearsRepository $yearsRepo)
-    {
-        $this->yearsRepository = $yearsRepo;
-    }
+  public function __construct(yearsRepository $yearsRepo)
+  {
+    $this->yearsRepository = $yearsRepo;
+  }
 
-    /**
-     * Display a listing of the years.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+  /**
+   * Display a listing of the years.
+   *
+   * @param Request $request
+   *
+   * @return Response
+   */
 
-    public function index(Request $request)
-    {
-        $years = Years::orderBy('created_at', 'DESC')->get();
+  public function index(Request $request)
+  {
+    $years = Years::orderBy('created_at', 'DESC')->get();
 
-        return view('years.index', compact('years'));
-    }
+    return view('years.index', compact('years'));
+  }
 
-    /**
-     * Store a newly created years in storage.
-     *
-     * @param CreateyearsRequest $request
-     *
-     * @return Response
-     */
+  /**
+   * Store a newly created years in storage.
+   *
+   * @param CreateyearsRequest $request
+   *
+   * @return Response
+   */
 
-    public function store(CreateyearsRequest $request)
-    {
-        $this->authorize('create', years::class);
+  public function store(CreateyearsRequest $request)
+  {
+    $this->authorize('create', years::class);
 
-        $input = $request->all();
-        
-        $years = years::firstOrCreate(['title' => $input['title']]);
-
-        if($years->wasRecentlyCreated){
-            Flash::success('The year was saved successfully<br><br>تم حفظ بيانات العام الدراسي بنجاح');
-        }
-        else {
-            Flash::error($input['title'].' year data already exist<br><br>بيانات العام الدراسي موجودة بالفعل');
-        }
-
-        return redirect(route('years.index'));
-    }
-
-    /**
-     * Update the specified years in storage.
-     *
-     * @param int $id
-     * @param UpdateyearsRequest $request
-     *
-     * @return Response
-     */
-
+    $input = $request->all();
     
-     public function update(Request $request) // old updating
-     {
-        $this->authorize('update', years::class);
+    $years = years::firstOrCreate(['title' => $input['title']]);
 
-        $year = Years::findOrFail($request['id']);
-
-        if (empty($year)) {
-            Flash::error('The year was not found<br><br>بيانات العام الدراسي المطلوبة غير موجودة');
-
-            return redirect(route('years.index'));
-        }
-        
-        $year->update($request->all());
-
-        Flash::success('The year was updated successfully<br><br>تم تحديث بيانات العام الدراسي بنجاح');
-
-        return redirect(route('years.index'));
+    if($years->wasRecentlyCreated){
+      Flash::success('The year was saved successfully<br><br>تم حفظ بيانات العام الدراسي بنجاح');
+    }
+    else {
+      Flash::error($input['title'].' year data already exist<br><br>بيانات العام الدراسي موجودة بالفعل');
     }
 
-    /**
-     * Remove the specified years from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
+    return redirect(route('years.index'));
+  }
 
-    public function destroy(Request $request)
-    {
-        $this->authorize('delete', years::class);
+  /**
+   * Update the specified years in storage.
+   *
+   * @param int $id
+   * @param UpdateyearsRequest $request
+   *
+   * @return Response
+   */
 
-        $id = $request['id'];
-        
-        $years = $this->yearsRepository->find($id);
+  
+  public function update(Request $request) // old updating
+  {
+    $this->authorize('update', years::class);
 
-        if (empty($years)) {
-            Flash::error('The year was not found<br><br>بيانات العام الدراسي المطلوبة غير موجودة');
+    $year = Years::findOrFail($request['id']);
 
-            return redirect(route('years.index'));
-        }
+    if (empty($year)) {
+      Flash::error('The year was not found<br><br>بيانات العام الدراسي المطلوبة غير موجودة');
 
-        $this->yearsRepository->delete($id);
-
-        Flash::success('The year was deleted successfully<br><br>تم حذف بيانات العام الدراسي بنجاح');
-
-        return redirect(route('years.index'));
+      return redirect(route('years.index'));
     }
+    
+    $year->update($request->all());
+
+    Flash::success('The year was updated successfully<br><br>تم تحديث بيانات العام الدراسي بنجاح');
+
+    return redirect(route('years.index'));
+  }
+
+  /**
+   * Remove the specified years from storage.
+   *
+   * @param int $id
+   *
+   * @throws \Exception
+   *
+   * @return Response
+   */
+
+  public function destroy(Request $request)
+  {
+    $this->authorize('delete', years::class);
+
+    $id = $request['id'];
+    
+    $years = $this->yearsRepository->find($id);
+
+    if (empty($years)) {
+      Flash::error('The year was not found<br><br>بيانات العام الدراسي المطلوبة غير موجودة');
+
+      return redirect(route('years.index'));
+    }
+
+    $this->yearsRepository->delete($id);
+
+    Flash::success('The year was deleted successfully<br><br>تم حذف بيانات العام الدراسي بنجاح');
+
+    return redirect(route('years.index'));
+  }
 }

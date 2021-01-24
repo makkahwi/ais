@@ -1,1 +1,1 @@
-@include('statuses.title')es الحالات
+<i class="fas fa-exclamation"></i> @include('statuses.title')es الحالات

@@ -46,30 +46,28 @@ class marksController extends AppBaseController
 
     public function index(Request $request)
     {
+      $editby = date("Y-m-d H:i:s", strtotime('-1 day', strtotime(now())));
 
-        $editby = date("Y-m-d H:i:s", strtotime('-1 day', strtotime(now())));
-
-        $currentSem = Sems::with('year')
+      $currentSem = Sems::with('year')
         ->where('sems.start', '<=', today())
         ->where('end', '>=', today())->first();
 
-        $levels = Levels::all();
-        $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user', 'level.courses.markstypes.sem.year')->get();
-        $courses = Courses::all();
+      $levels = Levels::all();
+      $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user', 'level.courses.markstypes.sem.year')->get();
+      $courses = Courses::all();
 
-        return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
+      return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
     }
 
-    public function dynamicStudents(Request $request){ // Dynamic Classroom Show ///////////////////////////////////////////
+    public function dynamicStudents(Request $request) // Dynamic Classroom Show ///////////////////////////////////////////
+    {
+      $classroom_id = $request->get('classroom_id');
 
-        $classroom_id = $request->get('classroom_id');
+      $students = student::with('user')
+      ->where('classroom_id', '=', $classroom_id)
+      ->get();
 
-        $students = student::with('user')
-        ->where('classroom_id', '=', $classroom_id)
-        ->get();
-
-        return Response::json($students);
-        
+      return Response::json($students);
     }
 
     public function dynamicStudentsByTitle(Request $request){ // Dynamic Classroom Show ///////////////////////////////////////////

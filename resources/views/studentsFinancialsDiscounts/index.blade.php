@@ -29,7 +29,7 @@
 
 @can('delete', App\Models\studentsFinancialsDiscounts::class)
     @section('deleteModal')
-        <form method="post" action="{{ route ('studentsFinancialsDiscounts.destroy', 1) }}">
+        <form method="post" action="{{ route ('sfDiscounts.destroy', 1) }}">
     @endsection
 @endcan
 

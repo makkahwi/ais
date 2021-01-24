@@ -1,1 +1,1 @@
-@include('roles.title')s صلاحيات الوصول
+<i class="fas fa-user-tag"></i> @include('roles.title')s صلاحيات الوصول

@@ -23,7 +23,7 @@
             @can('delete', App\Models\studentsPayments::class)
 
                 <!-- Deleting Button-->
-                <button data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$payment->id}}" data-title="{{ $payment->studentNo }} {{$payment->student->user->name}} | {{ $payment->category->title }} {{ $payment->finalAmount }}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
+                <button data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$payment->id}}" data-title="{{ $payment->studentNo }} {{$payment->student->user->name}} | {{ $payment->title }} {{ $payment->amount }}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
 
             @endcan
         @endcan

@@ -1,1 +1,1 @@
-<i class="fas fa-table"></i> @include('sches.title')s جداول الحصص
+<i class="fas fa-chalkboard-teacher"></i> @include('sches.title')s جداول الحصص

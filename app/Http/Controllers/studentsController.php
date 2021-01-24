@@ -167,6 +167,9 @@ class studentsController extends AppBaseController
             $school = $studentNo . "_" . "School_Certificate" . "." . $files->getClientOriginalExtension();
             $files->move($spath, $school);
         }
+        else {
+            $school = 0;
+        }
  
         if ($files = $request->file('rpassport')) {
             $rPassport = $request['rppno'] . "_" . "Guardian_Passport" . "." . $files->getClientOriginalExtension();
@@ -188,7 +191,6 @@ class studentsController extends AppBaseController
             'aName' => $request['raName'],
             'name' => $rName,
             'gender' => $request['rgender'],
-            'relation' => $request['relation'],
             'job' => $request['job'],
             'org' => $request['org'],
             'email' => $request['remail'],
@@ -212,7 +214,6 @@ class studentsController extends AppBaseController
             'aName' => $request['raName'],
             'name' => $rName,
             'gender' => $request['rgender'],
-            'relation' => $request['relation'],
             'job' => $request['job'],
             'org' => $request['org'],
             'email' => $request['remail'],
@@ -235,7 +236,8 @@ class studentsController extends AppBaseController
             'email' => $request['email'],
             'phone' => $request['phone'],
             'address' => $request['address'],
-            'relative_id' => $rel[0]['id'],
+            'relative_id' => $rel['id'],
+            'relation' => $request['relation'],
             'nation' => $request['nation'],
             'ppno' => $request['ppno'],
             'ppExpiry' => $request['ppExpiry'],
@@ -249,7 +251,7 @@ class studentsController extends AppBaseController
 
         $splitseName = explode(" ",$request['eName']);
         $seName1 = $splitseName[0];
-        $seName2 = $splitseName[1];
+        $seName2 = $splitseName[count($splitseName)-1];
 
         Users::create([
             'schoolNo' => $studentNo,

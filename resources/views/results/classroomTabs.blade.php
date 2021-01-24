@@ -2,10 +2,10 @@
   <div class="box-body">
     @if(Auth::user()->role_id == 7 && Auth::user()->student->financial == 0)
       <div class="col-md-6">
-        <h4 style="text-align: justify; line-height:1.5;">We are sorry, <span style="color:red;">you cannot</span> see your marks in the time being. You may contact the school managment to clear that.</h4>
+        <h4 style="text-align: justify; line-height:1.5;">Due to your <span style="color:red;">UNSETTLED FINANCIAL</span> status, you can't see your results. You may contact the school to settle and allow you to see your results.</h4>
       </div>
       <div class="col-md-6">
-        <h4 style="direction: rtl; text-align: justify; line-height:1.5;">نعتذر منكم, <span style="color:red;">لا يمكنكم</span> الاطلاع على العلامات الدراسية الخاصة بكم الان. بإمانكم التواصل مع إدارة المدرسة للاستيضاح.</h4>
+        <h4 style="direction: rtl; text-align: justify; line-height:1.5;">نظراً لوضعكم <span style="color:red;">المالي غير المسوّى</span>, لا يمكنكم الاطلاع على العلامات الدراسية الخاصة بكم. بإمكانكم التواصل مع إدارة المدرسة لتسوية الأوضاع المالية والسماح لكم بالاطلاع على العلامات الدراسية</h4>
       </div>
     @else
       <!-- Nav pills -->
@@ -33,7 +33,7 @@
           @can('viewStudents', [App\Models\classrooms::class, $classroom])
             <div class="box tab-pane container" id="{{$classroom->id}}C">
               <br>
-              @include('marks.courseTabs')
+              @include('results.courseTabs')
             </div>
           @endcan
         @endforeach

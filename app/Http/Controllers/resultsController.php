@@ -13,7 +13,6 @@ use Flash;
 use App\Models\marks;
 use App\Models\markstypes;
 use App\Models\sches;
-use App\Models\results;
 
 use App\Models\sems;
 use App\Models\classrooms;
@@ -26,162 +25,161 @@ use App\Models\student;
 
 class resultsController extends AppBaseController
 {
-    /** @var  marksRepository */
-    private $marksRepository;
+  /** @var  marksRepository */
+  private $marksRepository;
 
-    public function __construct(marksRepository $marksRepo)
-    {
-        $this->marksRepository = $marksRepo;
+  public function __construct(marksRepository $marksRepo)
+  {
+    $this->marksRepository = $marksRepo;
+  }
+
+  /**
+   * Display a listing of The Results.
+   *
+   * @param Request $request
+   *
+   * @return Response
+   */
+
+  public function index(Request $request)
+  {
+    $currentSem = sems::with('year')
+      ->where('sems.start', '<=', today())
+      ->where('end', '>=', today())
+      ->first();
+
+    $students = student::
+      with(['classroom.level.courses.markstypes' => function($q) use ($currentSem){
+        $q->where('sem_id', '=', $currentSem[0]['id'])
+        ->with('marks');
+      }])
+      ->get();
+
+    $editby = date("Y-m-d H:i:s", strtotime('-1 day', strtotime(now())));
+
+    $levels = levels::all();
+    $classrooms = classrooms::with('level.courses.markstypes.marks.student.user')->get();
+    $courses = courses::all();
+
+    return view('results.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
+  }
+
+  /**
+   * Store a newly created marks in storage.
+   *
+   * @param CreatemarksRequest $request
+   *
+   * @return Response
+   */
+
+  public function generate(CreatemarksRequest $request)
+  {
+    $this->authorize('generate', marks::class);
+
+    $students = student::with('classroom.level')->all();
+
+    return $students;
+
+    $classroom = $request['classroom'];
+
+    $currentSem = sems::
+      where('start', '<=', today())
+      ->where('end', '>=', today())
+      ->first();
+
+    $marks = markstypes::where('sem_id', '=', $currentSem['id']);
+
+    $marks = $this->marksRepository->create($input);
+
+    Flash::success('The results of '.$classroom.' were created successfully<br><br> تم إصدار النتائج للصف الدراسي'.$classroom.' بنجاح');
+
+    return redirect(route('results.index'));
+  }
+
+  /**
+   * Store a newly created marks in storage.
+   *
+   * @param CreatemarksRequest $request
+   *
+   * @return Response
+   */
+
+  public function store(CreatemarksRequest $request)
+  {
+    $this->authorize('create', marks::class);
+
+    $classroom = $request['classroom'];
+
+    $currentSem = sems::
+      where('start', '<=', today())
+      ->where('end', '>=', today())
+      ->first();
+
+    $marks = markstypes::where('sem_id', '=', $currentSem['id']);
+
+    $marks = $this->marksRepository->create($input);
+
+    Flash::success('The results of '.$classroom.' were created successfully<br><br> تم إصدار النتائج للصف الدراسي'.$classroom.' بنجاح');
+
+    return redirect(route('results.index'));
+  }
+
+  /**
+   * Update the specified marks in storage.
+   *
+   * @param int $id
+   * @param UpdatemarksRequest $request
+   *
+   * @return Response
+   */
+
+  public function update(Request $request) // Updating with Modal
+  {
+    $this->authorize('update', marks::class);
+
+    $mark = marks::findOrFail($request->mark_id);
+
+    if (empty($mark)) {
+      Flash::error('The Result was not found<br><br>بيانات النتيجة المطلوبة غير موجودة');
+
+      return redirect(route('results.index'));
     }
 
-    /**
-     * Display a listing of The Results.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+    $mark->update($request->all());
 
-    public function index(Request $request)
-    {
+    Flash::success('The Result was updated successfully<br><br>تم تحديث بيانات النتيجة بنجاح');
 
-        $students = student::
-        with(['classroom.level.courses.markstypes.marks' => function($q) {
-            $q->where('studentNo', '=', 19100137);}])
-        ->get();
+    return redirect(route('results.index'));
+  }
 
-        return $students;
+  /**
+   * Remove the specified marks from storage.
+   *
+   * @param int $id
+   *
+   * @throws \Exception
+   *
+   * @return Response
+   */
 
-        $editby = date("Y-m-d H:i:s", strtotime('-1 day', strtotime(now())));
+  public function destroy(Request $request)
+  {
+    $this->authorize('delete', marks::class);
 
-        $currentSem = sems::with('year')
-        ->where('sems.start', '<=', today())
-        ->where('end', '>=', today())
-        ->first();
-
-        $levels = levels::all();
-        $classrooms = classrooms::with('level.courses.markstypes.marks.student.user', 'level.courses.markstypes.sem.year')->get();
-        $courses = courses::all();
-
-        return view('results.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
-    }
-
-    /**
-     * Store a newly created marks in storage.
-     *
-     * @param CreatemarksRequest $request
-     *
-     * @return Response
-     */
-
-    public function generate(CreatemarksRequest $request)
-    {
-        $this->authorize('generate', marks::class);
-
-        $students = student::with('classroom.level')->all();
-
-        return $students;
-
-        $classroom = $request['classroom'];
-
-        $currentSem = sems::
-        where('start', '<=', today())
-        ->where('end', '>=', today())
-        ->first();
-
-        $marks = markstypes::where('sem_id', '=', $currentSem['id']);
-
-        $marks = $this->marksRepository->create($input);
-
-        Flash::success('The results of '.$classroom.' were created successfully<br><br> تم إصدار النتائج للصف الدراسي'.$classroom.' بنجاح');
-
-        return redirect(route('results.index'));
-    }
-
-    /**
-     * Store a newly created marks in storage.
-     *
-     * @param CreatemarksRequest $request
-     *
-     * @return Response
-     */
-
-    public function store(CreatemarksRequest $request)
-    {
-        $this->authorize('create', marks::class);
-
-        $classroom = $request['classroom'];
-
-        $currentSem = sems::
-        where('start', '<=', today())
-        ->where('end', '>=', today())
-        ->first();
-
-        $marks = markstypes::where('sem_id', '=', $currentSem['id']);
-
-        $marks = $this->marksRepository->create($input);
-
-        Flash::success('The results of '.$classroom.' were created successfully<br><br> تم إصدار النتائج للصف الدراسي'.$classroom.' بنجاح');
-
-        return redirect(route('results.index'));
-    }
-
-    /**
-     * Update the specified marks in storage.
-     *
-     * @param int $id
-     * @param UpdatemarksRequest $request
-     *
-     * @return Response
-     */
-
-    public function update(Request $request) // Updating with Modal
-     {
-        $this->authorize('update', marks::class);
-
-        $mark = marks::findOrFail($request->mark_id);
-
-        if (empty($mark)) {
-            Flash::error('The Result was not found<br><br>بيانات النتيجة المطلوبة غير موجودة');
-
-            return redirect(route('results.index'));
-        }
+    $id = $request['id'];
     
-        $mark->update($request->all());
+    $marks = $this->marksRepository->find($id);
 
-        Flash::success('The Result was updated successfully<br><br>تم تحديث بيانات النتيجة بنجاح');
+    if (empty($marks)) {
+      Flash::error('The Result was not found<br><br>بيانات النتيجة المطلوبة غير موجودة');
 
-        return redirect(route('results.index'));
-     }
-
-    /**
-     * Remove the specified marks from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-
-    public function destroy(Request $request)
-    {
-        $this->authorize('delete', marks::class);
-
-        $id = $request['id'];
-        
-        $marks = $this->marksRepository->find($id);
-
-        if (empty($marks)) {
-            Flash::error('The Result was not found<br><br>بيانات النتيجة المطلوبة غير موجودة');
-
-            return redirect(route('results.index'));
-        }
-
-        $this->marksRepository->delete($id);
-
-        Flash::success('The Result was deleted successfully<br><br>تم حذف بيانات النتيجة بنجاح');
-
-        return redirect(route('results.index'));
+      return redirect(route('results.index'));
     }
+
+    $this->marksRepository->delete($id);
+
+    Flash::success('The Result was deleted successfully<br><br>تم حذف بيانات النتيجة بنجاح');
+
+    return redirect(route('results.index'));
+  }
 }

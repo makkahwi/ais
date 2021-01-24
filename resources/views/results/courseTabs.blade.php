@@ -26,7 +26,7 @@
       @can('view', [App\Models\courses::class, $course])
         <div class="box tab-pane container" id="{{$course->id}}CC">
           <br>
-          @include('marks.typeTabs')
+          @include('results.table')
         </div>
       @endcan
     @endif

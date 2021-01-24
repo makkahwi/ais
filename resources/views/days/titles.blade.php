@@ -1,1 +1,1 @@
-@include('days.title')s الأيام الدراسية
+<i class="fas fa-calendar-day"></i> @include('days.title')s الأيام الدراسية

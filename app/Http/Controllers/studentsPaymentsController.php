@@ -18,138 +18,129 @@ use App\Models\studentsFinancials;
 
 class studentsPaymentsController extends Controller
 {
-    public function __construct()
+  public function __construct()
+  {
+      //
+  }
+
+  public function index(Request $request)
+  {    
+    $currentSem = sems::with('year')
+      ->where('start', '<=', today())
+      ->where('end', '>=', today())->first();
+
+    return view('studentsFinancials.index', compact('currentSem'));
+  }
+
+  public function store(Request $request)
+  {
+    $this->authorize('create', studentsPayments::class);
+
+    $data = $request->all();
+
+    // Referance No
+
+    $splitToday = explode("-",today());
+
+    $splitDate = explode(" ",$splitToday[2]);
+
+    $referances = referances::where('created_at', '>=', today())
+      ->orderby('created_at', 'desc')->where('type', '=', 'SPR')
+      ->first();
+
+    if (empty($referances))
+      $count = 1;
+    else
     {
-        //
+      $splitRef = explode("-",$referances['ref']);
+      $count = $splitRef[3]+1;
     }
 
-    public function index(Request $request)
-    {    
-        $currentSem = sems::with('year')
-        ->where('start', '<=', today())
-        ->where('end', '>=', today())->first();
+    $ref = referances::create([
+      'type' => 'SPR',
+      'ref' => 'AIS-SPR-'.($splitToday[0] % 100).$splitToday[1].$splitDate[0].'-'.$count
+    ]);
 
-        return view('studentsFinancials.index', compact('currentSem'));
+    $data += ['ref' => $ref['ref']];
+
+    $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
+
+    $data += ['name' => $student[0]['eName']];
+
+    $pdf = PDF::loadView('studentsFinancials.payments.studentPaymentReceipt', $data);
+
+    $path = 'docs/students/payment_receipts/'.$data['studentNo'].'/';
+
+    if(!File::isDirectory($path)){
+      File::makeDirectory($path);
     }
 
-    public function store(Request $request)
-    {
-        $this->authorize('create', studentsPayments::class);
+    $pdf->save($path.$ref['ref'].'.pdf');
 
-        $data = $request->all();
+    $data += ['receipt' => $path.$ref['ref'].'.pdf'];
 
-        // Referance No
+    studentsPayments::create($data);
 
-        $splitToday = explode("-",today());
+    $this->settlementCalculation($data['studentNo']);
 
-        $splitDate = explode(" ",$splitToday[2]);
+    Flash::success('Student '.$data['studentNo'].' '.$data['name'].' payment data was saved successfully<br><br>تم حفظ بيانات الدفعة المالية للطالب '.$request['studentNo'].' '.$request['name'].' بنجاح');
 
-        $referances = referances::where('created_at', '>=', today())
-                                ->orderby('created_at', 'desc')->where('type', '=', 'SPR')
-                                ->first();
+    return redirect(route('sFinancials.index'));
+  }
 
-        if (empty($referances))
-            $count = 1;
-        else
-        {
-            $splitRef = explode("-",$referances['ref']);
-            $count = $splitRef[3]+1;
-        }
+  public function update(Request $request) // Updating with Modal
+  {
+    $this->authorize('update', studentsPayments::class);
 
-        $ref = referances::create([
-            'type' => 'SPR',
-            'ref' => 'AIS-SPR-'.($splitToday[0] % 100).$splitToday[1].$splitDate[0].'-'.$count
-        ]);
+    $data = $request->all();
 
-        $data += ['ref' => $ref['ref']];
+    $sPayment = studentsPayments::findOrFail($request['id']);
 
-        $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
+    if (empty($sPayment)) {
+      Flash::error('The Student\' Payment\' was not found<br><br>بيانات الدفعة المالية المطلوبة غير موجودة');
 
-        $data += ['name' => $student[0]['eName']];
-
-        $pdf = PDF::loadView('studentsFinancials.payments.studentPaymentReceipt', $data);
-
-        $path = 'docs/students/payment_receipts/'.$data['studentNo'].'/';
-
-        if(!File::isDirectory($path)){
-            File::makeDirectory($path);
-        }
-
-        $pdf->save($path.$ref['ref'].'.pdf');
-
-        $data += ['receipt' => $path.$ref['ref'].'.pdf'];
-
-        studentsPayments::create($data);
-
-        $this->settlementCalculation($data['studentNo']);
-
-        Flash::success('Student '.$data['studentNo'].' '.$data['name'].' payment data was saved successfully<br><br>تم حفظ بيانات الدفعة المالية للطالب '.$request['studentNo'].' '.$request['name'].' بنجاح');
-
-        return redirect(route('sFinancials.index'));
+      return redirect(route('sFinancials.index'));
     }
 
-    public function update(Request $request) // Updating with Modal
-    {
-        $this->authorize('update', studentsPayments::class);
+    // extract same referance no
 
-        $data = $request->all();
+    $referance = explode("/",$data['receipt']);
 
-        $sPayment = studentsPayments::findOrFail($request['id']);
+    $refPDF = explode(".",$referance[4]);
 
-        if (empty($sPayment)) {
-            Flash::error('The Student\' Payment\' was not found<br><br>بيانات الدفعة المالية المطلوبة غير موجودة');
+    $ref = $refPDF[0];
 
-            return redirect(route('sFinancials.index'));
-        }
+    $data += ['ref' => $ref];
 
-        // extract same referance no
+    $path = 'docs/students/payment_receipts/'.$data['studentNo'].'/';
 
-        $referance = explode("/",$data['receipt']);
+    $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
 
-        $refPDF = explode(".",$referance[4]);
+    $data += ['name' => $student[0]['eName']];
 
-        $ref = $refPDF[0];
+    $pdf = PDF::loadView('studentsFinancials.payments.studentPaymentReceipt', $data);
 
-        $data += ['ref' => $ref];
+    $pdf->save($path.$ref.'.pdf');
 
-        $path = 'docs/students/payment_receipts/'.$data['studentNo'].'/';
+    $sPayment->update($data);
 
-        $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
+    $this->settlementCalculation($data['studentNo']);
 
-        $data += ['name' => $student[0]['eName']];
+    Flash::success('The Student\' Payment\' was updated successfully<br><br>تم تحديث بيانات الدفعة المالية بنجاح');
 
-        $pdf = PDF::loadView('studentsFinancials.payments.studentPaymentReceipt', $data);
+    return redirect(route('sFinancials.index'));
+  }
 
-        $pdf->save($path.$ref.'.pdf');
-    
-        $sPayment->update($data);
+  public function settlementCalculation($studentNo)
+  {
+    $payments = studentsPayments::where('studentNo', $studentNo)->sum('amount');
+    $fees = studentsFinancials::where('studentNo', $studentNo)->sum('finalAmount');
 
-        $this->settlementCalculation($data['studentNo']);
-
-        Flash::success('The Student\' Payment\' was updated successfully<br><br>تم تحديث بيانات الدفعة المالية بنجاح');
-
-        return redirect(route('sFinancials.index'));
+    if ($payments >= $fees) {
+      student::where('studentNo', $studentNo)->first()->update(array('financial' => 1));
     }
-
-    public function settlementCalculation($studentNo)
-    {
-        $payments = studentsPayments::where('studentNo', $studentNo)->get();
-        $fees = studentsFinancials::where('studentNo', $studentNo)->get();
-
-        $pTotal = 0;
-        $fTotal = 0;
-
-        foreach ($payments as $payment) {
-            $pTotal += $payment['amount'];
-        }
-
-        foreach ($fees as $fee) {
-            $fTotal += $fee['finalAmount'];
-        }
-
-        if ($pTotal >= $fTotal) {
-            student::where('studentNo', $studentNo)->first()->update(array('financial' => 1));
-        }
-            
+    else {
+      student::where('studentNo', $studentNo)->first()->update(array('financial' => 0));
     }
+  }
 }

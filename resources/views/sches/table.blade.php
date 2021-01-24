@@ -3,7 +3,7 @@
         
         <thead>
             <tr>
-                <th colspan="4" style="text-align:center;"><h3><b>@foreach ($currentSem as $sem) {{$sem->title}}, {{$sem->year->title}} @endforeach</b></h3></th>
+                <th colspan="4" style="text-align:center;"><h3><b>{{$currentSem ->title}}, {{$currentSem ->year->title}}</b></h3></th>
                 <th colspan="4" style="text-align:center;"><h3><b><u>{{$classroom->title}}</u></b></h3></th>
             </tr>
 

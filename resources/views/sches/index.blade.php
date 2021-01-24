@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('title')
-    @include('sches.title')s
+  @include('sches.title')s
 @endsection
 
 @section('modal.title')
-    Classes
+  Classes
 @endsection
 
 @section('header.title')
-    @include('sches.titles')
+  @include('sches.titles')
 @endsection
 
 @section('dataTableTitle')
@@ -25,69 +25,69 @@
 @endsection
 
 @section('dataTableOptions')
-    paging: false,
+  paging: false,
 
-    length: false,
+  length: false,
 
-    bInfo: false,
+  bInfo: false,
 
-    searching: false,
+  searching: false,
 @endsection
 
 @can('delete', App\Models\sches::class)
-    @section('deleteModal')
-            <form method="post" action="{{ route ('sches.destroy', 1) }}">
-    @endsection
+  @section('deleteModal')
+    <form method="post" action="{{ route ('sches.destroy', 1) }}">
+  @endsection
 @endcan
 
 @section('header')
-    @can('create', App\Models\sches::class)
-        <a data-toggle="modal" data-target="#create-modal" class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px"><i class="fa fa-plus"></i> <i class="fa fa-plus"></i> New Classes</a>
-    @else
-        @foreach ($currentSem as $sem) {{$sem->title}}, {{$sem->year->title}} @endforeach
-    @endcan
+  @can('create', App\Models\sches::class)
+    <a data-toggle="modal" data-target="#create-modal" class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px"><i class="fa fa-plus"></i> <i class="fa fa-plus"></i> New Classes</a>
+  @else
+    {{$currentSem ->title}}, {{$currentSem ->year->title}}
+  @endcan
 @endsection
 
 @section('content')
 
-    @if (Auth::user()->role_id < 4 )
+  @if (Auth::user()->role_id < 4 )
 
-        @include('sches.indexTabs')
+    @include('sches.indexTabs')
 
-        @include('sches.indexNext')
-    
-    @elseif (Auth::user()->role_id == 7 )
+    @include('sches.indexNext')
+  
+  @elseif (Auth::user()->role_id == 7 )
 
-        @include('sches.indexTabs')
+    @include('sches.indexTabs')
 
-    @else
+  @else
 
-        @section('section-title')
+    @section('section-title')
 
-            <div class="col-md-12">
-                <h4 class="theme-main"><b>Your supervised classrooms' timetables جدول الحصص للشعب التي تشرف عليها</b></h4>
-            </div>
+      <div class="col-md-12">
+        <h4 class="theme-main"><b>Your supervised classrooms' timetables جدول الحصص للشعب التي تشرف عليها</b></h4>
+      </div>
 
-        @endsection
+    @endsection
 
-        @include('sches.indexTabs')
-                    
-        @include('sches.tableT')
-                    
-    @endif
+    @include('sches.indexTabs')
+                
+    @include('sches.tableT')
+                
+  @endif
 
-    @include('sches.show.modal')
+  @include('sches.show.modal')
 
-    @can('create', App\Models\sches::class)
+  @can('create', App\Models\sches::class)
 
-        @include('sches.create.modal')
+    @include('sches.create.modal')
 
-    @endcan
+  @endcan
 
-    @can('update', App\Models\sches::class)
+  @can('update', App\Models\sches::class)
 
-        @include('sches.edit.modal')
+    @include('sches.edit.modal')
 
-    @endcan
+  @endcan
 
 @endsection

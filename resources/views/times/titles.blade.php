@@ -1,1 +1,1 @@
-@include('times.title')s أوقات الحصص
+<i class="fas fa-clock"></i> @include('times.title')s أوقات الحصص

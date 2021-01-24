@@ -31,7 +31,7 @@
     @can('create', App\Models\years::class)
         <a data-toggle="modal" data-target="#create-modal" class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px"><i class="fa fa-plus"></i> New @include('years.title')s</a>
     @else
-        @foreach ($currentSem as $sem) {{$sem->title}}, {{$sem->year->title}} @endforeach
+        {{$currentSem ->title}}, {{$currentSem ->year->title}}
     @endcan
 @endsection
 

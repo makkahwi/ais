@@ -1,1 +1,1 @@
-@include('results.title')s النتائج
+<i class="fas fa-award"></i> @include('results.title')s النتائج

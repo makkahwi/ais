@@ -1,1 +1,1 @@
-<i class="fas fa-vial"></i> @include('exams.title')s الامتحانات
+<i class="fas fa-pencil-alt"></i> @include('exams.title')s الامتحانات

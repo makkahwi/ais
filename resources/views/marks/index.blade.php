@@ -1,63 +1,71 @@
 @extends('layouts.app')
 
 @section('title')
-    @include('marks.title')s
+  @include('marks.title')s
 @endsection
 
 @section('modal.title')
-    @include('marks.title')s
+  @include('marks.title')s
 @endsection
 
 @section('header.title')
-    @include('marks.titles')
+  @include('marks.titles')
+@endsection
+
+@section('header.note')
+    @if ($currentSem->resultsDone == 0)
+      <h4 class="text-danger">Results Issuance Date {{$currentSem->results->format('d M Y')}}</h4>
+    @else
+      <h5 class="text-success">{{$currentSem->title}}, {{$currentSem->year->title}} Results already generated</h5>
+    @endif
 @endsection
 
 @can('delete', App\Models\markstypes::class)
-    @section('deleteModal')
-        <form method="post" action="{{ route ('markstypes.destroy', 1) }}">
-    @endsection
+  @section('deleteModal')
+    <form method="post" action="{{ route ('markstypes.destroy', 1) }}">
+  @endsection
 @endcan
 
 @section('header')
-    @can('create', App\Models\markstypes::class)
-        <a data-toggle="modal" data-target="#show-big-modal" class="btn btn-primary" style="margin-top: -10px;margin-bottom: 5px"><i class="far fa-eye"></i> Show @include('marks.title')s Types</a>
-    @else
-        @foreach ($currentSem as $sem) {{$sem->title}}, {{$sem->year->title}} @endforeach
-    @endcan
+  @can('create', App\Models\markstypes::class)
+    <a data-toggle="modal" data-target="#show-big-modal" class="btn btn-primary" style="margin-top: -10px;margin-bottom: 5px"><i class="far fa-eye"></i> Show @include('marks.title')s Types</a>
+  @else
+    {{$currentSem->title}}, {{$currentSem->year->title}}
+  @endcan
 @endsection
 
 @section('content')
 
-    @include('marks.classroomTabs')
+  @include('marks.classroomTabs')
 
-    @include('marks.show.modal')
+  @include('marks.show.modal')
 
-    @include('markstypes.index')
+  @include('markstypes.index')
 
-    @can('create', App\Models\marks::class)
+  @can('create', App\Models\marks::class)
 
-        @include('marks.create.modal')
+    @include('marks.create.modal')
 
-    @endcan
+  @endcan
 
-    @can('update', App\Models\marks::class)
+  @can('update', App\Models\marks::class)
 
-        @include('marks.edit.modal')
+    @include('marks.edit.modal')
 
-    @endcan
+  @endcan
 
-    @can('create', App\Models\markstypes::class)
+  @can('create', App\Models\markstypes::class)
 
-        @include('markstypes.create.modal')
+    @include('markstypes.create.modal')
 
-    @endcan
+  @endcan
 
-    @can('update', App\Models\markstypes::class)
+  @can('update', App\Models\markstypes::class)
 
-        @include('markstypes.edit.modal')
+    @include('markstypes.edit.modal')
 
-    @endcan
-    
-    @include('marks.appealModal')
+  @endcan
+  
+  @include('marks.appealModal')
 
 @endsection

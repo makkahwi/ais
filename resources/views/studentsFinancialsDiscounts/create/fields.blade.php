@@ -1,6 +1,6 @@
 <!-- Title Field -->
 <div class="form-group col-md-12">
-    <label for="title">@include('labels.dtitle')@include('layouts.required')</label>
+    <label for="title">@include('labels.dtitle')@include('layouts.required') <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="@include('labels.dtitle')"></i></label>
     <input class="form-control" list="title" name="title">
     <datalist required id="title">
         <option value="">Choose a title</option>
