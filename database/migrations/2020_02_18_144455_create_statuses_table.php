@@ -6,29 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatestatusesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('statuses', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title')->unique();
-            $table->text('description');
-            $table->softDeletes();
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('statuses', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->string('title')->unique();
+      $table->text('description');
+      $table->softDeletes();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('statuses');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('statuses');
+  }
 }

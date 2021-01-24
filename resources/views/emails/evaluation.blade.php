@@ -8,17 +8,17 @@
 <h3>From: {{$data['email']}}</h3>
 
 <table>
-    <tr>
-        <th><p>Outlook: <b>{{$data['outlook']}}</b></p></th>
-        <th><p>Efficiency: <b>{{$data['efficiency']}}</b></p></th>
-    </tr>
-    <tr>
-        <th><p>Accuracy: <b>{{$data['accuracy']}}</b></p></th>
-        <th><p>Speed: <b>{{$data['speed']}}</b></p></th>
-    </tr>
-    <tr>
-        <th colspan=2><p>Comment: <b>{{$data['comment']}}</b></p></th>
-    </tr>
+  <tr>
+    <td><p>Outlook: <b>{{$data['outlook']}}</b></p></td>
+    <td><p>Efficiency: <b>{{$data['efficiency']}}</b></p></td>
+  </tr>
+  <tr>
+    <td><p>Accuracy: <b>{{$data['accuracy']}}</b></p></td>
+    <td><p>Speed: <b>{{$data['speed']}}</b></p></td>
+  </tr>
+  <tr>
+    <td colspan=2><p>Comment: <b>{{$data['comment']}}</b></p></td>
+  </tr>
 </table>
 
 <br><br>

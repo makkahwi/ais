@@ -6,31 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateStudentsFinancialsDiscountsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('studentsFinancialsDiscounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('type');
-            $table->string('title');
-            $table->text('description');
-            $table->float('amount');
-            $table->softDeletes();
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('studentsFinancialsDiscounts', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->string('type');
+      $table->string('title');
+      $table->text('description');
+      $table->float('amount');
+      $table->softDeletes();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('studentsFinancialsDiscounts');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('studentsFinancialsDiscounts');
+  }
 }

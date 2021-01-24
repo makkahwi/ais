@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateYearsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('years', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title')->unique();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('years', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->string('title')->unique();
+      $table->softDeletes();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('years');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('years');
+  }
 }

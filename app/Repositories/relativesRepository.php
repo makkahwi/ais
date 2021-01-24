@@ -13,45 +13,45 @@ use App\Repositories\BaseRepository;
 
 class relativesRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'eName',
-        'aName',
-        'name',
-        'gender',
-        'relation',
-        'job',
-        'org',
-        'email',
-        'phone',
-        'hAddress',
-        'wAddress',
-        'more',
-        'nation',
-        'ppno',
-        'ppExpiry',
-        'visaExpiry',
-        'passport',
-        'visa'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'eName',
+    'aName',
+    'name',
+    'gender',
+    'relation',
+    'job',
+    'org',
+    'email',
+    'phone',
+    'hAddress',
+    'wAddress',
+    'more',
+    'nation',
+    'ppno',
+    'ppExpiry',
+    'visaExpiry',
+    'passport',
+    'visa'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return relatives::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return relatives::class;
+  }
 }

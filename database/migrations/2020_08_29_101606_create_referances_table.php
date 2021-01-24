@@ -6,29 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateReferancesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('referances', function (Blueprint $table) {
-            $table->bigIncrements('refId');
-            $table->string('type');
-            $table->string('ref')->unique();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('referances', function (Blueprint $table) {
+      $table->bigIncrements('refId');
+      $table->string('type');
+      $table->string('ref')->unique();
+      $table->softDeletes();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('referances');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('referances');
+  }
 }

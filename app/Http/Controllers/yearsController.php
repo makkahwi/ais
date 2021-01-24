@@ -32,6 +32,8 @@ class yearsController extends AppBaseController
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', years::class);
+
     $years = Years::orderBy('created_at', 'DESC')->get();
 
     return view('years.index', compact('years'));
@@ -81,7 +83,6 @@ class yearsController extends AppBaseController
 
     if (empty($year)) {
       Flash::error('The year was not found<br><br>بيانات العام الدراسي المطلوبة غير موجودة');
-
       return redirect(route('years.index'));
     }
     
@@ -100,7 +101,7 @@ class yearsController extends AppBaseController
    * @throws \Exception
    *
    * @return Response
-   */
+  */
 
   public function destroy(Request $request)
   {
@@ -112,7 +113,6 @@ class yearsController extends AppBaseController
 
     if (empty($years)) {
       Flash::error('The year was not found<br><br>بيانات العام الدراسي المطلوبة غير موجودة');
-
       return redirect(route('years.index'));
     }
 

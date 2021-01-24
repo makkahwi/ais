@@ -13,33 +13,33 @@ use App\Repositories\BaseRepository;
 
 class coursesRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'title',
-        'code',
-        'textbook',
-        'level_id',
-        'description',
-        'status_id'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'title',
+    'code',
+    'textbook',
+    'level_id',
+    'description',
+    'status_id'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return courses::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return courses::class;
+  }
 }

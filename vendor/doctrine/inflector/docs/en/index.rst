@@ -12,7 +12,7 @@ You can install the Inflector with composer:
 
 .. code-block:: console
 
-    $ composer require doctrine/inflector
+  $ composer require doctrine/inflector
 
 Usage
 =====
@@ -22,19 +22,19 @@ the ``Doctrine\Inflector\InflectorFactory`` class:
 
 .. code-block:: php
 
-    use Doctrine\Inflector\InflectorFactory;
+  use Doctrine\Inflector\InflectorFactory;
 
-    $inflector = InflectorFactory::create()->build();
+  $inflector = InflectorFactory::create()->build();
 
 By default it will create an English inflector. If you want to use another language, just pass the language
 you want to create an inflector for to the ``createForLanguage()`` method:
 
 .. code-block:: php
 
-    use Doctrine\Inflector\InflectorFactory;
-    use Doctrine\Inflector\Language;
+  use Doctrine\Inflector\InflectorFactory;
+  use Doctrine\Inflector\Language;
 
-    $inflector = InflectorFactory::createForLanguage(Language::SPANISH)->build();
+  $inflector = InflectorFactory::createForLanguage(Language::SPANISH)->build();
 
 The supported languages are as follows:
 
@@ -49,18 +49,18 @@ If you want to manually construct the inflector instead of using a factory, you 
 
 .. code-block:: php
 
-    use Doctrine\Inflector\CachedWordInflector;
-    use Doctrine\Inflector\RulesetInflector;
-    use Doctrine\Inflector\Rules\English;
+  use Doctrine\Inflector\CachedWordInflector;
+  use Doctrine\Inflector\RulesetInflector;
+  use Doctrine\Inflector\Rules\English;
 
-    $inflector = new Inflector(
-        new CachedWordInflector(new RulesetInflector(
-            English\Rules::getSingularRuleset()
-        )),
-        new CachedWordInflector(new RulesetInflector(
-            English\Rules::getPluralRuleset()
-        ))
-    );
+  $inflector = new Inflector(
+    new CachedWordInflector(new RulesetInflector(
+      English\Rules::getSingularRuleset()
+    )),
+    new CachedWordInflector(new RulesetInflector(
+      English\Rules::getPluralRuleset()
+    ))
+  );
 
 Adding Languages
 ----------------
@@ -78,41 +78,41 @@ If you want to setup custom singular and plural rules, you can configure these i
 
 .. code-block:: php
 
-    use Doctrine\Inflector\InflectorFactory;
-    use Doctrine\Inflector\Rules\Pattern;
-    use Doctrine\Inflector\Rules\Patterns;
-    use Doctrine\Inflector\Rules\Ruleset;
-    use Doctrine\Inflector\Rules\Substitution;
-    use Doctrine\Inflector\Rules\Substitutions;
-    use Doctrine\Inflector\Rules\Transformation;
-    use Doctrine\Inflector\Rules\Transformations;
-    use Doctrine\Inflector\Rules\Word;
+  use Doctrine\Inflector\InflectorFactory;
+  use Doctrine\Inflector\Rules\Pattern;
+  use Doctrine\Inflector\Rules\Patterns;
+  use Doctrine\Inflector\Rules\Ruleset;
+  use Doctrine\Inflector\Rules\Substitution;
+  use Doctrine\Inflector\Rules\Substitutions;
+  use Doctrine\Inflector\Rules\Transformation;
+  use Doctrine\Inflector\Rules\Transformations;
+  use Doctrine\Inflector\Rules\Word;
 
-    $inflector = InflectorFactory::create()
-        ->withSingularRules(
-            new Ruleset(
-                new Transformations(
-                    new Transformation(new Pattern('/^(bil)er$/i'), '\1'),
-                    new Transformation(new Pattern('/^(inflec|contribu)tors$/i'), '\1ta')
-                ),
-                new Patterns(new Pattern('singulars')),
-                new Substitutions(new Substitution(new Word('spins'), new Word('spinor')))
-            )
+  $inflector = InflectorFactory::create()
+    ->withSingularRules(
+      new Ruleset(
+        new Transformations(
+          new Transformation(new Pattern('/^(bil)er$/i'), '\1'),
+          new Transformation(new Pattern('/^(inflec|contribu)tors$/i'), '\1ta')
+        ),
+        new Patterns(new Pattern('singulars')),
+        new Substitutions(new Substitution(new Word('spins'), new Word('spinor')))
+      )
+    )
+    ->withPluralRules(
+      new Ruleset(
+        new Transformations(
+          new Transformation(new Pattern('^(bil)er$'), '\1'),
+          new Transformation(new Pattern('^(inflec|contribu)tors$'), '\1ta')
+        ),
+        new Patterns(new Pattern('noflect'), new Pattern('abtuse')),
+        new Substitutions(
+          new Substitution(new Word('amaze'), new Word('amazable')),
+          new Substitution(new Word('phone'), new Word('phonezes'))
         )
-        ->withPluralRules(
-            new Ruleset(
-                new Transformations(
-                    new Transformation(new Pattern('^(bil)er$'), '\1'),
-                    new Transformation(new Pattern('^(inflec|contribu)tors$'), '\1ta')
-                ),
-                new Patterns(new Pattern('noflect'), new Pattern('abtuse')),
-                new Substitutions(
-                    new Substitution(new Word('amaze'), new Word('amazable')),
-                    new Substitution(new Word('phone'), new Word('phonezes'))
-                )
-            )
-        )
-        ->build();
+      )
+    )
+    ->build();
 
 No operation inflector
 ----------------------
@@ -124,10 +124,10 @@ This is an implementation of the `Null Object design pattern <https://sourcemaki
 
 .. code-block:: php
 
-    use Doctrine\Inflector\Inflector;
-    use Doctrine\Inflector\NoopWordInflector;
+  use Doctrine\Inflector\Inflector;
+  use Doctrine\Inflector\NoopWordInflector;
 
-    $inflector = new Inflector(new NoopWordInflector(), new NoopWordInflector());
+  $inflector = new Inflector(new NoopWordInflector(), new NoopWordInflector());
 
 Tableize
 ========
@@ -136,7 +136,7 @@ Converts ``ModelName`` to ``model_name``:
 
 .. code-block:: php
 
-    echo $inflector->tableize('ModelName'); // model_name
+  echo $inflector->tableize('ModelName'); // model_name
 
 Classify
 ========
@@ -145,7 +145,7 @@ Converts ``model_name`` to ``ModelName``:
 
 .. code-block:: php
 
-    echo $inflector->classify('model_name'); // ModelName
+  echo $inflector->classify('model_name'); // ModelName
 
 Camelize
 ========
@@ -154,7 +154,7 @@ This method uses `Classify`_ and then converts the first character to lowercase:
 
 .. code-block:: php
 
-    echo $inflector->camelize('model_name'); // modelName
+  echo $inflector->camelize('model_name'); // modelName
 
 Capitalize
 ==========
@@ -168,11 +168,11 @@ Here is an example:
 
 .. code-block:: php
 
-    $string = 'top-o-the-morning to all_of_you!';
+  $string = 'top-o-the-morning to all_of_you!';
 
-    echo $inflector->capitalize($string); // Top-O-The-Morning To All_of_you!
+  echo $inflector->capitalize($string); // Top-O-The-Morning To All_of_you!
 
-    echo $inflector->capitalize($string, '-_ '); // Top-O-The-Morning To All_Of_You!
+  echo $inflector->capitalize($string, '-_ '); // Top-O-The-Morning To All_Of_You!
 
 Pluralize
 =========
@@ -181,7 +181,7 @@ Returns a word in plural form.
 
 .. code-block:: php
 
-    echo $inflector->pluralize('browser'); // browsers
+  echo $inflector->pluralize('browser'); // browsers
 
 Singularize
 ===========
@@ -190,7 +190,7 @@ Returns a word in singular form.
 
 .. code-block:: php
 
-    echo $inflector->singularize('browsers'); // browser
+  echo $inflector->singularize('browsers'); // browser
 
 Urlize
 ======
@@ -199,7 +199,7 @@ Generate a URL friendly string from a string of text:
 
 .. code-block:: php
 
-    echo $inflector->urlize('My first blog post'); // my-first-blog-post
+  echo $inflector->urlize('My first blog post'); // my-first-blog-post
 
 Unaccent
 ========
@@ -208,7 +208,7 @@ You can unaccent a string of text using the ``unaccent()`` method:
 
 .. code-block:: php
 
-    echo $inflector->unaccent('año'); // ano
+  echo $inflector->unaccent('año'); // ano
 
 Legacy API
 ==========

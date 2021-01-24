@@ -11,31 +11,31 @@ use Doctrine\DBAL\Events;
  */
 class SQLSessionInit implements EventSubscriber
 {
-    /** @var string */
-    protected $sql;
+  /** @var string */
+  protected $sql;
 
-    /**
-     * @param string $sql
-     */
-    public function __construct($sql)
-    {
-        $this->sql = $sql;
-    }
+  /**
+   * @param string $sql
+   */
+  public function __construct($sql)
+  {
+    $this->sql = $sql;
+  }
 
-    /**
-     * @return void
-     */
-    public function postConnect(ConnectionEventArgs $args)
-    {
-        $conn = $args->getConnection();
-        $conn->exec($this->sql);
-    }
+  /**
+   * @return void
+   */
+  public function postConnect(ConnectionEventArgs $args)
+  {
+    $conn = $args->getConnection();
+    $conn->exec($this->sql);
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSubscribedEvents()
-    {
-        return [Events::postConnect];
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getSubscribedEvents()
+  {
+    return [Events::postConnect];
+  }
 }

@@ -57,8 +57,8 @@ use Egulias\EmailValidator\Validation\RFCValidation;
 
 $validator = new EmailValidator();
 $multipleValidations = new MultipleValidationWithAnd([
-    new RFCValidation(),
-    new DNSCheckValidation()
+  new RFCValidation(),
+  new DNSCheckValidation()
 ]);
 $validator->isValid("example@example.com", $multipleValidations); //true
 ```
@@ -73,8 +73,8 @@ It's easy! You just need to implement [EmailValidation](https://github.com/eguli
 
 As this is a port from another library and work, here are other people related to the previous one:
 
-* Ricard Clau [@ricardclau](https://github.com/ricardclau):      	Performance against PHP built-in filter_var
-* Josepf Bielawski [@stloyd](https://github.com/stloyd):      		For its first re-work of Dominic's lib
+* Ricard Clau [@ricardclau](https://github.com/ricardclau):    	Performance against PHP built-in filter_var
+* Josepf Bielawski [@stloyd](https://github.com/stloyd):    		For its first re-work of Dominic's lib
 * Dominic Sayers [@dominicsayers](https://github.com/dominicsayers):  	The original isemail function
 
 ## License ##

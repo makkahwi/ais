@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\evaluationEmail;
-use Illuminate\Support\Facades\Mail;
+use Flash;
 
-use App\Models\users;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\newUser;
 
-use Flash;
+use App\Models\users;
 
 class HomeController extends Controller
 {
@@ -32,19 +32,14 @@ class HomeController extends Controller
 
   public function index()
   {
+    // $users = users::all();
 
-    /*
+    // foreach ($users as $u)
+    //   if($u['email'] != "principal@aqsa.edu.my")
+    //     if($u['role_id'] == 7)
+    //       Mail::to($u['email'])->send(new newUser($u));
 
-    $users = users::all();
-
-    foreach ($users as $u)
-        if($u['email'] != "principal@aqsa.edu.my")
-            if($u['role_id'] == 7)
-                Mail::to($u['email'])->send(new newUser($u));
-
-    Flash::success('All Students\' were notified of system launching');
-    
-    */
+    // Flash::success('All Students\' were notified of system launching');
 
     return view('home.index');
   }

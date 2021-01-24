@@ -19,8 +19,8 @@ $readmeGenerator->templateMethod = <<<RAW
 
 RAW;
 $readmeText = ($readmeGenerator)->generate(
-    __DIR__ . '/../src/voku/helper/ASCII.php',
-    __DIR__ . '/docs/base.md'
+  __DIR__ . '/../src/voku/helper/ASCII.php',
+  __DIR__ . '/docs/base.md'
 );
 
 file_put_contents(__DIR__ . '/../README.md', $readmeText);

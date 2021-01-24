@@ -10,12 +10,11 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
-use App\Models\student;
-use App\Models\users;
-
-use App\Models\statuses;
-use App\Models\levels;
 use App\Models\sems;
+use App\Models\users;
+use App\Models\levels;
+use App\Models\student;
+use App\Models\statuses;
 use App\Models\classrooms;
 
 class applicantsController extends AppBaseController
@@ -25,7 +24,7 @@ class applicantsController extends AppBaseController
 
   public function __construct(studentsRepository $studentsRepo)
   {
-      $this->studentsRepository = $studentsRepo;
+    $this->studentsRepository = $studentsRepo;
   }
 
   /**
@@ -42,7 +41,8 @@ class applicantsController extends AppBaseController
 
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+      ->where('end', '>=', today())
+      ->first();
 
     $statuses = statuses::all();
     $levels = Levels::all();
@@ -52,8 +52,7 @@ class applicantsController extends AppBaseController
       ->orderBy('eName', 'asc')
       ->get();
 
-    return view('applicants.index', compact('currentSem', 'statuses', 'levels',
-                                            'classrooms', 'applicants'));
+    return view('applicants.index', compact('currentSem', 'statuses', 'levels', 'classrooms', 'applicants'));
   }
 
   /**
@@ -94,7 +93,6 @@ class applicantsController extends AppBaseController
 
     if (empty($student)) {
       Flash::error('The student was not found<br><br>بيانات الطالب المطلوبة غير موجودة');
-
       return redirect(route('applicants.index'));
     }
 
@@ -125,7 +123,6 @@ class applicantsController extends AppBaseController
 
     if (empty($students)) {
       Flash::error('The student was not found<br><br>بيانات الطالب المطلوبة غير موجودة');
-
       return redirect(route('applicants.index'));
     }
 

@@ -13,32 +13,32 @@ use App\Repositories\BaseRepository;
 
 class visasRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'studentNo',
-        'status',
-        'firstEntry',
-        'lastEntry',
-        'visaExpiry'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'studentNo',
+    'status',
+    'firstEntry',
+    'lastEntry',
+    'visaExpiry'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return visas::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return visas::class;
+  }
 }

@@ -48,7 +48,7 @@ ASCII::to_transliterate('déjà σσς iıii'); // 'deja sss iiii'
 // voku/Stringy
 use Stringy\Stringy as S;
 $stringy = S::create('déjà σσς iıii');
-$stringy->toTransliterate();              // 'deja sss iiii'
+$stringy->toTransliterate();        // 'deja sss iiii'
 ```
 
 ## Install "Portable ASCII" via "composer require"

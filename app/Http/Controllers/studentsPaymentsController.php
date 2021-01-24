@@ -20,11 +20,13 @@ class studentsPaymentsController extends Controller
 {
   public function __construct()
   {
-      //
+    //
   }
 
   public function index(Request $request)
-  {    
+  {
+    $this->authorize('viewAny', studentsPayments::class);
+
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())->first();

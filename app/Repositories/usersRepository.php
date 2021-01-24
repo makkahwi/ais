@@ -13,36 +13,36 @@ use App\Repositories\BaseRepository;
 
 class usersRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'role_id',
-        'status_id',
-        'leaveDate',
-        'schoolNo',
-        'name',
-        'email',
-        'email_verified_at',
-        'password',
-        'remember_token'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'role_id',
+    'status_id',
+    'leaveDate',
+    'schoolNo',
+    'name',
+    'email',
+    'email_verified_at',
+    'password',
+    'remember_token'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return users::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return users::class;
+  }
 }

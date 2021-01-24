@@ -12,126 +12,127 @@ use Flash;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\newUser;
-use App\Models\users;
 
-use App\Models\sems;
 use App\Models\days;
+use App\Models\sems;
+use App\Models\users;
 
 class daysController extends AppBaseController
 {
-    /** @var  daysRepository */
-    private $daysRepository;
+  /** @var  daysRepository */
+  private $daysRepository;
 
-    public function __construct(daysRepository $daysRepo)
-    {
-        $this->daysRepository = $daysRepo;
-    }
+  public function __construct(daysRepository $daysRepo)
+  {
+    $this->daysRepository = $daysRepo;
+  }
 
-    /**
-     * Display a listing of the days.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+  /**
+   * Display a listing of the days.
+   *
+   * @param Request $request
+   *
+   * @return Response
+   */
 
-    public function index(Request $request)
-    {
-//     	$users = users::all();
-
-//         foreach ($users as $u)
-//             if($u['email'] == "Afnany98@gmail.com")
-//                 if($u['role_id'] == 7)
-//                     Mail::to($u['email'])->send(new newUser($u));
-
-//         Flash::success('All Students\' were notified of system launching');
+  public function index(Request $request)
+  {
+    $this->authorize('viewAny', days::class);
     
-        $currentSem = sems::with('year')
-        ->where('start', '<=', today())
-        ->where('end', '>=', today())->first();
+    // $users = users::all();
 
-        $days = days::all();
+    // foreach ($users as $u)
+    //   if($u['email'] == "Afnany98@gmail.com")
+    //     if($u['role_id'] == 7)
+    //       Mail::to($u['email'])->send(new newUser($u));
 
-        return view('days.index', compact('days', 'currentSem'));
+    // Flash::success('All Students\' were notified of system launching');
+  
+    $currentSem = sems::with('year')
+      ->where('start', '<=', today())
+      ->where('end', '>=', today())
+      ->first();
+
+    $days = days::all();
+
+    return view('days.index', compact('days', 'currentSem'));
+  }
+
+  /**
+   * Store a newly created days in storage.
+   *
+   * @param CreatedaysRequest $request
+   *
+   * @return Response
+   */
+
+  public function store(CreatedaysRequest $request)
+  {
+    $this->authorize('create', days::class);
+
+    $input = $request->all();
+
+    $days = $this->daysRepository->create($input);
+
+    Flash::success('The day was saved successfully<br><br>تم حفظ بيانات اليوم بنجاح');
+
+    return redirect(route('days.index'));
+  }
+
+  /**
+   * Update the specified days in storage.
+   *
+   * @param int $id
+   * @param UpdatedaysRequest $request
+   *
+   * @return Response
+   */
+
+  public function update(Request $request) // Updating with Modal
+  {
+    $this->authorize('update', days::class);
+
+    $day = Days::findOrFail($request->day_id);
+
+    if (empty($day)) {
+      Flash::error('The day was not found<br><br>بيانات اليوم المطلوبة غير موجودة');
+      return redirect(route('days.index'));
     }
 
-    /**
-     * Store a newly created days in storage.
-     *
-     * @param CreatedaysRequest $request
-     *
-     * @return Response
-     */
+    $day->update($request->all());
 
-    public function store(CreatedaysRequest $request)
-    {
-        $this->authorize('create', days::class);
+    Flash::success('The day was updated successfully<br><br>تم تحديث بيانات اليوم بنجاح');
 
-        $input = $request->all();
+    return redirect(route('days.index'));
+  }
 
-        $days = $this->daysRepository->create($input);
+  /**
+   * Remove the specified days from storage.
+   *
+   * @param int $id
+   *
+   * @throws \Exception
+   *
+   * @return Response
+   */
 
-        Flash::success('The day was saved successfully<br><br>تم حفظ بيانات اليوم بنجاح');
+  public function destroy(Request $request)
+  {
+    $this->authorize('delete', days::class);
 
-        return redirect(route('days.index'));
-    }
-
-    /**
-     * Update the specified days in storage.
-     *
-     * @param int $id
-     * @param UpdatedaysRequest $request
-     *
-     * @return Response
-     */
-
-    public function update(Request $request) // Updating with Modal
-     {
-        $this->authorize('update', days::class);
-
-        $day = Days::findOrFail($request->day_id);
-
-        if (empty($day)) {
-            Flash::error('The day was not found<br><br>بيانات اليوم المطلوبة غير موجودة');
-
-            return redirect(route('days.index'));
-        }
+    $id = $request['id'];
     
-        $day->update($request->all());
+    $days = $this->daysRepository->find($id);
 
-        Flash::success('The day was updated successfully<br><br>تم تحديث بيانات اليوم بنجاح');
-
-        return redirect(route('days.index'));
-     }
-
-    /**
-     * Remove the specified days from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-
-    public function destroy(Request $request)
-    {
-        $this->authorize('delete', days::class);
-
-        $id = $request['id'];
-        
-        $days = $this->daysRepository->find($id);
-
-        if (empty($days)) {
-            Flash::error('The day was not found<br><br>بيانات اليوم المطلوبة غير موجودة');
-
-            return redirect(route('days.index'));
-        }
-
-        $this->daysRepository->delete($id);
-
-        Flash::success('The day was deleted successfully<br><br>تم حذف بيانات اليوم بنجاح');
-
-        return redirect(route('days.index'));
+    if (empty($days)) {
+      Flash::error('The day was not found<br><br>بيانات اليوم المطلوبة غير موجودة');
+      return redirect(route('days.index'));
     }
+
+    $this->daysRepository->delete($id);
+
+    Flash::success('The day was deleted successfully<br><br>تم حذف بيانات اليوم بنجاح');
+
+    return redirect(route('days.index'));
+  }
 }

@@ -14,158 +14,156 @@ use App\Notifications\newExam;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 
-use App\Models\exams;
 use App\Models\sems;
+use App\Models\exams;
+use App\Models\sches;
 use App\Models\years;
 use App\Models\levels;
-use App\Models\courses;
-
-use App\Models\sches;
-use App\Models\classrooms;
 use App\Models\student;
+use App\Models\courses;
+use App\Models\classrooms;
 
 class examsController extends AppBaseController
 {
 
-    use Notifiable;
+  use Notifiable;
 
-    /** @var  examsRepository */
-    private $examsRepository;
+  /** @var  examsRepository */
+  private $examsRepository;
 
-    public function __construct(examsRepository $examsRepo)
-    {
-        $this->examsRepository = $examsRepo;
-    }
+  public function __construct(examsRepository $examsRepo)
+  {
+    $this->examsRepository = $examsRepo;
+  }
 
-    /**
-     * Display a listing of the exams.
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+  /**
+   * Display a listing of the exams.
+   *
+   * @param Request $request
+   *
+   * @return Response
+   */
 
-    public function index(Request $request)
-    {
-
-        $currentSem = sems::with('year')
-        ->where('start', '<=', today())
-        ->where('end', '>=', today())->first();
-
-        $levels = Levels::with('courses')->get();
-
-        return view('exams.index', compact('currentSem', 'levels'));
-    }
-
-    /**
-     * Store a newly created exams in storage.
-     *
-     * @param CreateexamsRequest $request
-     *
-     * @return Response
-     */
-
-    public function store(Request $request)
-    {
-        $this->authorize('create', exams::class);
-
-        $list = $request['list'];
-
-        $successful = [];
-
-        $failure = [];
-
-        $count =0;
-        
-        foreach($list as $y) {
-            
-            $course_id = $request['course_id'.$y];
-            $date = $request['date'.$y];
-            if($note = $request['note'.$y]){} else $note = null;
-
-            $exams = exams::firstOrCreate(['sem_id' => $request['sem_id'],
-            'course_id' => $request['course_id'.$y],'title' => $request['title']],
-            ['level_id' => $request['level_id'], 'date' => $date, 'note' => $note]);
+  public function index(Request $request)
+  {
+    $this->authorize('viewAny', exams::class);
     
-            if($exams->wasRecentlyCreated){
-                array_push($successful, ++$count);
-            }
-            else {
-                array_push($failure, ++$count);
-            }
-        }
+    $currentSem = sems::with('year')
+      ->where('start', '<=', today())
+      ->where('end', '>=', today())
+      ->first();
 
-        if(empty($failure)){
-            Flash::success('All exam(s) were saved successfully<br><br>تم حفظ كل بيانات الامتحانات بنجاح');
-        }
-        else if (empty($successful)){
-            Flash::error('All exam(s) data clashes with existed ones<br><br>كل بيانات الامتحان / الامتحانات الدراسية المدخلة تتعارض مع بيانات موجودة بالفعل');
-        }
-        else {
-            Flash::success('Exam(s) '.implode(' & ', $successful).' were saved successfully<br><br>تم حفظ بيانات الامتحانات '.implode(' و ', $successful).' بنجاح');
+    $levels = Levels::with('courses')->get();
 
-            Flash::error('Exam(s) '.implode(' & ', $failure).' data clashes with existed ones<br><br>بيانات الامتحانات '.implode(' و ', $failure).' المدخلة تتعارض مع بيانات موجودة بالفعل');
-        }
+    return view('exams.index', compact('currentSem', 'levels'));
+  }
 
-        return redirect(route('exams.index'));
-    }
+  /**
+   * Store a newly created exams in storage.
+   *
+   * @param CreateexamsRequest $request
+   *
+   * @return Response
+   */
 
-    /**
-     * Update the specified exams in storage.
-     *
-     * @param int $id
-     * @param UpdateexamsRequest $request
-     *
-     * @return Response
-     */
+  public function store(Request $request)
+  {
+    $this->authorize('create', exams::class);
 
-    public function update(Request $request) // Updating with Modal
-    {
-        $this->authorize('update', exams::class);
+    $list = $request['list'];
 
-        $exam = $this->examsRepository->find($request['exam_id']);
+    $successful = [];
 
-        if (empty($exam)) {
-            Flash::error('The exam was not found<br><br>بيانات الامتحان المطلوبة غير موجودة');
+    $failure = [];
 
-            return redirect(route('exams.index'));
-        }
+    $count =0;
+    
+    foreach($list as $y) {
         
-        $exam->update($request->all());
+      $course_id = $request['course_id'.$y];
+      $date = $request['date'.$y];
+      if($note = $request['note'.$y]){} else $note = null;
 
-        Flash::success('The exam was updated successfully<br><br>تم تحديث بيانات الامتحان بنجاح');
+      $exams = exams::firstOrCreate(['sem_id' => $request['sem_id'],
+        'course_id' => $request['course_id'.$y],'title' => $request['title']],
+        ['level_id' => $request['level_id'], 'date' => $date, 'note' => $note]);
 
-        return redirect(route('exams.index'));
+      if($exams->wasRecentlyCreated){
+        array_push($successful, ++$count);
+      }
+      else {
+        array_push($failure, ++$count);
+      }
     }
 
-    /**
-     * Remove the specified exams from storage.
-     *
-     * @param int $id
-     *
-     * @throws \Exception
-     *
-     * @return Response
-     */
-
-    public function destroy(Request $request)
-    {
-        $this->authorize('delete', exams::class);
-
-        $id = $request['id'];
-        
-        $exams = $this->examsRepository->find($id);
-
-        if (empty($exams)) {
-            Flash::error('The exam was not found<br><br>بيانات الامتحان المطلوبة غير موجودة');
-
-            return redirect(route('exams.index'));
-        }
-
-        $this->examsRepository->delete($id);
-
-        Flash::success('The exam was deleted successfully<br><br>تم حذف بيانات الامتحان بنجاح');
-
-        return redirect(route('exams.index'));
+    if(empty($failure)){
+      Flash::success('All exam(s) were saved successfully<br><br>تم حفظ كل بيانات الامتحانات بنجاح');
     }
+    else if (empty($successful)){
+      Flash::error('All exam(s) data clashes with existed ones<br><br>كل بيانات الامتحان / الامتحانات الدراسية المدخلة تتعارض مع بيانات موجودة بالفعل');
+    }
+    else {
+      Flash::success('Exam(s) '.implode(' & ', $successful).' were saved successfully<br><br>تم حفظ بيانات الامتحانات '.implode(' و ', $successful).' بنجاح');
+      Flash::error('Exam(s) '.implode(' & ', $failure).' data clashes with existed ones<br><br>بيانات الامتحانات '.implode(' و ', $failure).' المدخلة تتعارض مع بيانات موجودة بالفعل');
+    }
+
+    return redirect(route('exams.index'));
+  }
+
+  /**
+   * Update the specified exams in storage.
+   *
+   * @param int $id
+   * @param UpdateexamsRequest $request
+   *
+   * @return Response
+   */
+
+  public function update(Request $request) // Updating with Modal
+  {
+    $this->authorize('update', exams::class);
+
+    $exam = $this->examsRepository->find($request['exam_id']);
+
+    if (empty($exam)) {
+      Flash::error('The exam was not found<br><br>بيانات الامتحان المطلوبة غير موجودة');
+      return redirect(route('exams.index'));
+    }
+    
+    $exam->update($request->all());
+
+    Flash::success('The exam was updated successfully<br><br>تم تحديث بيانات الامتحان بنجاح');
+
+    return redirect(route('exams.index'));
+  }
+
+  /**
+   * Remove the specified exams from storage.
+   *
+   * @param int $id
+   *
+   * @throws \Exception
+   *
+   * @return Response
+   */
+
+  public function destroy(Request $request)
+  {
+    $this->authorize('delete', exams::class);
+
+    $id = $request['id'];
+    
+    $exams = $this->examsRepository->find($id);
+
+    if (empty($exams)) {
+      Flash::error('The exam was not found<br><br>بيانات الامتحان المطلوبة غير موجودة');
+      return redirect(route('exams.index'));
+    }
+
+    $this->examsRepository->delete($id);
+
+    Flash::success('The exam was deleted successfully<br><br>تم حذف بيانات الامتحان بنجاح');
+
+    return redirect(route('exams.index'));
+  }
 }

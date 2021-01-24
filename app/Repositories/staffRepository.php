@@ -13,30 +13,30 @@ use App\Repositories\BaseRepository;
 
 class staffRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'staffNo',
-        'eName',
-        'aName'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'staffNo',
+    'eName',
+    'aName'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return staff::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return staff::class;
+  }
 }

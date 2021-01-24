@@ -9,27 +9,27 @@ use Illuminate\Queue\SerializesModels;
 
 class applicantUpdate extends Mailable
 {
-    use Queueable, SerializesModels;
+  use Queueable, SerializesModels;
 
-    public $data;
+  public $data;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
+  /**
+   * Create a new message instance.
+   *
+   * @return void
+   */
+  public function __construct($data)
+  {
+    $this->data = $data;
+  }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        return $this->subject('Student Application Update')->markdown('emails.applicantUpdate');
-    }
+  /**
+   * Build the message.
+   *
+   * @return $this
+   */
+  public function build()
+  {
+    return $this->subject('Student Application Update')->markdown('emails.applicantUpdate');
+  }
 }

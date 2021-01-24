@@ -11,16 +11,15 @@ use Response;
 use Flash;
 use PDF;
 
-use App\Models\sches;
 use App\Models\sems;
 use App\Models\years;
+use App\Models\sches;
 use App\Models\levels;
 use App\Models\student;
 use App\Models\batches;
 use App\Models\courses;
-use App\Models\studentsFinancialsCategories;
 use App\Models\studentsFinancialsDiscounts;
-
+use App\Models\studentsFinancialsCategories;
 
 class Controller extends BaseController
 {
@@ -28,42 +27,36 @@ class Controller extends BaseController
 
   public function applicantsDoc()
   {
-
-      return view('docs.applicants');
+    return view('docs.applicants');
   }
 
   public function studentsDoc()
   {
-
-      return view('docs.students');
+    return view('docs.students');
   }
 
   public function staffDoc()
   {
-
-      return view('docs.staff');
+    return view('docs.staff');
   }
 
   public function managementDoc()
   {
-
-      return view('docs.management');
+    return view('docs.management');
   }
 
   public function adminDoc()
   {
-
-      return view('docs.admin');
+    return view('docs.admin');
   }
 
   public function dynamicCoursesOfTeacher(Request $request) // Dynamic Course Show ///////////////////////////////////////////
   {  
+    $classroom_id = $request['classroom_id'];
 
-      $classroom_id = $request['classroom_id'];
+    $teacher_id = $request['teacher_id'];
 
-      $teacher_id = $request['teacher_id'];
-
-      $course = courses::with('sches', 'sems')
+    $course = courses::with('sches', 'sems')
       ->where('classroom_id', '=', $classroom_id)
       ->where('status_id', '=', 2)
       ->where('teacher_id', '=', $teacher_id)
@@ -71,72 +64,72 @@ class Controller extends BaseController
       ->where('end', '>=', today())
       ->get();
 
-      return Response::json($course);
+    return Response::json($course);
   }
 
-  public function dynamicClassroomsOfSupervisor(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
-      
-      $teacher_id = $request->get('teacher_id');
+  public function dynamicClassroomsOfSupervisor(Request $request) // Dynamic Course Show ///////////////////////////////////////////
+  {
+    $teacher_id = $request->get('teacher_id');
 
-      $level_id = $request->get('level_id');
+    $level_id = $request->get('level_id');
 
-      $classrooms = classrooms::with('levels')
+    $classrooms = classrooms::with('levels')
       ->where('teacher_id', '=', $teacher_id)
       ->where('level_id', '=', $level_id)
       ->where('status_id', '=', 2)
       ->get();
 
-      return Response::json($classrooms);
+    return Response::json($classrooms);
   }
 
-  public function dynamiclevel_id(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
+  public function dynamiclevel_id(Request $request) // Dynamic Course Show ///////////////////////////////////////////
+  {
+    $title = $request->get('title');
 
-      $title = $request->get('title');
+    $level = levels::where('title', '=', $title)->get();
 
-      $level = levels::where('title', '=', $title)->get();
-
-      return Response::json($level);
+    return Response::json($level);
   }
 
-  public function dynamictitle(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
+  public function dynamictitle(Request $request) // Dynamic Course Show ///////////////////////////////////////////
+  {
+    $level_id = $request['level_id'];
 
-      $level_id = $request['level_id'];
+    $level = levels::where('id', '=', $level_id)->get();
 
-      $level = levels::where('id', '=', $level_id)->get();
-
-      return Response::json($level);
+    return Response::json($level);
   }
 
-  public function dynamicSFCategory(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
+  public function dynamicSFCategory(Request $request) // Dynamic Course Show ///////////////////////////////////////////
+  {
+    $category_id = $request['category_id'];
 
-      $category_id = $request['category_id'];
+    $category = studentsFinancialsCategories::where('id', '=', $category_id)->get();
 
-      $category = studentsFinancialsCategories::where('id', '=', $category_id)->get();
-
-      return Response::json($category);
+    return Response::json($category);
   }
 
-  public function dynamicFCategoryOfStudent(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
+  public function dynamicFCategoryOfStudent(Request $request) // Dynamic Course Show ///////////////////////////////////////////
+  {
+    $studentNo = $request['studentNo'];
 
-      $studentNo = $request['studentNo'];
+    $ori = strval($studentNo);
+    $med = $ori[0].$ori[1].$ori[2];
+    $final = (int)$med;
 
-      $ori = strval($studentNo);
-      $med = $ori[0].$ori[1].$ori[2];
-      $final = (int)$med;
-
-      $batches = batches::orderBy('batch', 'desc')->get();
-      
-      foreach ($batches as $batch){
-          if ($final >= $batch['batch']){
-              $bat = $batch;
-              break;
-          }
+    $batches = batches::orderBy('batch', 'desc')->get();
+    
+    foreach ($batches as $batch){
+      if ($final >= $batch['batch']){
+        $bat = $batch;
+        break;
       }
+    }
 
-      $student = student::with('classroom')->where('studentNo', $studentNo)->first();
-      $level = $student['classroom']['level_id'];
+    $student = student::with('classroom')->where('studentNo', $studentNo)->first();
+    $level = $student['classroom']['level_id'];
 
-      $category = studentsFinancialsCategories::with('batch', 'level')
+    $category = studentsFinancialsCategories::with('batch', 'level')
       ->where(function ($query) use ($level) {
           $query->where('level_id', '=', $level)
               ->orWhere('level_id', '=', 0);
@@ -144,27 +137,27 @@ class Controller extends BaseController
       ->where('batch_id', '=', $bat['id'])
       ->get();
 
-      return Response::json($category);
+    return Response::json($category);
   }
 
-  public function dynamicSFDiscount(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
+  public function dynamicSFDiscount(Request $request) // Dynamic Course Show ///////////////////////////////////////////
+  {
+    $discount_id = $request['discount_id'];
 
-      $discount_id = $request['discount_id'];
+    $discount = studentsFinancialsDiscounts::where('id', '=', $discount_id)->get();
 
-      $discount = studentsFinancialsDiscounts::where('id', '=', $discount_id)->get();
-
-      return Response::json($discount);
+    return Response::json($discount);
   }
 
-  public function calculator(){ 
+  public function calculator()
+  { 
+    $batches = batches::orderBy('batch', 'DESC')->get();
 
-      $batches = batches::orderBy('batch', 'DESC')->get();
+    $levels = levels::all();
 
-      $levels = levels::all();
+    $discounts = studentsFinancialsDiscounts::all();
 
-      $discounts = studentsFinancialsDiscounts::all();
-
-      return view('calculator.index', compact('batches', 'levels', 'discounts'));
+    return view('calculator.index', compact('batches', 'levels', 'discounts'));
   }
 
   public function calculation(Request $request)

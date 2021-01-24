@@ -62,11 +62,11 @@ They are converted to SQL literals (e.g. escaped). Clients must now specify defa
 
 Before:
 
-    $column->setDefault('Foo\\\\Bar\\\\Baz');
+  $column->setDefault('Foo\\\\Bar\\\\Baz');
 
 After:
 
-    $column->setDefault('Foo\\Bar\\Baz');
+  $column->setDefault('Foo\\Bar\\Baz');
 
 ## Deprecated `Type::*` constants
 
@@ -180,22 +180,22 @@ This method now throws SPL ``UnexpectedValueException`` instead of accidentally 
 
 Before:
 
-    Doctrine\DBAL\Driver\ResultStatement::fetch($fetchMode);
+  Doctrine\DBAL\Driver\ResultStatement::fetch($fetchMode);
 
 After:
 
-    Doctrine\DBAL\Driver\ResultStatement::fetch($fetchMode, $cursorOrientation, $cursorOffset);
+  Doctrine\DBAL\Driver\ResultStatement::fetch($fetchMode, $cursorOrientation, $cursorOffset);
 
 2. ``Doctrine\DBAL\Driver\ResultStatement::fetchAll()`` now has 3 arguments instead of 1, respecting
 ``PDO::fetchAll()`` signature.
 
 Before:
 
-    Doctrine\DBAL\Driver\ResultStatement::fetchAll($fetchMode);
+  Doctrine\DBAL\Driver\ResultStatement::fetchAll($fetchMode);
 
 After:
 
-    Doctrine\DBAL\Driver\ResultStatement::fetch($fetchMode, $fetchArgument, $ctorArgs);
+  Doctrine\DBAL\Driver\ResultStatement::fetch($fetchMode, $fetchArgument, $ctorArgs);
 
 
 ## MINOR BC BREAK: URL-style DSN with percentage sign in password
@@ -311,7 +311,7 @@ This could lead to problems on non english locale systems that required a comma 
 point seperator in Oracle. Since 2.3, using the Oracle Session Init on connection start the
 client session will be altered to set the numeric character to ".,":
 
-    ALTER SESSION SET NLS_NUMERIC_CHARACTERS = '.,'
+  ALTER SESSION SET NLS_NUMERIC_CHARACTERS = '.,'
 
 See [DBAL-345](http://www.doctrine-project.org/jira/browse/DBAL-345) for more details.
 
@@ -326,16 +326,16 @@ If you want to retrieve the driver specific exception, you can retrieve it by ca
 
 Before:
 
-    catch(\PDOException $ex) {
-        // ...
-    }
+  catch(\PDOException $ex) {
+    // ...
+  }
 
 After:
 
-    catch(\Doctrine\DBAL\DBALException $ex) {
-        $pdoException = $ex->getPrevious();
-        // ...
-    }
+  catch(\Doctrine\DBAL\DBALException $ex) {
+    $pdoException = $ex->getPrevious();
+    // ...
+  }
 
 ## Doctrine\DBAL\Connection#setCharsetSQL() removed
 
@@ -345,12 +345,12 @@ connection charset option:
 
 Before:
 
-    $conn = DriverManager::getConnection(array(..));
-    $conn->setCharset('UTF8');
+  $conn = DriverManager::getConnection(array(..));
+  $conn->setCharset('UTF8');
 
 After:
 
-    $conn = DriverManager::getConnection(array('charset' => 'UTF8', ..));
+  $conn = DriverManager::getConnection(array('charset' => 'UTF8', ..));
 
 ## Doctrine\DBAL\Schema\Table#renameColumn() removed
 
@@ -367,11 +367,11 @@ The Filter Schema assets expression is not wrapped in () anymore for the regexp 
 
 Before:
 
-    $config->setFilterSchemaAssetsExpression('foo');
+  $config->setFilterSchemaAssetsExpression('foo');
 
 After:
 
-    $config->setFilterSchemaAssetsExpression('(foo)');
+  $config->setFilterSchemaAssetsExpression('(foo)');
 
 ## Creating MySQL Tables now defaults to UTF-8
 
@@ -410,8 +410,8 @@ The PDO SqlSrv driver now uses the new `SQLServer2008Platform` as default platfo
 This platform uses new features of SQL Server as of version 2008. This also includes a switch
 in the used fields for "text" and "blob" field types to:
 
-    "text" => "VARCHAR(MAX)"
-    "blob" => "VARBINARY(MAX)"
+  "text" => "VARCHAR(MAX)"
+  "blob" => "VARBINARY(MAX)"
 
 Additionally `SQLServerPlatform` in DBAL 2.1 and before used "DATE", "TIME" and "DATETIME2" for dates.
 This types are only available since version 2008 and the introduction of an explicit
@@ -426,27 +426,27 @@ with an offset, since SQLServer 2003 and lower do not support this feature.
 To use the old SQL Server Platform, because you are using SQL Server 2003 and below use
 the following configuration code:
 
-    use Doctrine\DBAL\DriverManager;
-    use Doctrine\DBAL\Platforms\SQLServerPlatform;
-    use Doctrine\DBAL\Platforms\SQLServer2005Platform;
+  use Doctrine\DBAL\DriverManager;
+  use Doctrine\DBAL\Platforms\SQLServerPlatform;
+  use Doctrine\DBAL\Platforms\SQLServer2005Platform;
 
-    // You are using SQL Server 2003 or earlier
-    $conn = DriverManager::getConnection(array(
-        'driver' => 'pdo_sqlsrv',
-        'platform' => new SQLServerPlatform()
-        // .. additional parameters
-    ));
+  // You are using SQL Server 2003 or earlier
+  $conn = DriverManager::getConnection(array(
+    'driver' => 'pdo_sqlsrv',
+    'platform' => new SQLServerPlatform()
+    // .. additional parameters
+  ));
 
-    // You are using SQL Server 2005
-    $conn = DriverManager::getConnection(array(
-        'driver' => 'pdo_sqlsrv',
-        'platform' => new SQLServer2005Platform()
-        // .. additional parameters
-    ));
+  // You are using SQL Server 2005
+  $conn = DriverManager::getConnection(array(
+    'driver' => 'pdo_sqlsrv',
+    'platform' => new SQLServer2005Platform()
+    // .. additional parameters
+  ));
 
-    // You are using SQL Server 2008
-    $conn = DriverManager::getConnection(array(
-        'driver' => 'pdo_sqlsrv',
-        // 2008 is default platform
-        // .. additional parameters
-    ));
+  // You are using SQL Server 2008
+  $conn = DriverManager::getConnection(array(
+    'driver' => 'pdo_sqlsrv',
+    // 2008 is default platform
+    // .. additional parameters
+  ));

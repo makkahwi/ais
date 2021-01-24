@@ -13,32 +13,32 @@ use App\Repositories\BaseRepository;
 
 class attendancesRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'sem_id',
-        'schoolNo',
-        'date',
-        'attendance',
-        'note'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'sem_id',
+    'schoolNo',
+    'date',
+    'attendance',
+    'note'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return attendances::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return attendances::class;
+  }
 }

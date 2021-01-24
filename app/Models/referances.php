@@ -5,41 +5,32 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class referances
- * @package App\Models
- * @version February 20, 2020, 12:46 pm UTC
- *
- * @property string title
- */
 class referances extends Model
 {
-    use SoftDeletes;
+  use SoftDeletes;
 
-    public $table = 'referances';
-    
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+  public $table = 'referances';
+  
+  const CREATED_AT = 'created_at';
+  const UPDATED_AT = 'updated_at';
 
+  protected $dates = ['deleted_at'];
 
-    protected $dates = ['deleted_at'];
+  protected $primaryKey = 'refId';
 
-    protected $primaryKey = 'refId';
+  public $fillable = [
+    'type',
+    'ref'
+  ];
 
-    public $fillable = [
-        'type',
-        'ref'
-    ];
+  protected $casts = [
+    'refId' => 'integer',
+    'type' => 'string',
+    'ref' => 'string',
+  ];
 
-    protected $casts = [
-        'refId' => 'integer',
-        'type' => 'string',
-        'ref' => 'string',
-    ];
-    public static $rules = [
-        'type' => 'required',
-        'ref' => 'required',
-    ];
-
-    
+  public static $rules = [
+    'type' => 'required',
+    'ref' => 'required',
+  ];
 }

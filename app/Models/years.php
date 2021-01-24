@@ -5,43 +5,34 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class years
- * @package App\Models
- * @version February 20, 2020, 12:46 pm UTC
- *
- * @property string title
- */
 class years extends Model
 {
-    use SoftDeletes;
+  use SoftDeletes;
 
-    public $table = 'years';
-    
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+  public $table = 'years';
+  
+  const CREATED_AT = 'created_at';
+  const UPDATED_AT = 'updated_at';
 
+  protected $dates = ['deleted_at'];
 
-    protected $dates = ['deleted_at'];
+  protected $primaryKey = 'id';
 
-    protected $primaryKey = 'id';
+  public $fillable = [
+    'title'
+  ];
 
-    public $fillable = [
-        'title'
-    ];
+  protected $casts = [
+    'id' => 'integer',
+    'title' => 'string'
+  ];
 
-    protected $casts = [
-        'id' => 'integer',
-        'title' => 'string'
-    ];
+  public static $rules = [
+    'title' => 'required'
+  ];
 
-    public static $rules = [
-        'title' => 'required'
-    ];
-
-    public function sems()
-    {
-        return $this->hasMany(sems::class);
-    }
-    
+  public function sems()
+  {
+    return $this->hasMany(sems::class);
+  }
 }

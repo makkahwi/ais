@@ -36,117 +36,117 @@ use function in_array;
  */
 class MultiTenantVisitor implements Visitor
 {
-    /** @var string[] */
-    private $excludedTables = [];
+  /** @var string[] */
+  private $excludedTables = [];
 
-    /** @var string */
-    private $tenantColumnName;
+  /** @var string */
+  private $tenantColumnName;
 
-    /** @var string */
-    private $tenantColumnType = 'integer';
+  /** @var string */
+  private $tenantColumnType = 'integer';
 
-    /**
-     * Name of the federation distribution, defaulting to the tenantColumnName
-     * if not specified.
-     *
-     * @var string
-     */
-    private $distributionName;
+  /**
+   * Name of the federation distribution, defaulting to the tenantColumnName
+   * if not specified.
+   *
+   * @var string
+   */
+  private $distributionName;
 
-    /**
-     * @param string[]    $excludedTables
-     * @param string      $tenantColumnName
-     * @param string|null $distributionName
-     */
-    public function __construct(array $excludedTables = [], $tenantColumnName = 'tenant_id', $distributionName = null)
-    {
-        $this->excludedTables   = $excludedTables;
-        $this->tenantColumnName = $tenantColumnName;
-        $this->distributionName = $distributionName ?: $tenantColumnName;
+  /**
+   * @param string[]  $excludedTables
+   * @param string    $tenantColumnName
+   * @param string|null $distributionName
+   */
+  public function __construct(array $excludedTables = [], $tenantColumnName = 'tenant_id', $distributionName = null)
+  {
+    $this->excludedTables   = $excludedTables;
+    $this->tenantColumnName = $tenantColumnName;
+    $this->distributionName = $distributionName ?: $tenantColumnName;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function acceptTable(Table $table)
+  {
+    if (in_array($table->getName(), $this->excludedTables)) {
+      return;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function acceptTable(Table $table)
-    {
-        if (in_array($table->getName(), $this->excludedTables)) {
-            return;
-        }
+    $table->addColumn($this->tenantColumnName, $this->tenantColumnType, [
+      'default' => "federation_filtering_value('" . $this->distributionName . "')",
+    ]);
 
-        $table->addColumn($this->tenantColumnName, $this->tenantColumnType, [
-            'default' => "federation_filtering_value('" . $this->distributionName . "')",
-        ]);
+    $clusteredIndex = $this->getClusteredIndex($table);
 
-        $clusteredIndex = $this->getClusteredIndex($table);
+    $indexColumns   = $clusteredIndex->getColumns();
+    $indexColumns[] = $this->tenantColumnName;
 
-        $indexColumns   = $clusteredIndex->getColumns();
-        $indexColumns[] = $this->tenantColumnName;
+    if ($clusteredIndex->isPrimary()) {
+      $table->dropPrimaryKey();
+      $table->setPrimaryKey($indexColumns);
+    } else {
+      $table->dropIndex($clusteredIndex->getName());
+      $table->addIndex($indexColumns, $clusteredIndex->getName());
+      $table->getIndex($clusteredIndex->getName())->addFlag('clustered');
+    }
+  }
 
-        if ($clusteredIndex->isPrimary()) {
-            $table->dropPrimaryKey();
-            $table->setPrimaryKey($indexColumns);
-        } else {
-            $table->dropIndex($clusteredIndex->getName());
-            $table->addIndex($indexColumns, $clusteredIndex->getName());
-            $table->getIndex($clusteredIndex->getName())->addFlag('clustered');
-        }
+  /**
+   * @param Table $table
+   *
+   * @return Index
+   *
+   * @throws RuntimeException
+   */
+  private function getClusteredIndex($table)
+  {
+    foreach ($table->getIndexes() as $index) {
+      if ($index->isPrimary() && ! $index->hasFlag('nonclustered')) {
+        return $index;
+      }
+
+      if ($index->hasFlag('clustered')) {
+        return $index;
+      }
     }
 
-    /**
-     * @param Table $table
-     *
-     * @return Index
-     *
-     * @throws RuntimeException
-     */
-    private function getClusteredIndex($table)
-    {
-        foreach ($table->getIndexes() as $index) {
-            if ($index->isPrimary() && ! $index->hasFlag('nonclustered')) {
-                return $index;
-            }
+    throw new RuntimeException('No clustered index found on table ' . $table->getName());
+  }
 
-            if ($index->hasFlag('clustered')) {
-                return $index;
-            }
-        }
+  /**
+   * {@inheritdoc}
+   */
+  public function acceptSchema(Schema $schema)
+  {
+  }
 
-        throw new RuntimeException('No clustered index found on table ' . $table->getName());
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function acceptColumn(Table $table, Column $column)
+  {
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function acceptSchema(Schema $schema)
-    {
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
+  {
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function acceptColumn(Table $table, Column $column)
-    {
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function acceptIndex(Table $table, Index $index)
+  {
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function acceptIndex(Table $table, Index $index)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function acceptSequence(Sequence $sequence)
-    {
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function acceptSequence(Sequence $sequence)
+  {
+  }
 }

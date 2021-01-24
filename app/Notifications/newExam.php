@@ -9,64 +9,64 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class newExam extends Notification
 {
-    use Queueable;
+  use Queueable;
 
-    private $data;
+  private $data;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
+  /**
+   * Create a new notification instance.
+   *
+   * @return void
+   */
+  public function __construct($data)
+  {
+    $this->data = $data;
+  }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return ['mail', 'database'];
-    }
+  /**
+   * Get the notification's delivery channels.
+   *
+   * @param  mixed  $notifiable
+   * @return array
+   */
+  public function via($notifiable)
+  {
+    return ['mail', 'database'];
+  }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->to($this->data['to'])
-                    ->line('This is to norify you that the exams table was created. You can login to system to check it')
-                    ->action('Login', url('/exams'))
-                    ->line($this->data['id'])
-                    ->line('Good Luck!');
-    }
+  /**
+   * Get the mail representation of the notification.
+   *
+   * @param  mixed  $notifiable
+   * @return \Illuminate\Notifications\Messages\MailMessage
+   */
+  public function toMail($notifiable)
+  {
+    return (new MailMessage)
+      ->to($this->data['to'])
+      ->line('This is to norify you that the exams table was created. You can login to system to check it')
+      ->action('Login', url('/exams'))
+      ->line($this->data['id'])
+      ->line('Good Luck!');
+  }
 
-    public function toDatabase()
-    {
-        return [
-            'id' => $this->data['id']
-        ];
-    }
+  public function toDatabase()
+  {
+    return [
+        'id' => $this->data['id']
+    ];
+  }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
-    }
+  /**
+   * Get the array representation of the notification.
+   *
+   * @param  mixed  $notifiable
+   * @return array
+   */
+  public function toArray($notifiable)
+  {
+    return [
+        //
+    ];
+  }
 }

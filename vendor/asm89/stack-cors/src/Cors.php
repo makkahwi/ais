@@ -17,45 +17,45 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Cors implements HttpKernelInterface
 {
-    /**
-     * @var \Symfony\Component\HttpKernel\HttpKernelInterface
-     */
-    private $app;
+  /**
+   * @var \Symfony\Component\HttpKernel\HttpKernelInterface
+   */
+  private $app;
 
-    /**
-     * @var \Asm89\Stack\CorsService
-     */
-    private $cors;
+  /**
+   * @var \Asm89\Stack\CorsService
+   */
+  private $cors;
 
-    private $defaultOptions = array(
-        'allowedHeaders'         => array(),
-        'allowedMethods'         => array(),
-        'allowedOrigins'         => array(),
-        'allowedOriginsPatterns' => array(),
-        'exposedHeaders'         => array(),
-        'maxAge'                 => 0,
-        'supportsCredentials'    => false,
-    );
+  private $defaultOptions = array(
+    'allowedHeaders'     => array(),
+    'allowedMethods'     => array(),
+    'allowedOrigins'     => array(),
+    'allowedOriginsPatterns' => array(),
+    'exposedHeaders'     => array(),
+    'maxAge'         => 0,
+    'supportsCredentials'  => false,
+  );
 
-    public function __construct(HttpKernelInterface $app, array $options = array())
-    {
-        $this->app  = $app;
-        $this->cors = new CorsService(array_merge($this->defaultOptions, $options));
+  public function __construct(HttpKernelInterface $app, array $options = array())
+  {
+    $this->app  = $app;
+    $this->cors = new CorsService(array_merge($this->defaultOptions, $options));
+  }
+
+  public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+  {
+    if ($this->cors->isPreflightRequest($request)) {
+      $response = $this->cors->handlePreflightRequest($request);
+      return $this->cors->varyHeader($response, 'Access-Control-Request-Method');
     }
 
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
-    {
-        if ($this->cors->isPreflightRequest($request)) {
-            $response = $this->cors->handlePreflightRequest($request);
-            return $this->cors->varyHeader($response, 'Access-Control-Request-Method');
-        }
+    $response = $this->app->handle($request, $type, $catch);
 
-        $response = $this->app->handle($request, $type, $catch);
-
-        if ($request->getMethod() === 'OPTIONS') {
-            $this->cors->varyHeader($response, 'Access-Control-Request-Method');
-        }
-
-        return $this->cors->addActualRequestHeaders($response, $request);
+    if ($request->getMethod() === 'OPTIONS') {
+      $this->cors->varyHeader($response, 'Access-Control-Request-Method');
     }
+
+    return $this->cors->addActualRequestHeaders($response, $request);
+  }
 }

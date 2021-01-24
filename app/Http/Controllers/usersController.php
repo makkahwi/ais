@@ -6,28 +6,26 @@ use App\Http\Requests\CreateusersRequest;
 use App\Http\Requests\UpdateusersRequest;
 use App\Repositories\usersRepository;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
+use App;
 
 use Illuminate\Notifications\Notifiable;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\requestStaffStudentDataUpdate;
 
-use App\Models\relatives;
-use App\Models\contacts;
+use App\Models\sems;
 use App\Models\users;
 use App\Models\staff;
-use Illuminate\Support\Facades\Hash;
-
 use App\Models\roles;
-use App\Models\student;
 use App\Models\levels;
-use App\Models\sems;
+use App\Models\student;
+use App\Models\contacts;
 use App\Models\statuses;
-
-use App;
+use App\Models\relatives;
 
 class usersController extends AppBaseController
 {
@@ -50,6 +48,8 @@ class usersController extends AppBaseController
    */
   public function index(Request $request)
   {
+    $this->authorize('viewAny', users::class);
+
     $currentSem = Sems::with('year')
       ->where('sems.start', '<=', today())
       ->where('end', '>=', today())->first();
@@ -96,74 +96,102 @@ class usersController extends AppBaseController
 
     // Update Files
 
-    if ($data['photo'] != "None") {
+    if ($data['photo'] != "None")
+    {
       $splitPath = explode($data['id']."_", $data['photo']);
       $path = $splitPath[0];
     }
-    else {
+    else
+    {
       $random = mt_rand(100, 99999999);
-      if ($data['id'] > 999999) {
+      if ($data['id'] > 999999)
+      {
         $studentNo = $data['id'];
         $path = 'docs/students/'.$studentNo.'-'.$random.'/';
       }
-      else {
+      else
+      {
         $staffNo = $data['id'];
         $path = 'docs/staff/'.$staffNo.'-'.$random.'/';
       }
     }
 
-    if ($files = $request->file('photoNew')) {
+    if ($files = $request->file('photoNew'))
+    {
       $photo = $data['id'] . "_" . "NewPhoto" . "." . $files->getClientOriginalExtension();
       $files->move($path, $photo);
       $data += ['photoNewf' => $path.$photo];
     }
-    else {$data += ['photoNewf' => $data['photo']];}
+    else
+    {
+      $data += ['photoNewf' => $data['photo']];
+    }
 
 
     $splitPath = explode($data['id']."_", $data['passport']); // Passport
 
-    if ($files = $request->file('passportNew')) {
+    if ($files = $request->file('passportNew'))
+    {
       $passport = $data['id'] . "_" . "NewPassport" . "." . $files->getClientOriginalExtension();
       $files->move($path, $passport);
       $data += ['passportNewf' => $path.$passport];
     }
-    else {$data += ['passportNewf' => $data['passport']];}
+    else
+    {
+      $data += ['passportNewf' => $data['passport']];
+    }
 
     $splitPath = explode($data['id']."_", $data['visa']); // Visa
 
-    if ($files = $request->file('visaNew')) {
+    if ($files = $request->file('visaNew'))
+    {
       $visa = $data['id'] . "_" . "NewVisa" . "." . $files->getClientOriginalExtension();
       $files->move($path, $visa);
       $data += ['visaNewf' => $path.$visa];
     }
-    else {$data += ['visaNewf' => $data['visa']];}
+    else
+    {
+      $data += ['visaNewf' => $data['visa']];
+    }
 
     $splitPath = explode($data['id']."_", $data['doc1']); // Academic_Certificates / School_Certificate
 
-    if ($files = $request->file('doc1New')) {
+    if ($files = $request->file('doc1New'))
+    {
       $doc1 = $data['id'] . "_" . "NewDoc1" . "." . $files->getClientOriginalExtension();
       $files->move($path, $doc1);
       $data += ['doc1Newf' => $path.$doc1];
     }
-    else {$data += ['doc1Newf' => $data['doc1']];}
+    else
+    {
+      $data += ['doc1Newf' => $data['doc1']];
+    }
 
     $splitPath = explode($data['id']."_", $data['doc2']); // Health_Insurance / Birth_Certificate
 
-    if ($files = $request->file('doc2New')) {
+    if ($files = $request->file('doc2New'))
+    {
       $doc2 = $data['id'] . "_" . "NewDoc2" . "." . $files->getClientOriginalExtension();
       $files->move($path, $doc2);
       $data += ['doc2Newf' => $path.$doc2];
     }
-    else {$data += ['doc2Newf' => $data['doc2']];}
+    else
+    {
+      $data += ['doc2Newf' => $data['doc2']];
+    }
 
     $splitPath = explode($data['id']."_", $data['doc3']); // Experiance_Certificates
 
-    if ($files = $request->file('doc3New')) {
+    if ($files = $request->file('doc3New'))
+    {
       $doc3 = $data['id'] . "_" . "NewDoc3" . "." . $files->getClientOriginalExtension();
       $files->move($path, $doc3);
       $data += ['doc3Newf' => $path.$doc3];
     }
-    else {$data += ['doc3Newf' => $data['doc3']];}
+    else
+    {
+      $data += ['doc3Newf' => $data['doc3']];
+    }
 
     $secretary = users::where('role_id', '=', 4)->where('status_id', '=', 2)->get('email');
 
@@ -216,7 +244,6 @@ class usersController extends AppBaseController
 
     if (empty($users)) {
       Flash::error('Users not found');
-
       return redirect(route('users.index'));
     }
 

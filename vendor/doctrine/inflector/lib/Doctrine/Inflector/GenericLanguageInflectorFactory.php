@@ -9,57 +9,57 @@ use function array_unshift;
 
 abstract class GenericLanguageInflectorFactory implements LanguageInflectorFactory
 {
-    /** @var Ruleset[] */
-    private $singularRulesets = [];
+  /** @var Ruleset[] */
+  private $singularRulesets = [];
 
-    /** @var Ruleset[] */
-    private $pluralRulesets = [];
+  /** @var Ruleset[] */
+  private $pluralRulesets = [];
 
-    final public function __construct()
-    {
-        $this->singularRulesets[] = $this->getSingularRuleset();
-        $this->pluralRulesets[]   = $this->getPluralRuleset();
+  final public function __construct()
+  {
+    $this->singularRulesets[] = $this->getSingularRuleset();
+    $this->pluralRulesets[]   = $this->getPluralRuleset();
+  }
+
+  final public function build() : Inflector
+  {
+    return new Inflector(
+      new CachedWordInflector(new RulesetInflector(
+        ...$this->singularRulesets
+      )),
+      new CachedWordInflector(new RulesetInflector(
+        ...$this->pluralRulesets
+      ))
+    );
+  }
+
+  final public function withSingularRules(?Ruleset $singularRules, bool $reset = false) : LanguageInflectorFactory
+  {
+    if ($reset) {
+      $this->singularRulesets = [];
     }
 
-    final public function build() : Inflector
-    {
-        return new Inflector(
-            new CachedWordInflector(new RulesetInflector(
-                ...$this->singularRulesets
-            )),
-            new CachedWordInflector(new RulesetInflector(
-                ...$this->pluralRulesets
-            ))
-        );
+    if ($singularRules instanceof Ruleset) {
+      array_unshift($this->singularRulesets, $singularRules);
     }
 
-    final public function withSingularRules(?Ruleset $singularRules, bool $reset = false) : LanguageInflectorFactory
-    {
-        if ($reset) {
-            $this->singularRulesets = [];
-        }
+    return $this;
+  }
 
-        if ($singularRules instanceof Ruleset) {
-            array_unshift($this->singularRulesets, $singularRules);
-        }
-
-        return $this;
+  final public function withPluralRules(?Ruleset $pluralRules, bool $reset = false) : LanguageInflectorFactory
+  {
+    if ($reset) {
+      $this->pluralRulesets = [];
     }
 
-    final public function withPluralRules(?Ruleset $pluralRules, bool $reset = false) : LanguageInflectorFactory
-    {
-        if ($reset) {
-            $this->pluralRulesets = [];
-        }
-
-        if ($pluralRules instanceof Ruleset) {
-            array_unshift($this->pluralRulesets, $pluralRules);
-        }
-
-        return $this;
+    if ($pluralRules instanceof Ruleset) {
+      array_unshift($this->pluralRulesets, $pluralRules);
     }
 
-    abstract protected function getSingularRuleset() : Ruleset;
+    return $this;
+  }
 
-    abstract protected function getPluralRuleset() : Ruleset;
+  abstract protected function getSingularRuleset() : Ruleset;
+
+  abstract protected function getPluralRuleset() : Ruleset;
 }

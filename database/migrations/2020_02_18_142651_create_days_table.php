@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateDaysTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('days', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title');
-            $table->softDeletes();
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('days', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->string('title');
+      $table->softDeletes();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('days');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('days');
+  }
 }

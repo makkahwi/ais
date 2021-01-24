@@ -21,123 +21,123 @@ use function is_string;
  */
 class Statement implements IteratorAggregate, DriverStatement, Result
 {
-    /**
-     * The SQL statement.
-     *
-     * @var string
-     */
-    protected $sql;
+  /**
+   * The SQL statement.
+   *
+   * @var string
+   */
+  protected $sql;
 
-    /**
-     * The bound parameters.
-     *
-     * @var mixed[]
-     */
-    protected $params = [];
+  /**
+   * The bound parameters.
+   *
+   * @var mixed[]
+   */
+  protected $params = [];
 
-    /**
-     * The parameter types.
-     *
-     * @var int[]|string[]
-     */
-    protected $types = [];
+  /**
+   * The parameter types.
+   *
+   * @var int[]|string[]
+   */
+  protected $types = [];
 
-    /**
-     * The underlying driver statement.
-     *
-     * @var \Doctrine\DBAL\Driver\Statement
-     */
-    protected $stmt;
+  /**
+   * The underlying driver statement.
+   *
+   * @var \Doctrine\DBAL\Driver\Statement
+   */
+  protected $stmt;
 
-    /**
-     * The underlying database platform.
-     *
-     * @var AbstractPlatform
-     */
-    protected $platform;
+  /**
+   * The underlying database platform.
+   *
+   * @var AbstractPlatform
+   */
+  protected $platform;
 
-    /**
-     * The connection this statement is bound to and executed on.
-     *
-     * @var Connection
-     */
-    protected $conn;
+  /**
+   * The connection this statement is bound to and executed on.
+   *
+   * @var Connection
+   */
+  protected $conn;
 
-    /**
-     * Creates a new <tt>Statement</tt> for the given SQL and <tt>Connection</tt>.
-     *
-     * @internal The statement can be only instantiated by {@link Connection}.
-     *
-     * @param string     $sql  The SQL of the statement.
-     * @param Connection $conn The connection on which the statement should be executed.
-     */
-    public function __construct($sql, Connection $conn)
-    {
-        $this->sql      = $sql;
-        $this->stmt     = $conn->getWrappedConnection()->prepare($sql);
-        $this->conn     = $conn;
-        $this->platform = $conn->getDatabasePlatform();
+  /**
+   * Creates a new <tt>Statement</tt> for the given SQL and <tt>Connection</tt>.
+   *
+   * @internal The statement can be only instantiated by {@link Connection}.
+   *
+   * @param string   $sql  The SQL of the statement.
+   * @param Connection $conn The connection on which the statement should be executed.
+   */
+  public function __construct($sql, Connection $conn)
+  {
+    $this->sql    = $sql;
+    $this->stmt   = $conn->getWrappedConnection()->prepare($sql);
+    $this->conn   = $conn;
+    $this->platform = $conn->getDatabasePlatform();
+  }
+
+  /**
+   * Binds a parameter value to the statement.
+   *
+   * The value can optionally be bound with a PDO binding type or a DBAL mapping type.
+   * If bound with a DBAL mapping type, the binding type is derived from the mapping
+   * type and the value undergoes the conversion routines of the mapping type before
+   * being bound.
+   *
+   * @param string|int $param The name or position of the parameter.
+   * @param mixed    $value The value of the parameter.
+   * @param mixed    $type  Either a PDO binding type or a DBAL mapping type name or instance.
+   *
+   * @return bool TRUE on success, FALSE on failure.
+   */
+  public function bindValue($param, $value, $type = ParameterType::STRING)
+  {
+    $this->params[$param] = $value;
+    $this->types[$param]  = $type;
+    if ($type !== null) {
+      if (is_string($type)) {
+        $type = Type::getType($type);
+      }
+
+      if ($type instanceof Type) {
+        $value     = $type->convertToDatabaseValue($value, $this->platform);
+        $bindingType = $type->getBindingType();
+      } else {
+        $bindingType = $type;
+      }
+
+      return $this->stmt->bindValue($param, $value, $bindingType);
     }
 
-    /**
-     * Binds a parameter value to the statement.
-     *
-     * The value can optionally be bound with a PDO binding type or a DBAL mapping type.
-     * If bound with a DBAL mapping type, the binding type is derived from the mapping
-     * type and the value undergoes the conversion routines of the mapping type before
-     * being bound.
-     *
-     * @param string|int $param The name or position of the parameter.
-     * @param mixed      $value The value of the parameter.
-     * @param mixed      $type  Either a PDO binding type or a DBAL mapping type name or instance.
-     *
-     * @return bool TRUE on success, FALSE on failure.
-     */
-    public function bindValue($param, $value, $type = ParameterType::STRING)
-    {
-        $this->params[$param] = $value;
-        $this->types[$param]  = $type;
-        if ($type !== null) {
-            if (is_string($type)) {
-                $type = Type::getType($type);
-            }
+    return $this->stmt->bindValue($param, $value);
+  }
 
-            if ($type instanceof Type) {
-                $value       = $type->convertToDatabaseValue($value, $this->platform);
-                $bindingType = $type->getBindingType();
-            } else {
-                $bindingType = $type;
-            }
+  /**
+   * Binds a parameter to a value by reference.
+   *
+   * Binding a parameter by reference does not support DBAL mapping types.
+   *
+   * @param string|int $param  The name or position of the parameter.
+   * @param mixed    $variable The reference to the variable to bind.
+   * @param int    $type   The PDO binding type.
+   * @param int|null   $length   Must be specified when using an OUT bind
+   *               so that PHP allocates enough memory to hold the returned value.
+   *
+   * @return bool TRUE on success, FALSE on failure.
+   */
+  public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null)
+  {
+    $this->params[$param] = $variable;
+    $this->types[$param]  = $type;
 
-            return $this->stmt->bindValue($param, $value, $bindingType);
-        }
+    return $this->stmt->bindParam($param, $variable, $type, $length);
+  }
 
-        return $this->stmt->bindValue($param, $value);
-    }
-
-    /**
-     * Binds a parameter to a value by reference.
-     *
-     * Binding a parameter by reference does not support DBAL mapping types.
-     *
-     * @param string|int $param    The name or position of the parameter.
-     * @param mixed      $variable The reference to the variable to bind.
-     * @param int        $type     The PDO binding type.
-     * @param int|null   $length   Must be specified when using an OUT bind
-     *                             so that PHP allocates enough memory to hold the returned value.
-     *
-     * @return bool TRUE on success, FALSE on failure.
-     */
-    public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null)
-    {
-        $this->params[$param] = $variable;
-        $this->types[$param]  = $type;
-
-        return $this->stmt->bindParam($param, $variable, $type, $length);
-    }
-
-    /**
-     * Executes the statement with the currently bound parameters.
+  /**
+   * Executes the statement with the currently bound parameters.
      *
      * @param mixed[]|null $params
      *

@@ -5,95 +5,78 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class students
- * @package App\Models
- * @version February 20, 2020, 12:45 pm UTC
- *
- * @property integer studentNo
- * @property string leaveDate
- * @property string eName
- * @property string aName
- * @property string dob
- * @property string gender
- * @property integer classroom_id
- * @property string financial
- * @property string trans
- * @property string visa
- */
 class student extends Model
 {
-    use SoftDeletes;
+  use SoftDeletes;
 
-    public $table = 'students';
-    
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+  public $table = 'students';
+  
+  const CREATED_AT = 'created_at';
+  const UPDATED_AT = 'updated_at';
 
-    protected $dates = ['deleted_at'];
+  protected $dates = ['deleted_at'];
 
-    protected $primaryKey = 'id';
+  protected $primaryKey = 'id';
 
-    public $fillable = [
-        'studentNo',
-        'eName',
-        'aName',
-        'classroom_id',
-        'sponsor',
-        'tuitiondiscounts',
-        'tuitionfreq',
-        'financial',
-        'trans'
-    ];
+  public $fillable = [
+    'studentNo',
+    'eName',
+    'aName',
+    'classroom_id',
+    'sponsor',
+    'tuitiondiscounts',
+    'tuitionfreq',
+    'financial',
+    'trans'
+  ];
 
-    protected $casts = [
-        'id' => 'integer',
-        'studentNo' => 'integer',
-        'eName' => 'string',
-        'aName' => 'string',
-        'classroom_id' => 'integer',
-        'sponsor' => 'string',
-        'tuitiondiscounts' => 'string',
-        'tuitionfreq' => 'boolean',
-        'financial' => 'boolean',
-        'trans' => 'boolean'
-    ];
+  protected $casts = [
+    'id' => 'integer',
+    'studentNo' => 'integer',
+    'eName' => 'string',
+    'aName' => 'string',
+    'classroom_id' => 'integer',
+    'sponsor' => 'string',
+    'tuitiondiscounts' => 'string',
+    'tuitionfreq' => 'boolean',
+    'financial' => 'boolean',
+    'trans' => 'boolean'
+  ];
 
-    public static $rules = [
-        'studentNo' => 'required',
-        'eName' => 'required',
-        'aName' => 'required',
-        'classroom_id' => 'required',
-        'sponsor' => 'required',
-        'tuitiondiscounts' => 'required',
-        'tuitionfreq' => 'required',
-        'financial' => 'required',
-        'trans' => 'required',
-    ];
+  public static $rules = [
+    'studentNo' => 'required',
+    'eName' => 'required',
+    'aName' => 'required',
+    'classroom_id' => 'required',
+    'sponsor' => 'required',
+    'tuitiondiscounts' => 'required',
+    'tuitionfreq' => 'required',
+    'financial' => 'required',
+    'trans' => 'required',
+  ];
 
-    public function user()
-    {
-        return $this->belongsTo(users::class, 'studentNo', 'schoolNo');
-    }
+  public function user()
+  {
+    return $this->belongsTo(users::class, 'studentNo', 'schoolNo');
+  }
 
-    public function classroom()
-    {
-        return $this->belongsTo(classrooms::class);
-    }
+  public function classroom()
+  {
+    return $this->belongsTo(classrooms::class);
+  }
 
-    public function marks()
-    {
-        return $this->hasMany(marks::class, 'studentNo', 'studentNo');
-    }
+  public function marks()
+  {
+    return $this->hasMany(marks::class, 'studentNo', 'studentNo');
+  }
 
-    public function dues()
-    {
-        return $this->hasMany(studentsFinancials::class, 'studentNo', 'studentNo');
-    }
+  public function dues()
+  {
+    return $this->hasMany(studentsFinancials::class, 'studentNo', 'studentNo');
+  }
 
-    public function payments()
-    {
-        return $this->hasMany(studentsPayments::class, 'studentNo', 'studentNo');
-    }
-    
+  public function payments()
+  {
+    return $this->hasMany(studentsPayments::class, 'studentNo', 'studentNo');
+  }
 }

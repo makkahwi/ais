@@ -18,11 +18,13 @@ class studentsFinancialsCategoriesController extends AppBaseController
 {
   public function __construct()
   {
-      //
+    //
   }
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', studentsFinancialsCategories::class);
+    
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())->first();
@@ -53,8 +55,8 @@ class studentsFinancialsCategoriesController extends AppBaseController
     
     $batch = $request['batch_id'];
     
-    foreach($list as $y) {
-        
+    foreach($list as $y)
+    {
       $frequency = $request['frequency'.$y];
       $title = $request['title'.$y];
       $level = $request['level_id'.$y];

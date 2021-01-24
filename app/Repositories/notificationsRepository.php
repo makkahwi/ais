@@ -13,32 +13,32 @@ use App\Repositories\BaseRepository;
 
 class notificationsRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'type',
-        'notifiable_type',
-        'notifiable_id',
-        'data',
-        'read_at'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'type',
+    'notifiable_type',
+    'notifiable_id',
+    'data',
+    'read_at'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return notifications::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return notifications::class;
+  }
 }

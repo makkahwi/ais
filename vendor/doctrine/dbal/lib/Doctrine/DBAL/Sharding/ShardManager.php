@@ -22,55 +22,55 @@ namespace Doctrine\DBAL\Sharding;
  */
 interface ShardManager
 {
-    /**
-     * Selects global database with global data.
-     *
-     * This is the default database that is connected when no shard is
-     * selected.
-     *
-     * @return void
-     */
-    public function selectGlobal();
+  /**
+   * Selects global database with global data.
+   *
+   * This is the default database that is connected when no shard is
+   * selected.
+   *
+   * @return void
+   */
+  public function selectGlobal();
 
-    /**
-     * Selects the shard against which the queries after this statement will be issued.
-     *
-     * @param string $distributionValue
-     *
-     * @return void
-     *
-     * @throws ShardingException If no value is passed as shard identifier.
-     */
-    public function selectShard($distributionValue);
+  /**
+   * Selects the shard against which the queries after this statement will be issued.
+   *
+   * @param string $distributionValue
+   *
+   * @return void
+   *
+   * @throws ShardingException If no value is passed as shard identifier.
+   */
+  public function selectShard($distributionValue);
 
-    /**
-     * Gets the distribution value currently used for sharding.
-     *
-     * @return string|null
-     */
-    public function getCurrentDistributionValue();
+  /**
+   * Gets the distribution value currently used for sharding.
+   *
+   * @return string|null
+   */
+  public function getCurrentDistributionValue();
 
-    /**
-     * Gets information about the amount of shards and other details.
-     *
-     * Format is implementation specific, each shard is one element and has an
-     * 'id' attribute at least.
-     *
-     * @return mixed[][]
-     */
-    public function getShards();
+  /**
+   * Gets information about the amount of shards and other details.
+   *
+   * Format is implementation specific, each shard is one element and has an
+   * 'id' attribute at least.
+   *
+   * @return mixed[][]
+   */
+  public function getShards();
 
-    /**
-     * Queries all shards in undefined order and return the results appended to
-     * each other. Restore the previous distribution value after execution.
-     *
-     * Using {@link Connection::fetchAll()} to retrieve rows internally.
-     *
-     * @param string         $sql
-     * @param mixed[]        $params
-     * @param int[]|string[] $types
-     *
-     * @return mixed[]
-     */
-    public function queryAll($sql, array $params, array $types);
+  /**
+   * Queries all shards in undefined order and return the results appended to
+   * each other. Restore the previous distribution value after execution.
+   *
+   * Using {@link Connection::fetchAll()} to retrieve rows internally.
+   *
+   * @param string     $sql
+   * @param mixed[]    $params
+   * @param int[]|string[] $types
+   *
+   * @return mixed[]
+   */
+  public function queryAll($sql, array $params, array $types);
 }

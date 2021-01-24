@@ -13,34 +13,34 @@ use App\Repositories\BaseRepository;
 
 class semsRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'title',
-        'year_id',
-        'start',
-        'join',
-        'results',
-        'resultsDone',
-        'end'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'title',
+    'year_id',
+    'start',
+    'join',
+    'results',
+    'resultsDone',
+    'end'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return sems::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return sems::class;
+  }
 }

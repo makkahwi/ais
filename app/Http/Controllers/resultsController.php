@@ -10,18 +10,15 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
-use App\Models\marks;
-use App\Models\markstypes;
-use App\Models\sches;
-
 use App\Models\sems;
-use App\Models\classrooms;
 use App\Models\years;
+use App\Models\marks;
+use App\Models\sches;
 use App\Models\levels;
 use App\Models\courses;
 use App\Models\student;
-
-
+use App\Models\classrooms;
+use App\Models\markstypes;
 
 class resultsController extends AppBaseController
 {
@@ -43,6 +40,8 @@ class resultsController extends AppBaseController
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', marks::class);
+
     $currentSem = sems::with('year')
       ->where('sems.start', '<=', today())
       ->where('end', '>=', today())
@@ -141,7 +140,6 @@ class resultsController extends AppBaseController
 
     if (empty($mark)) {
       Flash::error('The Result was not found<br><br>بيانات النتيجة المطلوبة غير موجودة');
-
       return redirect(route('results.index'));
     }
 
@@ -172,7 +170,6 @@ class resultsController extends AppBaseController
 
     if (empty($marks)) {
       Flash::error('The Result was not found<br><br>بيانات النتيجة المطلوبة غير موجودة');
-
       return redirect(route('results.index'));
     }
 

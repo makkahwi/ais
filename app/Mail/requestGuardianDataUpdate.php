@@ -9,27 +9,27 @@ use Illuminate\Queue\SerializesModels;
 
 class requestGuardianDataUpdate extends Mailable
 {
-    use Queueable, SerializesModels;
+  use Queueable, SerializesModels;
 
-    public $data;
+  public $data;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
+  /**
+   * Create a new message instance.
+   *
+   * @return void
+   */
+  public function __construct($data)
+  {
+    $this->data = $data;
+  }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        return $this->subject('Request Relative Data Update')->markdown('emails.requestupdater');
-    }
+  /**
+   * Build the message.
+   *
+   * @return $this
+   */
+  public function build()
+  {
+    return $this->subject('Request Relative Data Update')->markdown('emails.requestupdater');
+  }
 }

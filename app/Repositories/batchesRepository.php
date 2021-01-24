@@ -13,28 +13,28 @@ use App\Repositories\BaseRepository;
 
 class batchesRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'batch',
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'batch',
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return batches::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return batches::class;
+  }
 }

@@ -10,61 +10,61 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class DateImmutableType extends DateType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return Types::DATE_IMMUTABLE;
+  /**
+   * {@inheritdoc}
+   */
+  public function getName()
+  {
+    return Types::DATE_IMMUTABLE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function convertToDatabaseValue($value, AbstractPlatform $platform)
+  {
+    if ($value === null) {
+      return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
-    {
-        if ($value === null) {
-            return $value;
-        }
-
-        if ($value instanceof DateTimeImmutable) {
-            return $value->format($platform->getDateFormatString());
-        }
-
-        throw ConversionException::conversionFailedInvalidType(
-            $value,
-            $this->getName(),
-            ['null', DateTimeImmutable::class]
-        );
+    if ($value instanceof DateTimeImmutable) {
+      return $value->format($platform->getDateFormatString());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
-    {
-        if ($value === null || $value instanceof DateTimeImmutable) {
-            return $value;
-        }
+    throw ConversionException::conversionFailedInvalidType(
+      $value,
+      $this->getName(),
+      ['null', DateTimeImmutable::class]
+    );
+  }
 
-        $dateTime = DateTimeImmutable::createFromFormat('!' . $platform->getDateFormatString(), $value);
-
-        if (! $dateTime) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateFormatString()
-            );
-        }
-
-        return $dateTime;
+  /**
+   * {@inheritdoc}
+   */
+  public function convertToPHPValue($value, AbstractPlatform $platform)
+  {
+    if ($value === null || $value instanceof DateTimeImmutable) {
+      return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
-    {
-        return true;
+    $dateTime = DateTimeImmutable::createFromFormat('!' . $platform->getDateFormatString(), $value);
+
+    if (! $dateTime) {
+      throw ConversionException::conversionFailedFormat(
+        $value,
+        $this->getName(),
+        $platform->getDateFormatString()
+      );
     }
+
+    return $dateTime;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function requiresSQLCommentHint(AbstractPlatform $platform)
+  {
+    return true;
+  }
 }

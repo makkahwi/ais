@@ -6,33 +6,33 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMarksTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('marks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('type_id');
-            $table->unsignedBigInteger('studentNo');
-            $table->float('markValue');
-            $table->text('note')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-            $table->foreign('type_id')->references('id')->on('markstypes')->onDelete('cascade');
-            $table->foreign('studentNo')->references('studentNo')->on('students')->onDelete('cascade');
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('marks', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->unsignedBigInteger('type_id');
+      $table->unsignedBigInteger('studentNo');
+      $table->float('markValue');
+      $table->text('note')->nullable();
+      $table->softDeletes();
+      $table->timestamps();
+      $table->foreign('type_id')->references('id')->on('markstypes')->onDelete('cascade');
+      $table->foreign('studentNo')->references('studentNo')->on('students')->onDelete('cascade');
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('marks');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('marks');
+  }
 }

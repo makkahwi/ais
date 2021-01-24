@@ -10,11 +10,11 @@
 @can ('viewAny', 'App\Models\statuses')
   <li class="treeview {{ Request::is('days*') ? 'active' : '' }} {{ Request::is('times*') ? 'active' : '' }} {{ Request::is('statuses*') ? 'active' : '' }} {{ Request::is('roles*') ? 'active' : '' }} {{ Request::is('users*') ? 'active' : '' }}">
     <a class="header" href="#">
-        <i class="fa fa-thumb-tack"></i>
-        <span>Static Data البيانات الثابتة</span>
-        <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-        </span>
+      <i class="fa fa-thumb-tack"></i>
+      <span>Static Data البيانات الثابتة</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
     </a>
 
     <ul class="treeview-menu">
@@ -111,93 +111,87 @@
       <a href="{{ route('results.index') }}"><i class="fa fa-caret-right"></i> <span>@include('results.titles')</span></a>
     </li>
 
-
   </ul>
-  @endcan
-
+@endcan
 
 @can ('viewApplicants', 'App\Models\student')
+  <li class="treeview {{ Request::is('students*') ? 'active' : '' }} {{ Request::is('relatives*') ? 'active' : '' }} {{ Request::is('staff*') ? 'active' : '' }} {{ Request::is('applicants*') ? 'active' : '' }}">
+    <a href="#">
+      <i class="fa fa-user"></i>
+      <span>People المستخدمون</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
 
-<li class="treeview {{ Request::is('students*') ? 'active' : '' }} {{ Request::is('relatives*') ? 'active' : '' }} {{ Request::is('staff*') ? 'active' : '' }} {{ Request::is('applicants*') ? 'active' : '' }}">
-  <a href="#">
-    <i class="fa fa-user"></i>
-    <span>People المستخدمون</span>
-    <span class="pull-right-container">
-      <i class="fa fa-angle-left pull-right"></i>
-    </span>
-  </a>
+    <ul class="treeview-menu">
 
-  <ul class="treeview-menu">
+      @can ('viewAny', 'App\Models\student')
+        <li class="{{ Request::is('students*') ? 'active' : '' }}">
+          <a href="{{ route('students.index') }}"><i class="fa fa-caret-right"></i> <span>@include('students.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewAny', 'App\Models\student')
-      <li class="{{ Request::is('students*') ? 'active' : '' }}">
-        <a href="{{ route('students.index') }}"><i class="fa fa-caret-right"></i> <span>@include('students.titles')</span></a>
-      </li>
-    @endcan
+      @can ('viewAny', 'App\Models\relatives')
+        <li class="{{ Request::is('relatives*') ? 'active' : '' }}">
+          <a href="{{ route('relatives.index') }}"><i class="fa fa-caret-right"></i> <span>@include('relatives.titles')</span></a>
+        </li>   
+      @endcan
 
-    @can ('viewAny', 'App\Models\relatives')
-      <li class="{{ Request::is('relatives*') ? 'active' : '' }}">
-        <a href="{{ route('relatives.index') }}"><i class="fa fa-caret-right"></i> <span>@include('relatives.titles')</span></a>
-      </li>   
-    @endcan
+      @can ('viewAny', 'App\Models\staff')
+        <li class="{{ Request::is('staff*') ? 'active' : '' }}">
+          <a href="{{ route('staff.index') }}"><i class="fa fa-caret-right"></i> <span>@include('staff.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewAny', 'App\Models\staff')
-      <li class="{{ Request::is('staff*') ? 'active' : '' }}">
-        <a href="{{ route('staff.index') }}"><i class="fa fa-caret-right"></i> <span>@include('staff.titles')</span></a>
-      </li>
-    @endcan
+      @can ('viewApplicants', 'App\Models\student')
+        <li class="{{ Request::is('applicants*') ? 'active' : '' }}">
+          <a href="{{ route('applicants.index') }}"><i class="fa fa-caret-right"></i> <span>@include('applicants.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewApplicants', 'App\Models\student')
-      <li class="{{ Request::is('applicants*') ? 'active' : '' }}">
-        <a href="{{ route('applicants.index') }}"><i class="fa fa-caret-right"></i> <span>@include('applicants.titles')</span></a>
-      </li>
-    @endcan
-
-  </ul>
-</li>
-
+    </ul>
+  </li>
 @endcan
 
 @can ('viewAny', 'App\Models\sems')
+  <li class="treeview {{ Request::is('years*') ? 'active' : '' }} {{ Request::is('sems*') ? 'active' : '' }} {{ Request::is('levels*') ? 'active' : '' }} {{ Request::is('classrooms*') ? 'active' : '' }}">
+    <a href="#">
+      <i class="fa fa-exchange-alt"></i>
+      <span>Periodic Updates</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
 
-<li class="treeview {{ Request::is('years*') ? 'active' : '' }} {{ Request::is('sems*') ? 'active' : '' }} {{ Request::is('levels*') ? 'active' : '' }} {{ Request::is('classrooms*') ? 'active' : '' }}">
-  <a href="#">
-    <i class="fa fa-exchange-alt"></i>
-    <span>Periodic Updates</span>
-    <span class="pull-right-container">
-      <i class="fa fa-angle-left pull-right"></i>
-    </span>
-  </a>
+    <ul class="treeview-menu">
 
-  <ul class="treeview-menu">
+      @can ('viewAny', 'App\Models\years')
+        <li class="{{ Request::is('years*') ? 'active' : '' }}">
+          <a href="{{ route('years.index') }}"><i class="fa fa-caret-right"></i> <span>@include('years.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewAny', 'App\Models\years')
-      <li class="{{ Request::is('years*') ? 'active' : '' }}">
-        <a href="{{ route('years.index') }}"><i class="fa fa-caret-right"></i> <span>@include('years.titles')</span></a>
-      </li>
-    @endcan
+      @can ('viewAny', 'App\Models\sems')
+        <li class="{{ Request::is('sems*') ? 'active' : '' }}">
+          <a href="{{ route('sems.index') }}"><i class="fa fa-caret-right"></i> <span>@include('sems.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewAny', 'App\Models\sems')
-      <li class="{{ Request::is('sems*') ? 'active' : '' }}">
-        <a href="{{ route('sems.index') }}"><i class="fa fa-caret-right"></i> <span>@include('sems.titles')</span></a>
-      </li>
-    @endcan
+      @can ('viewAny', 'App\Models\levels')
+        <li class="{{ Request::is('levels*') ? 'active' : '' }}">
+          <a href="{{ route('levels.index') }}"><i class="fa fa-caret-right"></i> <span>@include('levels.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewAny', 'App\Models\levels')
-      <li class="{{ Request::is('levels*') ? 'active' : '' }}">
-        <a href="{{ route('levels.index') }}"><i class="fa fa-caret-right"></i> <span>@include('levels.titles')</span></a>
-      </li>
-    @endcan
+      @can ('viewAny', 'App\Models\classrooms')
+        <li class="{{ Request::is('classrooms*') ? 'active' : '' }}">
+          <a href="{{ route('classrooms.index') }}"><i class="fa fa-caret-right"></i> <span>@include('classrooms.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewAny', 'App\Models\classrooms')
-      <li class="{{ Request::is('classrooms*') ? 'active' : '' }}">
-        <a href="{{ route('classrooms.index') }}"><i class="fa fa-caret-right"></i> <span>@include('classrooms.titles')</span></a>
-      </li>
-    @endcan
-
-  </ul>
-</li>
-
+    </ul>
+  </li>
 @endcan
 
 @if(Auth::user()->status_id != 2)
@@ -222,104 +216,96 @@
 @endif
 
 @can ('upgrade', 'App\Models\student')
-
   <li class="{{ Request::is('upgradestudents*') ? 'active' : '' }}">
     <a href="{{ url('/upgradestudents') }}"><i class="fa fa-arrow-up"></i> <span>Upgrade Students</span></a>
   </li>
-
 @endcan
 
 @can ('viewAny', 'App\Models\attendances')
-
-<li class="{{ Request::is('attendances*') ? 'active' : '' }}">
-  <a href="{{ url ('/attendances') }}"><i class="fa fa-fingerprint"></i> <span>@include('attendances.titles')</span></a>
-</li>
-
+  <li class="{{ Request::is('attendances*') ? 'active' : '' }}">
+    <a href="{{ url ('/attendances') }}"><i class="fa fa-fingerprint"></i> <span>@include('attendances.titles')</span></a>
+  </li>
 @endcan
 
 @can ('viewAny', 'App\Models\studentsFinancials')
+  <li class="treeview {{ Request::is('sFinancials*') ? 'active' : '' }} {{ Request::is('sfCategories*') ? 'active' : '' }} {{ Request::is('sfDiscounts*') ? 'active' : '' }} {{ Request::is('sfReports*') ? 'active' : '' }} {{ Request::is('calculator*') ? 'active' : '' }}">
+    <a href="#">
+      <i class="fa fa-wallet"></i>
+      <span>Financials الشؤون المالية</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
 
-<li class="treeview {{ Request::is('sFinancials*') ? 'active' : '' }} {{ Request::is('sfCategories*') ? 'active' : '' }} {{ Request::is('sfDiscounts*') ? 'active' : '' }} {{ Request::is('sfReports*') ? 'active' : '' }} {{ Request::is('calculator*') ? 'active' : '' }}">
-  <a href="#">
-    <i class="fa fa-wallet"></i>
-    <span>Financials الشؤون المالية</span>
-    <span class="pull-right-container">
-      <i class="fa fa-angle-left pull-right"></i>
-    </span>
-  </a>
+    <ul class="treeview-menu">
 
-  <ul class="treeview-menu">
+      @can ('viewAny', 'App\Models\studentsFinancials')
+        <li class="{{ Request::is('sFinancials*') ? 'active' : '' }}">
+          <a href="{{ url ('/sFinancials') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancials.titles')</span></a>
+        </li>
+      @endcan
 
-    @can ('viewAny', 'App\Models\studentsFinancials')
-      <li class="{{ Request::is('sFinancials*') ? 'active' : '' }}">
-        <a href="{{ url ('/sFinancials') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancials.titles')</span></a>
+      @can ('viewAny', 'App\Models\studentsFinancialsCategories')
+        <li class="{{ Request::is('sfCategories*') ? 'active' : '' }}">
+          <a href="{{ url ('/sfCategories') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialsCategories.titles')</span></a>
+        </li>
+      @endcan
+
+      @can ('viewAny', 'App\Models\studentsFinancialsDiscounts')
+        <li class="{{ Request::is('sfDiscounts*') ? 'active' : '' }}">
+          <a href="{{ url ('/sfDiscounts') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialsDiscounts.titles')</span></a>
+        </li>
+      @endcan
+
+      @can ('reports', 'App\Models\studentsFinancials')
+        <li class="{{ Request::is('sfReports*') ? 'active' : '' }}">
+          <a href="{{ url ('/sfReports') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialReports.titles')</span></a>
+        </li>
+      @endcan
+      
+      <li class="{{ Request::is('calculator*') ? 'active' : '' }}">
+        <a href="{{ url ('/calculator') }}"><i class="fa fa-caret-right"></i> <span>@include('calculator.titles')</span></a>
       </li>
-    @endcan
+    </ul>
 
-    @can ('viewAny', 'App\Models\studentsFinancialsCategories')
-      <li class="{{ Request::is('sfCategories*') ? 'active' : '' }}">
-        <a href="{{ url ('/sfCategories') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialsCategories.titles')</span></a>
-      </li>
-    @endcan
-
-    @can ('viewAny', 'App\Models\studentsFinancialsDiscounts')
-      <li class="{{ Request::is('sfDiscounts*') ? 'active' : '' }}">
-        <a href="{{ url ('/sfDiscounts') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialsDiscounts.titles')</span></a>
-      </li>
-    @endcan
-
-    @can ('reports', 'App\Models\studentsFinancials')
-      <li class="{{ Request::is('sfReports*') ? 'active' : '' }}">
-        <a href="{{ url ('/sfReports') }}"><i class="fa fa-caret-right"></i> <span>@include('studentsFinancialReports.titles')</span></a>
-      </li>
-    @endcan
-    
-    <li class="{{ Request::is('calculator*') ? 'active' : '' }}">
-      <a href="{{ url ('/calculator') }}"><i class="fa fa-caret-right"></i> <span>@include('calculator.titles')</span></a>
-    </li>
-  </ul>
-
-</li>
-
+  </li>
 @endcan
 
 @can ('viewAny', 'App\Models\users')
+  <li class="treeview">
+    <a href="#">
+      <span>Features to Have in Future<br>خصائص ستتوفر في المستقبل</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
 
-<li class="treeview">
-  <a href="#">
-    <span>Features Soon to Have<br>خصائص ستتوفر قريباً</span>
-    <span class="pull-right-container">
-      <i class="fa fa-angle-left pull-right"></i>
-    </span>
-  </a>
-
-  <ul class="treeview-menu">
-    <li>
-      <a href="#"> <span>Financials الشؤون المالية</span></a>
-    </li>
-
-    <li>
-      <a href="#"> <span>Online Library المكتبة الإلكترونية</span></a>
-    </li>
-
-    <li>
-      <a href="#"> <span>E-Learning التعليم الإلكتروني</span></a>
-    </li>
-
-    <li>
-      <a href="#"> <span>School Clubs أندية المدرسة</span></a>
-    </li>
-
-    @can ('viewAny', 'App\Models\classrooms')
-      <li class="">
-        <a href="#"> <span>Administration الشؤون الإدارية</span></a>
+    <ul class="treeview-menu">
+      <li>
+        <a href="#"> <span>Financials الشؤون المالية</span></a>
       </li>
-    @endcan
 
-  </ul>
+      @can ('viewAny', 'App\Models\classrooms')
+        <li class="">
+          <a href="#"> <span>Administration الشؤون الإدارية</span></a>
+        </li>
+      @endcan
 
-</li>
+      <li>
+        <a href="#"> <span>Online Library المكتبة الإلكترونية</span></a>
+      </li>
 
+      <li>
+        <a href="#"> <span>E-Learning التعليم الإلكتروني</span></a>
+      </li>
+
+      <li>
+        <a href="#"> <span>School Clubs أندية المدرسة</span></a>
+      </li>
+
+    </ul>
+
+  </li>
 @endcan
 
 <!--@if(Auth::user()->status_id == 2)

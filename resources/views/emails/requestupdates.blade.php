@@ -6,294 +6,294 @@
 <h2>This is an email to request STAFF OR STUDENT data to be updated, from {{ config('app.name') }}<br></h2>
 
 <table width="100%">
-    <tbody>
-        <tr>
-            <th></th>
-            <th>Current Data<br>البيانات الحالية</th>
-            <th>New Data<br>البيانات الجديدة</th>
-        </tr>
-        <tr style="background-color:#004394; color:#ffffff;">
-            <th>The data requested to be changed is highlightened with blue background</th>
-            <th></th>
-            <th>البيانات المطلوب تغييرها هي البيانات المعلمة بالخلفية الزرقاء</th>
-        </tr>
-        <tr style="background-color:#ffffff; color:#004394;">
-            <th>
-                @include('labels.sno')
-            </th>
-            <th colspan="2">
-                {{$data['id']}}
-            </th>
-        </tr>
-        <tr style="background-color:#ffffff; color:#004394;">
-            <th>
-                @include('labels.level')
-            </th>
-            <th colspan="2">
-                {{$data['level']}}
-            </th>
-        </tr>
-        <tr style="background-color:#ffffff; color:#004394;">
-            <th>
-                @include('labels.classroom')
-            </th>
-            <th colspan="2">
-                {{$data['classroom']}}
-            </th>
-        </tr>
-        @if ($data['ename'] != $data['enameNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.ename')
-            </th>
-            <th>
-                {{$data['ename']}}
-            </th>
-            <th>
-                {{$data['enameNew']}}
-            </th>
-        </tr>
-        @if ($data['aname'] != $data['anameNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.aname')
-            </th>
-            <th>
-                {{$data['aname']}}
-            </th>
-            <th>
-                {{$data['anameNew']}}
-            </th>
-        </tr>
-        @if ($data['gender'] != $data['genderNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.gender')
-            </th>
-            <th>
-                {{$data['gender']}}
-            </th>
-            <th>
-                {{$data['genderNew']}}
-            </th>
-        </tr>
-        @if ($data['dob'] != $data['dobNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.dob')
-            </th>
-            <th>
-                {{$data['dob']}}
-            </th>
-            <th>
-                {{$data['dobNew']}}
-            </th>
-        </tr>
-        @if ($data['email'] != $data['emailNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.email')
-            </th>
-            <th>
-                {{$data['email']}}
-            </th>
-            <th>
-                {{$data['emailNew']}}
-            </th>
-        </tr>
-        @if ($data['phone'] != $data['phoneNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.phone')
-            </th>
-            <th>
-                {{$data['phone']}}
-            </th>
-            <th>
-                {{$data['phoneNew']}}
-            </th>
-        </tr>
-        @if ($data['address'] != $data['addressNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.address')
-            </th>
-            <th>
-                {{$data['address']}}
-            </th>
-            <th>
-                {{$data['addressNew']}}
-            </th>
-        </tr>
-        @if ($data['nation'] != $data['nationNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.nation')
-            </th>
-            <th>
-                {{$data['nation']}}
-            </th>
-            <th>
-                {{$data['nationNew']}}
-            </th>
-        </tr>
-        @if ($data['ppno'] != $data['ppnoNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.passno')
-            </th>
-            <th>
-                {{$data['ppno']}}
-            </th>
-            <th>
-                {{$data['ppnoNew']}}
-            </th>
-        </tr>
-        @if ($data['ppExpiry'] != $data['ppExpiryNew'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.ppe')
-            </th>
-            <th>
-                {{$data['ppExpiry']}}
-            </th>
-            <th>
-                {{$data['ppExpiryNew']}}
-            </th>
-        </tr>
-        @if ($data['photo'] != $data['photoNewf'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.photo')
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['photo']}}">Photo</a>
-                {{$data['photo']}}
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['photoNewf']}}">New Photo</a>
-                {{$data['photoNewf']}}
-            </th>
-        </tr>
-        @if ($data['passport'] != $data['passportNewf'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.pass')
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['passport']}}">Passport</a>
-                {{$data['passport']}}
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['passportNewf']}}">New Passport</a>
-                {{$data['passportNewf']}}
-            </th>
-        </tr>
-        @if ($data['visa'] != $data['visaNewf'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                @include('labels.visa')
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['visa']}}">Visa</a>
-                {{$data['visa']}}
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['visaNewf']}}">New Visa</a>
-                {{$data['visaNewf']}}
-            </th>
-        </tr>
-        @if ($data['doc1'] != $data['doc1Newf'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-            Document 1
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['doc1']}}">Doc 1</a>
-                {{$data['doc1']}}
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['doc1Newf']}}">New Doc 1</a>
-                {{$data['doc1Newf']}}
-            </th>
-        </tr>
-        @if ($data['doc2'] != $data['doc2Newf'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                Document 2
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['doc2']}}">Doc 2</a>
-                {{$data['doc2']}}
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['doc2Newf']}}">New Doc 2</a>
-                {{$data['doc2Newf']}}
-            </th>
-        </tr>
-        @if ($data['doc3'] != $data['doc3Newf'])
-            <tr style="background-color:#004394; color:#ffffff;">
-        @else
-            <tr style="background-color:#ffffff; color:#004394;">
-        @endif
-            <th>
-                Document 3
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['doc3']}}">Doc 3</a>
-                {{$data['doc3']}}
-            </th>
-            <th>
-                <a target="_blank" href="{{config('app.url')}}/{{$data['doc3Newf']}}">New Doc 3</a>
-                {{$data['doc3Newf']}}
-            </th>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <td></td>
+      <td>Current Data<br>البيانات الحالية</td>
+      <td>New Data<br>البيانات الجديدة</td>
+    </tr>
+    <tr style="background-color:#004394; color:#ffffff;">
+      <td>The data requested to be changed is highlightened with blue background</td>
+      <td></td>
+      <td>البيانات المطلوب تغييرها هي البيانات المعلمة بالخلفية الزرقاء</td>
+    </tr>
+    <tr style="background-color:#ffffff; color:#004394;">
+      <td>
+        @include('labels.sno')
+      </td>
+      <td colspan="2">
+        {{$data['id']}}
+      </td>
+    </tr>
+    <tr style="background-color:#ffffff; color:#004394;">
+      <td>
+        @include('labels.level')
+      </td>
+      <td colspan="2">
+        {{$data['level']}}
+      </td>
+    </tr>
+    <tr style="background-color:#ffffff; color:#004394;">
+      <td>
+        @include('labels.classroom')
+      </td>
+      <td colspan="2">
+        {{$data['classroom']}}
+      </td>
+    </tr>
+    @if ($data['ename'] != $data['enameNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.ename')
+      </td>
+      <td>
+        {{$data['ename']}}
+      </td>
+      <td>
+        {{$data['enameNew']}}
+      </td>
+    </tr>
+    @if ($data['aname'] != $data['anameNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.aname')
+      </td>
+      <td>
+        {{$data['aname']}}
+      </td>
+      <td>
+        {{$data['anameNew']}}
+      </td>
+    </tr>
+    @if ($data['gender'] != $data['genderNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.gender')
+      </td>
+      <td>
+        {{$data['gender']}}
+      </td>
+      <td>
+        {{$data['genderNew']}}
+      </td>
+    </tr>
+    @if ($data['dob'] != $data['dobNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.dob')
+      </td>
+      <td>
+        {{$data['dob']}}
+      </td>
+      <td>
+        {{$data['dobNew']}}
+      </td>
+    </tr>
+    @if ($data['email'] != $data['emailNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.email')
+      </td>
+      <td>
+        {{$data['email']}}
+      </td>
+      <td>
+        {{$data['emailNew']}}
+      </td>
+    </tr>
+    @if ($data['phone'] != $data['phoneNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.phone')
+      </td>
+      <td>
+        {{$data['phone']}}
+      </td>
+      <td>
+        {{$data['phoneNew']}}
+      </td>
+    </tr>
+    @if ($data['address'] != $data['addressNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.address')
+      </td>
+      <td>
+        {{$data['address']}}
+      </td>
+      <td>
+        {{$data['addressNew']}}
+      </td>
+    </tr>
+    @if ($data['nation'] != $data['nationNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.nation')
+      </td>
+      <td>
+        {{$data['nation']}}
+      </td>
+      <td>
+        {{$data['nationNew']}}
+      </td>
+    </tr>
+    @if ($data['ppno'] != $data['ppnoNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.passno')
+      </td>
+      <td>
+        {{$data['ppno']}}
+      </td>
+      <td>
+        {{$data['ppnoNew']}}
+      </td>
+    </tr>
+    @if ($data['ppExpiry'] != $data['ppExpiryNew'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.ppe')
+      </td>
+      <td>
+        {{$data['ppExpiry']}}
+      </td>
+      <td>
+        {{$data['ppExpiryNew']}}
+      </td>
+    </tr>
+    @if ($data['photo'] != $data['photoNewf'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.photo')
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['photo']}}">Photo</a>
+        {{$data['photo']}}
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['photoNewf']}}">New Photo</a>
+        {{$data['photoNewf']}}
+      </td>
+    </tr>
+    @if ($data['passport'] != $data['passportNewf'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.pass')
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['passport']}}">Passport</a>
+        {{$data['passport']}}
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['passportNewf']}}">New Passport</a>
+        {{$data['passportNewf']}}
+      </td>
+    </tr>
+    @if ($data['visa'] != $data['visaNewf'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        @include('labels.visa')
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['visa']}}">Visa</a>
+        {{$data['visa']}}
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['visaNewf']}}">New Visa</a>
+        {{$data['visaNewf']}}
+      </td>
+    </tr>
+    @if ($data['doc1'] != $data['doc1Newf'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+      Document 1
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['doc1']}}">Doc 1</a>
+        {{$data['doc1']}}
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['doc1Newf']}}">New Doc 1</a>
+        {{$data['doc1Newf']}}
+      </td>
+    </tr>
+    @if ($data['doc2'] != $data['doc2Newf'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        Document 2
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['doc2']}}">Doc 2</a>
+        {{$data['doc2']}}
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['doc2Newf']}}">New Doc 2</a>
+        {{$data['doc2Newf']}}
+      </td>
+    </tr>
+    @if ($data['doc3'] != $data['doc3Newf'])
+      <tr style="background-color:#004394; color:#ffffff;">
+    @else
+      <tr style="background-color:#ffffff; color:#004394;">
+    @endif
+      <td>
+        Document 3
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['doc3']}}">Doc 3</a>
+        {{$data['doc3']}}
+      </td>
+      <td>
+        <a target="_blank" href="{{config('app.url')}}/{{$data['doc3Newf']}}">New Doc 3</a>
+        {{$data['doc3Newf']}}
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <br><br>

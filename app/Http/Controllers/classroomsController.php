@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
-use App\Models\levels;
-use App\Models\classrooms;
-use App\Models\student;
-use App\Models\staff;
 use App\Models\sems;
+use App\Models\staff;
+use App\Models\levels;
+use App\Models\student;
 use App\Models\statuses;
+use App\Models\classrooms;
 
 class classroomsController extends AppBaseController
 {
@@ -37,6 +37,8 @@ class classroomsController extends AppBaseController
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', classrooms::class);
+    
     $levels = levels::all();
     $statuses = statuses::orderBy('id', 'DESC')->get();
     $staff = staff::with('user')->get();
@@ -61,7 +63,7 @@ class classroomsController extends AppBaseController
   public function counter(Request $request)
   {
     $count = student::where('classroom_id', '=', $request->classroom_id)
-    ->where('status_id', '=', 2);
+      ->where('status_id', '=', 2);
 
     $counter = collect($count)->count();
 

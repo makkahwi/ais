@@ -13,36 +13,36 @@ use App\Repositories\BaseRepository;
 
 class markstypesRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'sem_id',
-        'classroom_id',
-        'course_id',
-        'teacher_id',
-        'max',
-        'weight',
-        'deadline',
-        'title',
-        'used'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'sem_id',
+    'classroom_id',
+    'course_id',
+    'teacher_id',
+    'max',
+    'weight',
+    'deadline',
+    'title',
+    'used'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return markstypes::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return markstypes::class;
+  }
 }

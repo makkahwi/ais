@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBatchesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('batches', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('batch')->unique();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('batches', function (Blueprint $table) {
+      $table->bigIncrements('id');
+      $table->integer('batch')->unique();
+      $table->softDeletes();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('batches');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('batches');
+  }
 }

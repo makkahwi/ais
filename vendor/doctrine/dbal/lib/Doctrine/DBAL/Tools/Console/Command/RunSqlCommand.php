@@ -28,93 +28,93 @@ use const E_USER_DEPRECATED;
  */
 class RunSqlCommand extends Command
 {
-    /** @var ConnectionProvider|null */
-    private $connectionProvider;
+  /** @var ConnectionProvider|null */
+  private $connectionProvider;
 
-    public function __construct(?ConnectionProvider $connectionProvider = null)
-    {
-        parent::__construct();
-        $this->connectionProvider = $connectionProvider;
-        if ($connectionProvider !== null) {
-            return;
-        }
-
-        @trigger_error(
-            'Not passing a connection provider as the first constructor argument is deprecated',
-            E_USER_DEPRECATED
-        );
+  public function __construct(?ConnectionProvider $connectionProvider = null)
+  {
+    parent::__construct();
+    $this->connectionProvider = $connectionProvider;
+    if ($connectionProvider !== null) {
+      return;
     }
 
-    /** @return void */
-    protected function configure()
-    {
-        $this
-        ->setName('dbal:run-sql')
-        ->setDescription('Executes arbitrary SQL directly from the command line.')
-        ->setDefinition([
-            new InputOption('connection', null, InputOption::VALUE_REQUIRED, 'The named database connection'),
-            new InputArgument('sql', InputArgument::REQUIRED, 'The SQL statement to execute.'),
-            new InputOption('depth', null, InputOption::VALUE_REQUIRED, 'Dumping depth of result set.', 7),
-            new InputOption('force-fetch', null, InputOption::VALUE_NONE, 'Forces fetching the result.'),
-        ])
-        ->setHelp(<<<EOT
+    @trigger_error(
+      'Not passing a connection provider as the first constructor argument is deprecated',
+      E_USER_DEPRECATED
+    );
+  }
+
+  /** @return void */
+  protected function configure()
+  {
+    $this
+    ->setName('dbal:run-sql')
+    ->setDescription('Executes arbitrary SQL directly from the command line.')
+    ->setDefinition([
+      new InputOption('connection', null, InputOption::VALUE_REQUIRED, 'The named database connection'),
+      new InputArgument('sql', InputArgument::REQUIRED, 'The SQL statement to execute.'),
+      new InputOption('depth', null, InputOption::VALUE_REQUIRED, 'Dumping depth of result set.', 7),
+      new InputOption('force-fetch', null, InputOption::VALUE_NONE, 'Forces fetching the result.'),
+    ])
+    ->setHelp(<<<EOT
 The <info>%command.name%</info> command executes the given SQL query and
 outputs the results:
 
 <info>php %command.full_name% "SELECT * FROM users"</info>
 EOT
-        );
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function execute(InputInterface $input, OutputInterface $output)
+  {
+    $conn = $this->getConnection($input);
+
+    $sql = $input->getArgument('sql');
+
+    if ($sql === null) {
+      throw new RuntimeException("Argument 'SQL' is required in order to execute this command correctly.");
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $conn = $this->getConnection($input);
+    assert(is_string($sql));
 
-        $sql = $input->getArgument('sql');
+    $depth = $input->getOption('depth');
 
-        if ($sql === null) {
-            throw new RuntimeException("Argument 'SQL' is required in order to execute this command correctly.");
-        }
-
-        assert(is_string($sql));
-
-        $depth = $input->getOption('depth');
-
-        if (! is_numeric($depth)) {
-            throw new LogicException("Option 'depth' must contains an integer value");
-        }
-
-        if (stripos($sql, 'select') === 0 || $input->getOption('force-fetch')) {
-            $resultSet = $conn->fetchAllAssociative($sql);
-        } else {
-            $resultSet = $conn->executeStatement($sql);
-        }
-
-        $output->write(Dumper::dump($resultSet, (int) $depth));
-
-        return 0;
+    if (! is_numeric($depth)) {
+      throw new LogicException("Option 'depth' must contains an integer value");
     }
 
-    private function getConnection(InputInterface $input): Connection
-    {
-        $connectionName = $input->getOption('connection');
-        assert(is_string($connectionName) || $connectionName === null);
-
-        if ($this->connectionProvider === null) {
-            if ($connectionName !== null) {
-                throw new Exception('Specifying a connection is only supported when a ConnectionProvider is used.');
-            }
-
-            return $this->getHelper('db')->getConnection();
-        }
-
-        if ($connectionName !== null) {
-            return $this->connectionProvider->getConnection($connectionName);
-        }
-
-        return $this->connectionProvider->getDefaultConnection();
+    if (stripos($sql, 'select') === 0 || $input->getOption('force-fetch')) {
+      $resultSet = $conn->fetchAllAssociative($sql);
+    } else {
+      $resultSet = $conn->executeStatement($sql);
     }
+
+    $output->write(Dumper::dump($resultSet, (int) $depth));
+
+    return 0;
+  }
+
+  private function getConnection(InputInterface $input): Connection
+  {
+    $connectionName = $input->getOption('connection');
+    assert(is_string($connectionName) || $connectionName === null);
+
+    if ($this->connectionProvider === null) {
+      if ($connectionName !== null) {
+        throw new Exception('Specifying a connection is only supported when a ConnectionProvider is used.');
+      }
+
+      return $this->getHelper('db')->getConnection();
+    }
+
+    if ($connectionName !== null) {
+      return $this->connectionProvider->getConnection($connectionName);
+    }
+
+    return $this->connectionProvider->getDefaultConnection();
+  }
 }

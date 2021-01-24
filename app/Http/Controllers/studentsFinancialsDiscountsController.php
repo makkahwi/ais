@@ -22,6 +22,8 @@ class studentsFinancialsDiscountsController extends AppBaseController
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', studentsFinancialsDiscounts::class);
+
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())->first();
@@ -61,7 +63,6 @@ class studentsFinancialsDiscountsController extends AppBaseController
 
     if (empty($sfDiscount)) {
       Flash::error('The Students\' Financials\' Discount was not found<br><br>بيانات الخصم المالي المطلوبة غير موجودة');
-
       return redirect(route('sfCategories.index'));
     }
 

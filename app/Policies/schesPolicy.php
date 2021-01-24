@@ -77,9 +77,9 @@ class schesPolicy
    */
   public function delete(User $user)
   {
-      return in_array($user->role_id, [
-          1, 2, 3,
-      ]);
+    return in_array($user->role_id, [
+      1, 2, 3,
+    ]);
   }
 
   /**
@@ -91,7 +91,7 @@ class schesPolicy
    */
   public function restore(User $user, sches $sches)
   {
-      //
+    //
   }
 
   /**
@@ -103,6 +103,6 @@ class schesPolicy
    */
   public function forceDelete(User $user, sches $sches)
   {
-      //
+    //
   }
 }

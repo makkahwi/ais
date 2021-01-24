@@ -9,69 +9,69 @@ use Egulias\EmailValidator\Exception\NoDNSRecord;
 
 class DNSCheckValidation implements EmailValidation
 {
-    /**
-     * @var array
-     */
-    private $warnings = [];
+  /**
+   * @var array
+   */
+  private $warnings = [];
 
-    /**
-     * @var InvalidEmail|null
-     */
-    private $error;
+  /**
+   * @var InvalidEmail|null
+   */
+  private $error;
 
-    public function __construct()
-    {
-        if (!function_exists('idn_to_ascii')) {
-            throw new \LogicException(sprintf('The %s class requires the Intl extension.', __CLASS__));
-        }
+  public function __construct()
+  {
+    if (!function_exists('idn_to_ascii')) {
+      throw new \LogicException(sprintf('The %s class requires the Intl extension.', __CLASS__));
+    }
+  }
+
+  public function isValid($email, EmailLexer $emailLexer)
+  {
+    // use the input to check DNS if we cannot extract something similar to a domain
+    $host = $email;
+
+    // Arguable pattern to extract the domain. Not aiming to validate the domain nor the email
+    if (false !== $lastAtPos = strrpos($email, '@')) {
+      $host = substr($email, $lastAtPos + 1);
     }
 
-    public function isValid($email, EmailLexer $emailLexer)
-    {
-        // use the input to check DNS if we cannot extract something similar to a domain
-        $host = $email;
+    return $this->checkDNS($host);
+  }
 
-        // Arguable pattern to extract the domain. Not aiming to validate the domain nor the email
-        if (false !== $lastAtPos = strrpos($email, '@')) {
-            $host = substr($email, $lastAtPos + 1);
-        }
+  public function getError()
+  {
+    return $this->error;
+  }
 
-        return $this->checkDNS($host);
+  public function getWarnings()
+  {
+    return $this->warnings;
+  }
+
+  /**
+   * @param string $host
+   *
+   * @return bool
+   */
+  protected function checkDNS($host)
+  {
+    $variant = INTL_IDNA_VARIANT_2003;
+    if ( defined('INTL_IDNA_VARIANT_UTS46') ) {
+      $variant = INTL_IDNA_VARIANT_UTS46;
     }
+    $host = rtrim(idn_to_ascii($host, IDNA_DEFAULT, $variant), '.') . '.';
 
-    public function getError()
-    {
-        return $this->error;
+    $Aresult = true;
+    $MXresult = checkdnsrr($host, 'MX');
+
+    if (!$MXresult) {
+      $this->warnings[NoDNSMXRecord::CODE] = new NoDNSMXRecord();
+      $Aresult = checkdnsrr($host, 'A') || checkdnsrr($host, 'AAAA');
+      if (!$Aresult) {
+        $this->error = new NoDNSRecord();
+      }
     }
-
-    public function getWarnings()
-    {
-        return $this->warnings;
-    }
-
-    /**
-     * @param string $host
-     *
-     * @return bool
-     */
-    protected function checkDNS($host)
-    {
-        $variant = INTL_IDNA_VARIANT_2003;
-        if ( defined('INTL_IDNA_VARIANT_UTS46') ) {
-            $variant = INTL_IDNA_VARIANT_UTS46;
-        }
-        $host = rtrim(idn_to_ascii($host, IDNA_DEFAULT, $variant), '.') . '.';
-
-        $Aresult = true;
-        $MXresult = checkdnsrr($host, 'MX');
-
-        if (!$MXresult) {
-            $this->warnings[NoDNSMXRecord::CODE] = new NoDNSMXRecord();
-            $Aresult = checkdnsrr($host, 'A') || checkdnsrr($host, 'AAAA');
-            if (!$Aresult) {
-                $this->error = new NoDNSRecord();
-            }
-        }
-        return $MXresult || $Aresult;
-    }
+    return $MXresult || $Aresult;
+  }
 }

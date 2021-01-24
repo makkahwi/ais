@@ -17,8 +17,8 @@ use App\Models\statuses;
 use App\Models\classrooms;
 use App\Models\studentsPayments;
 use App\Models\studentsFinancials;
-use App\Models\studentsFinancialsCategories;
 use App\Models\studentsFinancialsDiscounts;
+use App\Models\studentsFinancialsCategories;
 
 class studentsFinancialsController extends AppBaseController
 {
@@ -29,6 +29,8 @@ class studentsFinancialsController extends AppBaseController
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', studentsFinancials::class);
+
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())->first();
@@ -92,7 +94,6 @@ class studentsFinancialsController extends AppBaseController
 
     if (empty($sFinancial)) {
       Flash::error('The financial due data was not found<br><br>بيانات المستحق المالي غير موجودة');
-
       return redirect(route('sFinancials.index'));
     }
 
@@ -115,7 +116,6 @@ class studentsFinancialsController extends AppBaseController
 
     if (empty($student)) {
       Flash::error('The student data was not found<br><br>بيانات الطالب غير موجودة');
-
       return redirect(route('sFinancials.index'));
     }
 
@@ -184,15 +184,14 @@ class studentsFinancialsController extends AppBaseController
 
   public function sfReports(Request $request) // Updating with Modal
   {
-        
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())->first();
     
     $levels = levels::with('classrooms.students.user', 'classrooms.students.dues.sem.year',
-                    'classrooms.students.dues.category', 'classrooms.students.dues.discount',
-                    'classrooms.students.payments', 'classrooms.students.payments.sem.year')
-                    ->get();
+      'classrooms.students.dues.category', 'classrooms.students.dues.discount',
+      'classrooms.students.payments', 'classrooms.students.payments.sem.year')
+      ->get();
 
     $classrooms = classrooms::with('level')->get();
 
@@ -213,10 +212,12 @@ class studentsFinancialsController extends AppBaseController
     $payments = studentsPayments::where('studentNo', $studentNo)->sum('amount');
     $fees = studentsFinancials::where('studentNo', $studentNo)->sum('finalAmount');
 
-    if ($payments >= $fees) {
+    if ($payments >= $fees)
+    {
       student::where('studentNo', $studentNo)->first()->update(array('financial' => 1));
     }
-    else {
+    else
+    {
       student::where('studentNo', $studentNo)->first()->update(array('financial' => 0));
     }
   }

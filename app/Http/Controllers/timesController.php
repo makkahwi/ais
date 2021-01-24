@@ -33,6 +33,8 @@ class timesController extends AppBaseController
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', times::class);
+
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())->first();
@@ -78,9 +80,9 @@ class timesController extends AppBaseController
 
     $time = times::findOrFail($request->time_id);
 
-    if (empty($time)) {
+    if (empty($time))
+    {
       Flash::error('The time was not found<br><br>بيانات وقت الحصة المطلوبة غير موجودة');
-
       return redirect(route('times.index'));
     }
 
@@ -109,9 +111,9 @@ class timesController extends AppBaseController
     
     $times = $this->timesRepository->find($id);
 
-    if (empty($times)) {
+    if (empty($times))
+    {
       Flash::error('The time was not found<br><br>بيانات وقت الحصة المطلوبة غير موجودة');
-
       return redirect(route('times.index'));
     }
 

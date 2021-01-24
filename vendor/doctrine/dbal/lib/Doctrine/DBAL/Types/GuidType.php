@@ -9,27 +9,27 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class GuidType extends StringType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
-    {
-        return $platform->getGuidTypeDeclarationSQL($column);
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+  {
+    return $platform->getGuidTypeDeclarationSQL($column);
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return Types::GUID;
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getName()
+  {
+    return Types::GUID;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
-    {
-        return ! $platform->hasNativeGuidType();
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function requiresSQLCommentHint(AbstractPlatform $platform)
+  {
+    return ! $platform->hasNativeGuidType();
+  }
 }

@@ -37,312 +37,312 @@ use function reset;
  */
 class ResultCacheStatement implements IteratorAggregate, ResultStatement, Result
 {
-    /** @var Cache */
-    private $resultCache;
+  /** @var Cache */
+  private $resultCache;
 
-    /** @var string */
-    private $cacheKey;
+  /** @var string */
+  private $cacheKey;
 
-    /** @var string */
-    private $realKey;
+  /** @var string */
+  private $realKey;
 
-    /** @var int */
-    private $lifetime;
+  /** @var int */
+  private $lifetime;
 
-    /** @var ResultStatement */
-    private $statement;
+  /** @var ResultStatement */
+  private $statement;
 
-    /** @var array<int,array<string,mixed>>|null */
-    private $data;
+  /** @var array<int,array<string,mixed>>|null */
+  private $data;
 
-    /** @var int */
-    private $defaultFetchMode = FetchMode::MIXED;
+  /** @var int */
+  private $defaultFetchMode = FetchMode::MIXED;
 
-    /**
-     * @param string $cacheKey
-     * @param string $realKey
-     * @param int    $lifetime
-     */
-    public function __construct(ResultStatement $stmt, Cache $resultCache, $cacheKey, $realKey, $lifetime)
-    {
-        $this->statement   = $stmt;
-        $this->resultCache = $resultCache;
-        $this->cacheKey    = $cacheKey;
-        $this->realKey     = $realKey;
-        $this->lifetime    = $lifetime;
+  /**
+   * @param string $cacheKey
+   * @param string $realKey
+   * @param int  $lifetime
+   */
+  public function __construct(ResultStatement $stmt, Cache $resultCache, $cacheKey, $realKey, $lifetime)
+  {
+    $this->statement   = $stmt;
+    $this->resultCache = $resultCache;
+    $this->cacheKey  = $cacheKey;
+    $this->realKey   = $realKey;
+    $this->lifetime  = $lifetime;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @deprecated Use free() instead.
+   */
+  public function closeCursor()
+  {
+    $this->free();
+
+    return true;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function columnCount()
+  {
+    return $this->statement->columnCount();
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @deprecated Use one of the fetch- or iterate-related methods.
+   */
+  public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
+  {
+    $this->defaultFetchMode = $fetchMode;
+
+    return true;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @deprecated Use iterateNumeric(), iterateAssociative() or iterateColumn() instead.
+   */
+  public function getIterator()
+  {
+    $data = $this->fetchAll();
+
+    return new ArrayIterator($data);
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @deprecated Use fetchNumeric(), fetchAssociative() or fetchOne() instead.
+   */
+  public function fetch($fetchMode = null, $cursorOrientation = PDO::FETCH_ORI_NEXT, $cursorOffset = 0)
+  {
+    if ($this->data === null) {
+      $this->data = [];
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use free() instead.
-     */
-    public function closeCursor()
-    {
-        $this->free();
+    $row = $this->statement->fetch(FetchMode::ASSOCIATIVE);
 
-        return true;
-    }
+    if ($row) {
+      $this->data[] = $row;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function columnCount()
-    {
-        return $this->statement->columnCount();
-    }
+      $fetchMode = $fetchMode ?: $this->defaultFetchMode;
 
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use one of the fetch- or iterate-related methods.
-     */
-    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
-    {
-        $this->defaultFetchMode = $fetchMode;
+      if ($fetchMode === FetchMode::ASSOCIATIVE) {
+        return $row;
+      }
 
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use iterateNumeric(), iterateAssociative() or iterateColumn() instead.
-     */
-    public function getIterator()
-    {
-        $data = $this->fetchAll();
-
-        return new ArrayIterator($data);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use fetchNumeric(), fetchAssociative() or fetchOne() instead.
-     */
-    public function fetch($fetchMode = null, $cursorOrientation = PDO::FETCH_ORI_NEXT, $cursorOffset = 0)
-    {
-        if ($this->data === null) {
-            $this->data = [];
-        }
-
-        $row = $this->statement->fetch(FetchMode::ASSOCIATIVE);
-
-        if ($row) {
-            $this->data[] = $row;
-
-            $fetchMode = $fetchMode ?: $this->defaultFetchMode;
-
-            if ($fetchMode === FetchMode::ASSOCIATIVE) {
-                return $row;
-            }
-
-            if ($fetchMode === FetchMode::NUMERIC) {
-                return array_values($row);
-            }
-
-            if ($fetchMode === FetchMode::MIXED) {
-                return array_merge($row, array_values($row));
-            }
-
-            if ($fetchMode === FetchMode::COLUMN) {
-                return reset($row);
-            }
-
-            throw new InvalidArgumentException('Invalid fetch-style given for caching result.');
-        }
-
-        $this->saveToCache();
-
-        return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use fetchAllNumeric(), fetchAllAssociative() or fetchFirstColumn() instead.
-     */
-    public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
-    {
-        $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE, $fetchArgument, $ctorArgs);
-
-        $this->data = $data;
-
-        $this->saveToCache();
-
-        if ($fetchMode === FetchMode::NUMERIC) {
-            foreach ($data as $i => $row) {
-                $data[$i] = array_values($row);
-            }
-        } elseif ($fetchMode === FetchMode::MIXED) {
-            foreach ($data as $i => $row) {
-                $data[$i] = array_merge($row, array_values($row));
-            }
-        } elseif ($fetchMode === FetchMode::COLUMN) {
-            foreach ($data as $i => $row) {
-                $data[$i] = reset($row);
-            }
-        }
-
-        return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use fetchOne() instead.
-     */
-    public function fetchColumn($columnIndex = 0)
-    {
-        $row = $this->fetch(FetchMode::NUMERIC);
-
-        // TODO: verify that return false is the correct behavior
-        return $row[$columnIndex] ?? false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchNumeric()
-    {
-        $row = $this->doFetch();
-
-        if ($row === false) {
-            return false;
-        }
-
+      if ($fetchMode === FetchMode::NUMERIC) {
         return array_values($row);
+      }
+
+      if ($fetchMode === FetchMode::MIXED) {
+        return array_merge($row, array_values($row));
+      }
+
+      if ($fetchMode === FetchMode::COLUMN) {
+        return reset($row);
+      }
+
+      throw new InvalidArgumentException('Invalid fetch-style given for caching result.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchAssociative()
-    {
-        return $this->doFetch();
+    $this->saveToCache();
+
+    return false;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @deprecated Use fetchAllNumeric(), fetchAllAssociative() or fetchFirstColumn() instead.
+   */
+  public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
+  {
+    $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE, $fetchArgument, $ctorArgs);
+
+    $this->data = $data;
+
+    $this->saveToCache();
+
+    if ($fetchMode === FetchMode::NUMERIC) {
+      foreach ($data as $i => $row) {
+        $data[$i] = array_values($row);
+      }
+    } elseif ($fetchMode === FetchMode::MIXED) {
+      foreach ($data as $i => $row) {
+        $data[$i] = array_merge($row, array_values($row));
+      }
+    } elseif ($fetchMode === FetchMode::COLUMN) {
+      foreach ($data as $i => $row) {
+        $data[$i] = reset($row);
+      }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchOne()
-    {
-        return FetchUtils::fetchOne($this);
+    return $data;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @deprecated Use fetchOne() instead.
+   */
+  public function fetchColumn($columnIndex = 0)
+  {
+    $row = $this->fetch(FetchMode::NUMERIC);
+
+    // TODO: verify that return false is the correct behavior
+    return $row[$columnIndex] ?? false;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchNumeric()
+  {
+    $row = $this->doFetch();
+
+    if ($row === false) {
+      return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchAllNumeric(): array
-    {
-        if ($this->statement instanceof Result) {
-            $data = $this->statement->fetchAllAssociative();
-        } else {
-            $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE);
-        }
+    return array_values($row);
+  }
 
-        $this->store($data);
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchAssociative()
+  {
+    return $this->doFetch();
+  }
 
-        return array_map('array_values', $this->data);
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchOne()
+  {
+    return FetchUtils::fetchOne($this);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchAllNumeric(): array
+  {
+    if ($this->statement instanceof Result) {
+      $data = $this->statement->fetchAllAssociative();
+    } else {
+      $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchAllAssociative(): array
-    {
-        if ($this->statement instanceof Result) {
-            $data = $this->statement->fetchAllAssociative();
-        } else {
-            $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE);
-        }
+    $this->store($data);
 
-        $this->store($data);
+    return array_map('array_values', $this->data);
+  }
 
-        return $data;
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchAllAssociative(): array
+  {
+    if ($this->statement instanceof Result) {
+      $data = $this->statement->fetchAllAssociative();
+    } else {
+      $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fetchFirstColumn(): array
-    {
-        return FetchUtils::fetchFirstColumn($this);
+    $this->store($data);
+
+    return $data;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fetchFirstColumn(): array
+  {
+    return FetchUtils::fetchFirstColumn($this);
+  }
+
+  /**
+   * Returns the number of rows affected by the last DELETE, INSERT, or UPDATE statement
+   * executed by the corresponding object.
+   *
+   * If the last SQL statement executed by the associated Statement object was a SELECT statement,
+   * some databases may return the number of rows returned by that statement. However,
+   * this behaviour is not guaranteed for all databases and should not be
+   * relied on for portable applications.
+   *
+   * @return int The number of rows.
+   */
+  public function rowCount()
+  {
+    assert($this->statement instanceof Statement);
+
+    return $this->statement->rowCount();
+  }
+
+  public function free(): void
+  {
+    $this->data = null;
+  }
+
+  /**
+   * @return array<string,mixed>|false
+   *
+   * @throws Exception
+   */
+  private function doFetch()
+  {
+    if ($this->data === null) {
+      $this->data = [];
     }
 
-    /**
-     * Returns the number of rows affected by the last DELETE, INSERT, or UPDATE statement
-     * executed by the corresponding object.
-     *
-     * If the last SQL statement executed by the associated Statement object was a SELECT statement,
-     * some databases may return the number of rows returned by that statement. However,
-     * this behaviour is not guaranteed for all databases and should not be
-     * relied on for portable applications.
-     *
-     * @return int The number of rows.
-     */
-    public function rowCount()
-    {
-        assert($this->statement instanceof Statement);
-
-        return $this->statement->rowCount();
+    if ($this->statement instanceof Result) {
+      $row = $this->statement->fetchAssociative();
+    } else {
+      $row = $this->statement->fetch(FetchMode::ASSOCIATIVE);
     }
 
-    public function free(): void
-    {
-        $this->data = null;
+    if ($row !== false) {
+      $this->data[] = $row;
+
+      return $row;
     }
 
-    /**
-     * @return array<string,mixed>|false
-     *
-     * @throws Exception
-     */
-    private function doFetch()
-    {
-        if ($this->data === null) {
-            $this->data = [];
-        }
+    $this->saveToCache();
 
-        if ($this->statement instanceof Result) {
-            $row = $this->statement->fetchAssociative();
-        } else {
-            $row = $this->statement->fetch(FetchMode::ASSOCIATIVE);
-        }
+    return false;
+  }
 
-        if ($row !== false) {
-            $this->data[] = $row;
+  /**
+   * @param array<int,array<string,mixed>> $data
+   */
+  private function store(array $data): void
+  {
+    $this->data = $data;
+  }
 
-            return $row;
-        }
-
-        $this->saveToCache();
-
-        return false;
+  private function saveToCache(): void
+  {
+    if ($this->data === null) {
+      return;
     }
 
-    /**
-     * @param array<int,array<string,mixed>> $data
-     */
-    private function store(array $data): void
-    {
-        $this->data = $data;
+    $data = $this->resultCache->fetch($this->cacheKey);
+    if (! $data) {
+      $data = [];
     }
 
-    private function saveToCache(): void
-    {
-        if ($this->data === null) {
-            return;
-        }
+    $data[$this->realKey] = $this->data;
 
-        $data = $this->resultCache->fetch($this->cacheKey);
-        if (! $data) {
-            $data = [];
-        }
-
-        $data[$this->realKey] = $this->data;
-
-        $this->resultCache->save($this->cacheKey, $data, $this->lifetime);
-    }
+    $this->resultCache->save($this->cacheKey, $data, $this->lifetime);
+  }
 }

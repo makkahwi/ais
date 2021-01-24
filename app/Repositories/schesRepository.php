@@ -13,34 +13,34 @@ use App\Repositories\BaseRepository;
 
 class schesRepository extends BaseRepository
 {
-    /**
-     * @var array
-     */
-    protected $fieldSearchable = [
-        'sem_id',
-        'classroom_id',
-        'course_id',
-        'teacher_id',
-        'day_id',
-        'time_id',
-        'status_id'
-    ];
+  /**
+   * @var array
+   */
+  protected $fieldSearchable = [
+    'sem_id',
+    'classroom_id',
+    'course_id',
+    'teacher_id',
+    'day_id',
+    'time_id',
+    'status_id'
+  ];
 
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
+  /**
+   * Return searchable fields
+   *
+   * @return array
+   */
+  public function getFieldsSearchable()
+  {
+    return $this->fieldSearchable;
+  }
 
-    /**
-     * Configure the Model
-     **/
-    public function model()
-    {
-        return sches::class;
-    }
+  /**
+   * Configure the Model
+   **/
+  public function model()
+  {
+    return sches::class;
+  }
 }

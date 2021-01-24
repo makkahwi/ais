@@ -3,109 +3,116 @@
 
 <hr><br>
 
-<h2>This is an auto generated confirmation email from {{ config('app.name') }}<br> </h2>
-
 <table style="border: none;">
-    <tr>
-        <th>
-            <p style="text-align:justify;">We happily received your application for a job vacancy<br></p>
-        </th>
-        <th style="width:30%;"></th>
-        <th>
-            <p style="text-align:right;">لقد استلمنا طلبكم  للتقديم على فرصة عمل<br></p>
-        </th>
-    </tr>
-    <tr>
-        <th>Below are the data entered by you<br><br></th>
-        <th></th>
-        <th>أدناه البيانات المدخلة من قبلكم<br><br></th>
-    </tr>
-    <tr>
-        <th colspan=3><h2>Applicant Data بيانات المتقدم</h2></th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>English Full Name</th>
-        <th><b>{{$data['eName']}}</b></th>
-        <th>الاسم الإنجليزي الكامل</th>
-    </tr>
-    <tr style="background-color:#004394; color:#ffffff;">
-        <th>Arabci Full Name</th>
-        <th><b>{{$data['aName']}}</b></th>
-        <th>الاسم العربي الكامل</th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>Gender</th>
-        <th><b>{{$data['gender']}}</b></th>
-        <th>الجنس</th>
-    </tr>
-    <tr style="background-color:#004394; color:#ffffff;">
-        <th>Date of Birth</th>
-        <th><b>{{$data['dob']}}</b></th>
-        <th>تاريخ الميلاد</th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>Email</th>
-        <th><b>{{$data['email']}}</b></th>
-        <th>البريد الإلكتروني</th>
-    </tr>
-    <tr style="background-color:#004394; color:#ffffff;">
-        <th>Phone No</th>
-        <th><b>{{$data['phone']}}</b></th>
-        <th>رقم التلفون</th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>Home Address</th>
-        <th><b>{{$data['hAddress']}}</b></th>
-        <th>عنوان السكن</th>
-    </tr>
-    <tr style="background-color:#004394; color:#ffffff;">
-        <th>Nationality</th>
-        <th><b>{{$data['nation']}}</b></th>
-        <th>الجنسية </th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>Passport No</th>
-        <th><b>{{$data['ppno']}}</b></th>
-        <th>رقم جواز السفر</th>
-    </tr>
-    <tr style="background-color:#004394; color:#ffffff;">
-        <th>Photo</th>
-        <th><b><a href="{{ config('app.url') }}/{{$data['photoo']}}">Link</a></b></th>
-        <th>الصورة الشخصية</th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>CV</th>
-        <th><b><a href="{{ config('app.url') }}/{{$data['cv']}}">Link</a></b></th>
-        <th>السيرة الذاتية</th>
-    </tr>
-    <tr style="background-color:#004394; color:#ffffff;">
-        <th>Academic Certificate</th>
-        <th><b><a href="{{ config('app.url') }}/{{$data['academic']}}">Link</a></b></th>
-        <th>الشهادات الأكاديمية</th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>Experience Certificate</th>
-        <th><b><a href="{{ config('app.url') }}/{{$data['experience']}}">Link</a></b></th>
-        <th>شهادات الخبرة</th>
-    </tr>
-    <tr style="background-color:#004394; color:#ffffff;">
-        <th>Additional Documents</th>
-        <th><b><a href="{{ config('app.url') }}/{{$data['additional1']}}">Link</a></b></th>
-        <th>وثائق إضافية</th>
-    </tr>
-    <tr style="background-color:#ffffff; color:#004394;">
-        <th>Additional Documents</th>
-        <th><b><a href="{{ config('app.url') }}/{{$data['additional2']}}">Link</a></b></th>
-        <th>وثائق إضافية</th>
-    </tr>
-    <tr>
-        <th colspan="3"><br><br></th>
-    </tr>
-    <tr>
-        <th><p style="text-align: justify;">Thank you for applying to our school, we will contact you soon to have an interview. We hope you would be accpeted & be part of our big family.<br></p></th>
-        <th></th>
-        <th><p style="text-align: justify; direction:rtl;">نشكركم على التقديم للعمل بمدرستنا, سنتواصل معكم قريباً لترتيب مقابلة العمل. نرجو أن تقبلوا للوظيفة وتكونوا جزءاً من أسرة مدرستنا الكبيرة.<br></p></th>
-    </tr>
+  <tr>
+    <td>
+      <p style="text-align:justify;">This is an auto generated confirmation email from {{ config('app.name') }}, please do not reply to it. For any concerns, email us at principal@aqsa.edu.my<br> </p>
+    </td>
+    <td style="width:30%;"></td>
+    <td>
+      <p style="text-align:justify; direction: rtl;">هذه الرسالة تم إرسالها بشكل آلي من {{ config('app.aname') }} - {{ config('app.saname') }}, نرجو عدم الرد عليها. في حال وجود أي استفسارات, يمنكم التواصل عبر البريد الإلكتروني principal@aqsa.edu.my<br> </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p style="text-align:justify;">We happily received your application for a job vacancy<br></p>
+    </td>
+    <td style="width:30%;"></td>
+    <td>
+      <p style="text-align:right;">لقد استلمنا طلبكم  للتقديم على فرصة عمل<br></p>
+    </td>
+  </tr>
+  <tr>
+    <td>Below are the data entered by you<br><br></td>
+    <td></td>
+    <td>أدناه البيانات المدخلة من قبلكم<br><br></td>
+  </tr>
+  <tr>
+    <td colspan=3><h2>Applicant Data بيانات المتقدم</h2></td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>English Full Name</td>
+    <td><b>{{$data['eName']}}</b></td>
+    <td>الاسم الإنجليزي الكامل</td>
+  </tr>
+  <tr style="background-color:#004394; color:#ffffff;">
+    <td>Arabci Full Name</td>
+    <td><b>{{$data['aName']}}</b></td>
+    <td>الاسم العربي الكامل</td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>Gender</td>
+    <td><b>{{$data['gender']}}</b></td>
+    <td>الجنس</td>
+  </tr>
+  <tr style="background-color:#004394; color:#ffffff;">
+    <td>Date of Birth</td>
+    <td><b>{{$data['dob']}}</b></td>
+    <td>تاريخ الميلاد</td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>Email</td>
+    <td><b>{{$data['email']}}</b></td>
+    <td>البريد الإلكتروني</td>
+  </tr>
+  <tr style="background-color:#004394; color:#ffffff;">
+    <td>Phone No</td>
+    <td><b>{{$data['phone']}}</b></td>
+    <td>رقم التلفون</td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>Home Address</td>
+    <td><b>{{$data['hAddress']}}</b></td>
+    <td>عنوان السكن</td>
+  </tr>
+  <tr style="background-color:#004394; color:#ffffff;">
+    <td>Nationality</td>
+    <td><b>{{$data['nation']}}</b></td>
+    <td>الجنسية </td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>Passport No</td>
+    <td><b>{{$data['ppno']}}</b></td>
+    <td>رقم جواز السفر</td>
+  </tr>
+  <tr style="background-color:#004394; color:#ffffff;">
+    <td>Photo</td>
+    <td><b><a href="{{ config('app.url') }}/{{$data['photoo']}}">Link</a></b></td>
+    <td>الصورة الشخصية</td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>CV</td>
+    <td><b><a href="{{ config('app.url') }}/{{$data['cv']}}">Link</a></b></td>
+    <td>السيرة الذاتية</td>
+  </tr>
+  <tr style="background-color:#004394; color:#ffffff;">
+    <td>Academic Certificate</td>
+    <td><b><a href="{{ config('app.url') }}/{{$data['academic']}}">Link</a></b></td>
+    <td>الشهادات الأكاديمية</td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>Experience Certificate</td>
+    <td><b><a href="{{ config('app.url') }}/{{$data['experience']}}">Link</a></b></td>
+    <td>شهادات الخبرة</td>
+  </tr>
+  <tr style="background-color:#004394; color:#ffffff;">
+    <td>Additional Documents</td>
+    <td><b><a href="{{ config('app.url') }}/{{$data['additional1']}}">Link</a></b></td>
+    <td>وثائق إضافية</td>
+  </tr>
+  <tr style="background-color:#ffffff; color:#004394;">
+    <td>Additional Documents</td>
+    <td><b><a href="{{ config('app.url') }}/{{$data['additional2']}}">Link</a></b></td>
+    <td>وثائق إضافية</td>
+  </tr>
+  <tr>
+    <td colspan="3"><br><br></td>
+  </tr>
+  <tr>
+    <td><p style="text-align: justify;">Thank you for applying to our school, we will contact you soon to have an interview. We hope you would be accpeted & be part of our big family.<br></p></td>
+    <td></td>
+    <td><p style="text-align: justify; direction:rtl;">نشكركم على التقديم للعمل بمدرستنا, سنتواصل معكم قريباً لترتيب مقابلة العمل. نرجو أن تقبلوا للوظيفة وتكونوا جزءاً من أسرة مدرستنا الكبيرة.<br></p></td>
+  </tr>
 </table>
 
 <br>

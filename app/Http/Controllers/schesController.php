@@ -10,18 +10,17 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
-use App\Models\sches;
 use App\Models\sems;
-use App\Models\years;
-use App\Models\levels;
-use App\Models\classrooms;
-use App\Models\courses;
-use App\Models\staff;
 use App\Models\days;
+use App\Models\sches;
+use App\Models\years;
+use App\Models\staff;
 use App\Models\times;
-use App\Models\statuses;
-
+use App\Models\levels;
 use App\Models\student;
+use App\Models\courses;
+use App\Models\statuses;
+use App\Models\classrooms;
 
 class schesController extends AppBaseController
 {
@@ -43,6 +42,8 @@ class schesController extends AppBaseController
   
   public function index(Request $request)
   {
+    $this->authorize('viewAny', sches::class);
+
     $sems = sems::with('year')
       ->orderBy('created_at', 'DESC')
       ->get();
@@ -71,10 +72,12 @@ class schesController extends AppBaseController
     $csem = $currentSem['id'];
 
     $cnSem = sems::with('year')
-      ->where('end', '>=', today())->get();
+      ->where('end', '>=', today())
+      ->get();
 
     $nextSem = sems::with('year')
-      ->where('start', '>', today())->first();
+      ->where('start', '>', today())
+      ->first();
 
     $nsem = $nextSem->get('id');
 
@@ -98,54 +101,53 @@ class schesController extends AppBaseController
       ->where('status_id', '=', 1)
       ->get();
 
-    return view('sches.index', compact('currentSem', 'nextSem', 'statuses', 'days',
-                                        'sches', 'schesNext', 'schesOld', 'schesDe',
-                                        'sems', 'levels', 'cnSem', 'times', 'csem',
-                                        'classrooms', 'courses', 'staff'));
+    return view('sches.index', compact('currentSem', 'nextSem', 'statuses', 'days', 'sches', 'schesNext',
+                                        'schesOld', 'schesDe', 'classrooms', 'courses', 'staff',
+                                        'sems', 'levels', 'cnSem', 'times', 'csem'));
   }
 
-  public function dynamicClassroom(Request $request){ // Dynamic Classroom Show ///////////////////////////////////////////
+  public function dynamicClassroom(Request $request) // Dynamic Classroom Show ///////////////////////////////////////////
+  {
+    $level_id = $request->get('level_id');
 
-      $level_id = $request->get('level_id');
+    $classroom = Classrooms::where('level_id', '=', $level_id)->where('status_id', '=', 2)->get();
 
-      $classroom = Classrooms::where('level_id', '=', $level_id)->where('status_id', '=', 2)->get();
-
-      return Response::json($classroom);
+    return Response::json($classroom);
   }
 
-  public function dynamicClassroomByTitle(Request $request){ // Dynamic Classroom Show ///////////////////////////////////////////
+  public function dynamicClassroomByTitle(Request $request) // Dynamic Classroom Show ///////////////////////////////////////////
+  {
+    $level = $request->get('level');
 
-      $level = $request->get('level');
+    $level_id = levels::where('title', '=', $level)->first();
 
-      $level_id = levels::where('title', '=', $level)->first();
+    $classroom = Classrooms::where('level_id', '=', $level_id['id'])->where('status_id', '=', 2)->get();
 
-      $classroom = Classrooms::where('level_id', '=', $level_id['id'])->where('status_id', '=', 2)->get();
-
-      return Response::json($classroom);
+    return Response::json($classroom);
   }
 
-  public function dynamicCourse(Request $request){ // Dynamic Course Show ///////////////////////////////////////////
+  public function dynamicCourse(Request $request) // Dynamic Course Show ///////////////////////////////////////////
+  {
+    $level_id = $request->get('level_id');
 
-      $level_id = $request->get('level_id');
+    $course = Courses::where('level_id', '=', $level_id)->where('status_id', '=', 2)->get();
 
-      $course = Courses::where('level_id', '=', $level_id)->where('status_id', '=', 2)->get();
-
-      return Response::json($course);
+    return Response::json($course);
   }
 
-  public function getClass(Request $request){ 
+  public function getClass(Request $request)
+  { 
+    $day_id = $request->get('day_id');
 
-      $day_id = $request->get('day_id');
+    $time_id = $request->get('time_id');
 
-      $time_id = $request->get('time_id');
+    $classroom_id = $request->get('classroom_id');
 
-      $classroom_id = $request->get('classroom_id');
-
-      $class = Sches::where('status_id', '=', 2)
+    $class = Sches::where('status_id', '=', 2)
       ->where('day_id', '=', $day_id)->where('time_id', '=', $time_id)
       ->where('classroom_id', '=', $classroom_id)->get();
 
-      return Response::json($class);
+    return Response::json($class);
   }
 
   /**
@@ -158,45 +160,49 @@ class schesController extends AppBaseController
 
   public function store(Request $request)
   {
-      $this->authorize('create', sches::class);
+    $this->authorize('create', sches::class);
 
-      $list = $request['list'];
+    $list = $request['list'];
 
-      $successful = [];
+    $successful = [];
 
-      $failure = [];
-      
-      foreach($list as $y) {
-          
-          $time_id = $request['time_id'.$y];
-          $course_id = $request['course_id'.$y];
-          $teacher_id = $request['teacher_id'.$y];
+    $failure = [];
+    
+    foreach($list as $y)
+    {
+      $time_id = $request['time_id'.$y];
+      $course_id = $request['course_id'.$y];
+      $teacher_id = $request['teacher_id'.$y];
 
-          $sches = sches::firstOrCreate(['sem_id' => $request['sem_id'], 'classroom_id' => $request['classroom_id'],
-          'day_id' => $request['day_id'], 'time_id' => $time_id, 'status_id' => $request['status_id']],
-          ['course_id' => $course_id, 'teacher_id' => $teacher_id]);
-  
-          if($sches->wasRecentlyCreated){
-              array_push($successful, $time_id);
-          }
-          else {
-              array_push($failure, $time_id);
-          }
+      $sches = sches::firstOrCreate(['sem_id' => $request['sem_id'], 'classroom_id' => $request['classroom_id'],
+        'day_id' => $request['day_id'], 'time_id' => $time_id, 'status_id' => $request['status_id']],
+        ['course_id' => $course_id, 'teacher_id' => $teacher_id]);
+
+      if ($sches->wasRecentlyCreated)
+      {
+        array_push($successful, $time_id);
       }
-
-      if(empty($failure)){
-          Flash::success('All Class(es) were saved successfully<br><br>تم حفظ كل بيانات الحصة / الحصص الدراسية بنجاح');
+      else
+      {
+        array_push($failure, $time_id);
       }
-      elseif (empty($successful)){
-          Flash::error('All Class(es) data clashes with existed ones<br><br>كل بيانات الحصة / الحصص الدراسية المدخلة تتعارض مع بيانات موجودة بالفعل');
-      }
-      else {
-          Flash::success('Class(es) '.implode(' & ', $successful).' were saved successfully<br><br>تم حفظ بيانات الحصة / الحصص الدراسية '.implode(' و ', $successful).' بنجاح');
+    }
 
-          Flash::error('Class(es) '.implode(' & ', $failure).' data clashes with existed ones<br><br>بيانات الحصة / الحصص الدراسية '.implode(' و ', $failure).' المدخلة تتعارض مع بيانات موجودة بالفعل');
-      }
+    if (empty($failure))
+    {
+      Flash::success('All Class(es) were saved successfully<br><br>تم حفظ كل بيانات الحصة / الحصص الدراسية بنجاح');
+    }
+    elseif (empty($successful))
+    {
+      Flash::error('All Class(es) data clashes with existed ones<br><br>كل بيانات الحصة / الحصص الدراسية المدخلة تتعارض مع بيانات موجودة بالفعل');
+    }
+    else
+    {
+      Flash::success('Class(es) '.implode(' & ', $successful).' were saved successfully<br><br>تم حفظ بيانات الحصة / الحصص الدراسية '.implode(' و ', $successful).' بنجاح');
+      Flash::error('Class(es) '.implode(' & ', $failure).' data clashes with existed ones<br><br>بيانات الحصة / الحصص الدراسية '.implode(' و ', $failure).' المدخلة تتعارض مع بيانات موجودة بالفعل');
+    }
 
-      return redirect(route('sches.index'));
+    return redirect(route('sches.index'));
   }
 
   /**
@@ -209,22 +215,22 @@ class schesController extends AppBaseController
    */
 
   public function update(Request $request) // Updating with Modal
+  {
+    $this->authorize('update', sches::class);
+
+    $sch = sches::findOrFail($request->sch_id);
+
+    if (empty($sch))
     {
-      $this->authorize('update', sches::class);
-
-      $sch = sches::findOrFail($request->sch_id);
-
-      if (empty($sch)) {
-          Flash::error('The schadule was not found<br><br>بيانات الحصة الدراسية المطلوبة غير موجودة');
-
-          return redirect(route('sches.index'));
-      }
-
-      $sch->update($request->all());
-      Flash::success('The class was updated successfully<br><br>تم تحديث بيانات الحصة الدراسية بنجاح');
-
+      Flash::error('The schadule was not found<br><br>بيانات الحصة الدراسية المطلوبة غير موجودة');
       return redirect(route('sches.index'));
     }
+
+    $sch->update($request->all());
+    Flash::success('The class was updated successfully<br><br>تم تحديث بيانات الحصة الدراسية بنجاح');
+
+    return redirect(route('sches.index'));
+  }
 
   /**
    * Remove the specified sches from storage.
@@ -238,22 +244,22 @@ class schesController extends AppBaseController
 
   public function destroy(Request $request)
   {
-      $this->authorize('delete', sches::class);
+    $this->authorize('delete', sches::class);
 
-      $id = $request['id'];
-      
-      $sches = $this->schesRepository->find($id);
+    $id = $request['id'];
+    
+    $sches = $this->schesRepository->find($id);
 
-      if (empty($sches)) {
-          Flash::error('The schedule was not found<br><br>بيانات الحصة الدراسية المطلوبة غير موجودة');
-
-          return redirect(route('sches.index'));
-      }
-
-      $this->schesRepository->delete($id);
-
-      Flash::success('The schedule was deleted successfully<br><br>تم حذف بيانات الحصة الدراسية بنجاح');
-
+    if (empty($sches))
+    {
+      Flash::error('The schedule was not found<br><br>بيانات الحصة الدراسية المطلوبة غير موجودة');
       return redirect(route('sches.index'));
+    }
+
+    $this->schesRepository->delete($id);
+
+    Flash::success('The schedule was deleted successfully<br><br>تم حذف بيانات الحصة الدراسية بنجاح');
+
+    return redirect(route('sches.index'));
   }
 }

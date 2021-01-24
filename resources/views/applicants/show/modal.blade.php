@@ -64,15 +64,23 @@
         $('#doc2Sw').append('<a target="_blank" href="{{config("app.url")}}/'+doc2+'">School Certificate</a>')
         
 
-        if ($(this).data('visarequest') == 0){
-          $("#svisarequestSw").val('No لا');}
-        else{
-          $("#svisarequestSw").val('Yes نعم');}
+        if ($(this).data('visarequest') == 0)
+        {
+          $("#svisarequestSw").val('No لا');
+        }
+        else
+        {
+          $("#svisarequestSw").val('Yes نعم');
+        }
 
-        if ($(this).data('transrequest') == 1){
-          $("#stransrequestSw").val('Yes نعم');}
-        else{
-          $("#stransrequestSw").val('No لا');}
+        if ($(this).data('transrequest') == 1)
+        {
+          $("#stransrequestSw").val('Yes نعم');
+        }
+        else
+        {
+          $("#stransrequestSw").val('No لا');
+        }
 
         $("#reNameSw").val($(this).data('rename'));
         $("#raNameSw").val($(this).data('raname'));

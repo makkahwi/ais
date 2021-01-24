@@ -10,17 +10,16 @@ use Illuminate\Http\Request;
 use Response;
 use Flash;
 
-use App\Mail\applicantUpdate;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\applicantUpdate;
 
-use App\Models\student;
-use App\Models\users;
-use App\Models\contacts;
-use App\Models\marks;
-
-use App\Models\statuses;
-use App\Models\levels;
 use App\Models\sems;
+use App\Models\users;
+use App\Models\marks;
+use App\Models\levels;
+use App\Models\student;
+use App\Models\statuses;
+use App\Models\contacts;
 use App\Models\classrooms;
 use App\Models\studentsFinancialsDiscounts;
 
@@ -31,7 +30,7 @@ class upgradestudentsController extends AppBaseController
 
   public function __construct(studentsRepository $studentsRepo)
   {
-      $this->studentsRepository = $studentsRepo;
+    $this->studentsRepository = $studentsRepo;
   }
 
   /**
@@ -44,6 +43,8 @@ class upgradestudentsController extends AppBaseController
 
   public function index(Request $request)
   {
+    $this->authorize('viewAny', student::class);
+
     $marks = marks::all();
     $statuses = statuses::where('id', '<', 6)->get();
     $classrooms = Classrooms::with('students.user.contact')->where('status_id', '=', 2)->orderBy('level_id', 'desc')->get();
@@ -90,45 +91,45 @@ class upgradestudentsController extends AppBaseController
    */
 
   public function update(Request $request)
-    {
-      $this->authorize('update', student::class);
+  {
+    $this->authorize('update', student::class);
 
-      $status = $request['status'];
+    $status = $request['status'];
 
-      $studentNo = $request['studentNo'];
+    $studentNo = $request['studentNo'];
 
-      $student = users::where('schoolNo', '=', $studentNo);
+    $student = users::where('schoolNo', '=', $studentNo);
 
-      if ($status == 2)
-        $student->update(['status_id' => $status, 'leaveDate' => NULL, 'role_id' => 7]);
-      else
-        $student->update(['status_id' => $status, 'leaveDate' => today()]);
+    if ($status == 2)
+      $student->update(['status_id' => $status, 'leaveDate' => NULL, 'role_id' => 7]);
+    else
+      $student->update(['status_id' => $status, 'leaveDate' => today()]);
 
-      $classroom = $request['classroom'];
+    $classroom = $request['classroom'];
 
-      $student = student::where('studentNo', '=', $studentNo);
-      
-      $student->update(['classroom_id' => $classroom]);
+    $student = student::where('studentNo', '=', $studentNo);
+    
+    $student->update(['classroom_id' => $classroom]);
 
-      $newStudentNo = $request['newStudentNo'];
+    $newStudentNo = $request['newStudentNo'];
 
-      $users = users::where('schoolNo', '=', $studentNo)
-        ->update(['schoolNo' => $newStudentNo]);
+    $users = users::where('schoolNo', '=', $studentNo)
+      ->update(['schoolNo' => $newStudentNo]);
 
-      $student = student::where('studentNo', '=', $studentNo)
-        ->update(['studentNo' => $newStudentNo]);
+    $student = student::where('studentNo', '=', $studentNo)
+      ->update(['studentNo' => $newStudentNo]);
 
-      $contact = contacts::where('schoolNo', '=', $studentNo)
-        ->update(['schoolNo' => $newStudentNo]);
+    $contact = contacts::where('schoolNo', '=', $studentNo)
+      ->update(['schoolNo' => $newStudentNo]);
 
-      $data = ['studentNo' => $newStudentNo];
+    $data = ['studentNo' => $newStudentNo];
 
-      $email = users::where('schoolNo', '=', $newStudentNo)->get('email');
+    $email = users::where('schoolNo', '=', $newStudentNo)->get('email');
 
-      Mail::to($email)->send(new applicantUpdate($data));
+    Mail::to($email)->send(new applicantUpdate($data));
 
-      return Response::json($email);
-    }
+    return Response::json($email);
+  }
 
   /**
    * Remove the specified students from storage.
@@ -150,7 +151,6 @@ class upgradestudentsController extends AppBaseController
 
     if (empty($students)) {
       Flash::error('The student was not found<br><br>بيانات الطالب المطلوبة غير موجودة');
-
       return redirect(route('upgradestudents.index'));
     }
 
