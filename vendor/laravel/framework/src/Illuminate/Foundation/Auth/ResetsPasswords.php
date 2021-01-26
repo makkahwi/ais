@@ -65,7 +65,7 @@ trait ResetsPasswords
     {
         return [
             'token' => 'required',
-            'schoolNo' => 'required|integer',
+            'email' => 'required|email',
             'password' => 'required|confirmed|min:8',
         ];
     }
@@ -89,7 +89,7 @@ trait ResetsPasswords
     protected function credentials(Request $request)
     {
         return $request->only(
-            'schoolNo', 'password', 'password_confirmation', 'token'
+            'email', 'password', 'password_confirmation', 'token'
         );
     }
 

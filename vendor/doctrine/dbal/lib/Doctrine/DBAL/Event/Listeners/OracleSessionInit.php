@@ -25,50 +25,50 @@ use const CASE_UPPER;
  */
 class OracleSessionInit implements EventSubscriber
 {
-  /** @var string[] */
-  protected $_defaultSessionVars = [
-    'NLS_TIME_FORMAT' => 'HH24:MI:SS',
-    'NLS_DATE_FORMAT' => 'YYYY-MM-DD HH24:MI:SS',
-    'NLS_TIMESTAMP_FORMAT' => 'YYYY-MM-DD HH24:MI:SS',
-    'NLS_TIMESTAMP_TZ_FORMAT' => 'YYYY-MM-DD HH24:MI:SS TZH:TZM',
-    'NLS_NUMERIC_CHARACTERS' => '.,',
-  ];
+    /** @var string[] */
+    protected $_defaultSessionVars = [
+        'NLS_TIME_FORMAT' => 'HH24:MI:SS',
+        'NLS_DATE_FORMAT' => 'YYYY-MM-DD HH24:MI:SS',
+        'NLS_TIMESTAMP_FORMAT' => 'YYYY-MM-DD HH24:MI:SS',
+        'NLS_TIMESTAMP_TZ_FORMAT' => 'YYYY-MM-DD HH24:MI:SS TZH:TZM',
+        'NLS_NUMERIC_CHARACTERS' => '.,',
+    ];
 
-  /**
-   * @param string[] $oracleSessionVars
-   */
-  public function __construct(array $oracleSessionVars = [])
-  {
-    $this->_defaultSessionVars = array_merge($this->_defaultSessionVars, $oracleSessionVars);
-  }
-
-  /**
-   * @return void
-   */
-  public function postConnect(ConnectionEventArgs $args)
-  {
-    if (! count($this->_defaultSessionVars)) {
-      return;
+    /**
+     * @param string[] $oracleSessionVars
+     */
+    public function __construct(array $oracleSessionVars = [])
+    {
+        $this->_defaultSessionVars = array_merge($this->_defaultSessionVars, $oracleSessionVars);
     }
 
-    $vars = [];
-    foreach (array_change_key_case($this->_defaultSessionVars, CASE_UPPER) as $option => $value) {
-      if ($option === 'CURRENT_SCHEMA') {
-        $vars[] = $option . ' = ' . $value;
-      } else {
-        $vars[] = $option . " = '" . $value . "'";
-      }
+    /**
+     * @return void
+     */
+    public function postConnect(ConnectionEventArgs $args)
+    {
+        if (! count($this->_defaultSessionVars)) {
+            return;
+        }
+
+        $vars = [];
+        foreach (array_change_key_case($this->_defaultSessionVars, CASE_UPPER) as $option => $value) {
+            if ($option === 'CURRENT_SCHEMA') {
+                $vars[] = $option . ' = ' . $value;
+            } else {
+                $vars[] = $option . " = '" . $value . "'";
+            }
+        }
+
+        $sql = 'ALTER SESSION SET ' . implode(' ', $vars);
+        $args->getConnection()->executeStatement($sql);
     }
 
-    $sql = 'ALTER SESSION SET ' . implode(' ', $vars);
-    $args->getConnection()->executeStatement($sql);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSubscribedEvents()
-  {
-    return [Events::postConnect];
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getSubscribedEvents()
+    {
+        return [Events::postConnect];
+    }
 }

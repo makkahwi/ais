@@ -9,12 +9,15 @@ use Doctrine\Instantiator\Exception\ExceptionInterface;
  */
 interface InstantiatorInterface
 {
-  /**
-   * @param string $className
-   *
-   * @return object
-   *
-   * @throws ExceptionInterface
-   */
-  public function instantiate($className);
+    /**
+     * @param string $className
+     *
+     * @return object
+     *
+     * @throws ExceptionInterface
+     *
+     * @template T of object
+     * @phpstan-param class-string<T> $className
+     */
+    public function instantiate($className);
 }

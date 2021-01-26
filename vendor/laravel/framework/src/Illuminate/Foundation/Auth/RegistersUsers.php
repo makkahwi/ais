@@ -6,9 +6,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\levels;
-use App\Models\sems;
-
 trait RegistersUsers
 {
     use RedirectsUsers;
@@ -20,14 +17,7 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        $levels = levels::all();
-
-        $nextSem = sems::with('year')
-        ->where('join', '>', today())
-        ->orderby('join', 'asc')
-        ->get();
-
-        return view('auth.register', compact('levels', 'nextSem'));
+        return view('auth.register');
     }
 
     /**

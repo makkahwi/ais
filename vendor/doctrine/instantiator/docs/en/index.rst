@@ -20,14 +20,14 @@ using the constructor or any API of the class itself:
 
 .. code-block:: php
 
-  <?php
+    <?php
 
-  use Doctrine\Instantiator\Instantiator;
-  use App\Entities\User;
+    use Doctrine\Instantiator\Instantiator;
+    use App\Entities\User;
 
-  $instantiator = new Instantiator();
+    $instantiator = new Instantiator();
 
-  $user = $instantiator->instantiate(User::class);
+    $user = $instantiator->instantiate(User::class);
 
 Contributing
 ============

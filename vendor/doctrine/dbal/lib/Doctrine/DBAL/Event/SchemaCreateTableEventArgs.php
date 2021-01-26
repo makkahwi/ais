@@ -14,84 +14,84 @@ use function is_array;
  */
 class SchemaCreateTableEventArgs extends SchemaEventArgs
 {
-  /** @var Table */
-  private $table;
+    /** @var Table */
+    private $table;
 
-  /** @var mixed[][] */
-  private $columns;
+    /** @var mixed[][] */
+    private $columns;
 
-  /** @var mixed[] */
-  private $options;
+    /** @var mixed[] */
+    private $options;
 
-  /** @var AbstractPlatform */
-  private $platform;
+    /** @var AbstractPlatform */
+    private $platform;
 
-  /** @var string[] */
-  private $sql = [];
+    /** @var string[] */
+    private $sql = [];
 
-  /**
-   * @param mixed[][] $columns
-   * @param mixed[]   $options
-   */
-  public function __construct(Table $table, array $columns, array $options, AbstractPlatform $platform)
-  {
-    $this->table  = $table;
-    $this->columns  = $columns;
-    $this->options  = $options;
-    $this->platform = $platform;
-  }
+    /**
+     * @param mixed[][] $columns
+     * @param mixed[]   $options
+     */
+    public function __construct(Table $table, array $columns, array $options, AbstractPlatform $platform)
+    {
+        $this->table    = $table;
+        $this->columns  = $columns;
+        $this->options  = $options;
+        $this->platform = $platform;
+    }
 
-  /**
-   * @return Table
-   */
-  public function getTable()
-  {
-    return $this->table;
-  }
+    /**
+     * @return Table
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
 
-  /**
-   * @return mixed[][]
-   */
-  public function getColumns()
-  {
-    return $this->columns;
-  }
+    /**
+     * @return mixed[][]
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
 
-  /**
-   * @return mixed[]
-   */
-  public function getOptions()
-  {
-    return $this->options;
-  }
+    /**
+     * @return mixed[]
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
 
-  /**
-   * @return AbstractPlatform
-   */
-  public function getPlatform()
-  {
-    return $this->platform;
-  }
+    /**
+     * @return AbstractPlatform
+     */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
 
-  /**
-   * Passing multiple SQL statements as an array is deprecated. Pass each statement as an individual argument instead.
-   *
-   * @param string|string[] $sql
-   *
-   * @return SchemaCreateTableEventArgs
-   */
-  public function addSql($sql)
-  {
-    $this->sql = array_merge($this->sql, is_array($sql) ? $sql : func_get_args());
+    /**
+     * Passing multiple SQL statements as an array is deprecated. Pass each statement as an individual argument instead.
+     *
+     * @param string|string[] $sql
+     *
+     * @return SchemaCreateTableEventArgs
+     */
+    public function addSql($sql)
+    {
+        $this->sql = array_merge($this->sql, is_array($sql) ? $sql : func_get_args());
 
-    return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * @return string[]
-   */
-  public function getSql()
-  {
-    return $this->sql;
-  }
+    /**
+     * @return string[]
+     */
+    public function getSql()
+    {
+        return $this->sql;
+    }
 }

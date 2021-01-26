@@ -11,98 +11,98 @@ use Doctrine\DBAL\Schema\Column;
  */
 class SchemaColumnDefinitionEventArgs extends SchemaEventArgs
 {
-  /** @var Column|null */
-  private $column = null;
+    /** @var Column|null */
+    private $column;
 
-  /**
-   * Raw column data as fetched from the database.
-   *
-   * @var mixed[]
-   */
-  private $tableColumn;
+    /**
+     * Raw column data as fetched from the database.
+     *
+     * @var mixed[]
+     */
+    private $tableColumn;
 
-  /** @var string */
-  private $table;
+    /** @var string */
+    private $table;
 
-  /** @var string */
-  private $database;
+    /** @var string */
+    private $database;
 
-  /** @var Connection */
-  private $connection;
+    /** @var Connection */
+    private $connection;
 
-  /**
-   * @param mixed[] $tableColumn
-   * @param string  $table
-   * @param string  $database
-   */
-  public function __construct(array $tableColumn, $table, $database, Connection $connection)
-  {
-    $this->tableColumn = $tableColumn;
-    $this->table     = $table;
-    $this->database  = $database;
-    $this->connection  = $connection;
-  }
+    /**
+     * @param mixed[] $tableColumn
+     * @param string  $table
+     * @param string  $database
+     */
+    public function __construct(array $tableColumn, $table, $database, Connection $connection)
+    {
+        $this->tableColumn = $tableColumn;
+        $this->table       = $table;
+        $this->database    = $database;
+        $this->connection  = $connection;
+    }
 
-  /**
-   * Allows to clear the column which means the column will be excluded from
-   * tables column list.
-   *
-   * @return SchemaColumnDefinitionEventArgs
-   */
-  public function setColumn(?Column $column = null)
-  {
-    $this->column = $column;
+    /**
+     * Allows to clear the column which means the column will be excluded from
+     * tables column list.
+     *
+     * @return SchemaColumnDefinitionEventArgs
+     */
+    public function setColumn(?Column $column = null)
+    {
+        $this->column = $column;
 
-    return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * @return Column|null
-   */
-  public function getColumn()
-  {
-    return $this->column;
-  }
+    /**
+     * @return Column|null
+     */
+    public function getColumn()
+    {
+        return $this->column;
+    }
 
-  /**
-   * @return mixed[]
-   */
-  public function getTableColumn()
-  {
-    return $this->tableColumn;
-  }
+    /**
+     * @return mixed[]
+     */
+    public function getTableColumn()
+    {
+        return $this->tableColumn;
+    }
 
-  /**
-   * @return string
-   */
-  public function getTable()
-  {
-    return $this->table;
-  }
+    /**
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
 
-  /**
-   * @return string
-   */
-  public function getDatabase()
-  {
-    return $this->database;
-  }
+    /**
+     * @return string
+     */
+    public function getDatabase()
+    {
+        return $this->database;
+    }
 
-  /**
-   * @return Connection
-   */
-  public function getConnection()
-  {
-    return $this->connection;
-  }
+    /**
+     * @return Connection
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 
-  /**
-   * @deprecated Use SchemaColumnDefinitionEventArgs::getConnection() and Connection::getDatabasePlatform() instead.
-   *
-   * @return AbstractPlatform
-   */
-  public function getDatabasePlatform()
-  {
-    return $this->connection->getDatabasePlatform();
-  }
+    /**
+     * @deprecated Use SchemaColumnDefinitionEventArgs::getConnection() and Connection::getDatabasePlatform() instead.
+     *
+     * @return AbstractPlatform
+     */
+    public function getDatabasePlatform()
+    {
+        return $this->connection->getDatabasePlatform();
+    }
 }

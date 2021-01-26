@@ -17,51 +17,51 @@ use function is_string;
  */
 class BlobType extends Type
 {
-  /**
-   * {@inheritdoc}
-   */
-  public function getSQLDeclaration(array $column, AbstractPlatform $platform)
-  {
-    return $platform->getBlobTypeDeclarationSQL($column);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function convertToPHPValue($value, AbstractPlatform $platform)
-  {
-    if ($value === null) {
-      return null;
+    /**
+     * {@inheritdoc}
+     */
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    {
+        return $platform->getBlobTypeDeclarationSQL($column);
     }
 
-    if (is_string($value)) {
-      $fp = fopen('php://temp', 'rb+');
-      assert(is_resource($fp));
-      fwrite($fp, $value);
-      fseek($fp, 0);
-      $value = $fp;
+    /**
+     * {@inheritdoc}
+     */
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if (is_string($value)) {
+            $fp = fopen('php://temp', 'rb+');
+            assert(is_resource($fp));
+            fwrite($fp, $value);
+            fseek($fp, 0);
+            $value = $fp;
+        }
+
+        if (! is_resource($value)) {
+            throw ConversionException::conversionFailed($value, Types::BLOB);
+        }
+
+        return $value;
     }
 
-    if (! is_resource($value)) {
-      throw ConversionException::conversionFailed($value, Types::BLOB);
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return Types::BLOB;
     }
 
-    return $value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getName()
-  {
-    return Types::BLOB;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getBindingType()
-  {
-    return ParameterType::LARGE_OBJECT;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getBindingType()
+    {
+        return ParameterType::LARGE_OBJECT;
+    }
 }

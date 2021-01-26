@@ -5,13 +5,16 @@ namespace Doctrine\DBAL;
 use Doctrine\DBAL\Abstraction\Result;
 use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Driver\Statement as DriverStatement;
+use Doctrine\DBAL\Exception\NoKeyValue;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use IteratorAggregate;
 use PDO;
+use PDOStatement;
 use Throwable;
 use Traversable;
 
+use function array_shift;
 use function is_array;
 use function is_string;
 
@@ -21,123 +24,127 @@ use function is_string;
  */
 class Statement implements IteratorAggregate, DriverStatement, Result
 {
-  /**
-   * The SQL statement.
-   *
-   * @var string
-   */
-  protected $sql;
+    /**
+     * The SQL statement.
+     *
+     * @var string
+     */
+    protected $sql;
 
-  /**
-   * The bound parameters.
-   *
-   * @var mixed[]
-   */
-  protected $params = [];
+    /**
+     * The bound parameters.
+     *
+     * @var mixed[]
+     */
+    protected $params = [];
 
-  /**
-   * The parameter types.
-   *
-   * @var int[]|string[]
-   */
-  protected $types = [];
+    /**
+     * The parameter types.
+     *
+     * @var int[]|string[]
+     */
+    protected $types = [];
 
-  /**
-   * The underlying driver statement.
-   *
-   * @var \Doctrine\DBAL\Driver\Statement
-   */
-  protected $stmt;
+    /**
+     * The underlying driver statement.
+     *
+     * @var \Doctrine\DBAL\Driver\Statement
+     */
+    protected $stmt;
 
-  /**
-   * The underlying database platform.
-   *
-   * @var AbstractPlatform
-   */
-  protected $platform;
+    /**
+     * The underlying database platform.
+     *
+     * @var AbstractPlatform
+     */
+    protected $platform;
 
-  /**
-   * The connection this statement is bound to and executed on.
-   *
-   * @var Connection
-   */
-  protected $conn;
+    /**
+     * The connection this statement is bound to and executed on.
+     *
+     * @var Connection
+     */
+    protected $conn;
 
-  /**
-   * Creates a new <tt>Statement</tt> for the given SQL and <tt>Connection</tt>.
-   *
-   * @internal The statement can be only instantiated by {@link Connection}.
-   *
-   * @param string   $sql  The SQL of the statement.
-   * @param Connection $conn The connection on which the statement should be executed.
-   */
-  public function __construct($sql, Connection $conn)
-  {
-    $this->sql    = $sql;
-    $this->stmt   = $conn->getWrappedConnection()->prepare($sql);
-    $this->conn   = $conn;
-    $this->platform = $conn->getDatabasePlatform();
-  }
-
-  /**
-   * Binds a parameter value to the statement.
-   *
-   * The value can optionally be bound with a PDO binding type or a DBAL mapping type.
-   * If bound with a DBAL mapping type, the binding type is derived from the mapping
-   * type and the value undergoes the conversion routines of the mapping type before
-   * being bound.
-   *
-   * @param string|int $param The name or position of the parameter.
-   * @param mixed    $value The value of the parameter.
-   * @param mixed    $type  Either a PDO binding type or a DBAL mapping type name or instance.
-   *
-   * @return bool TRUE on success, FALSE on failure.
-   */
-  public function bindValue($param, $value, $type = ParameterType::STRING)
-  {
-    $this->params[$param] = $value;
-    $this->types[$param]  = $type;
-    if ($type !== null) {
-      if (is_string($type)) {
-        $type = Type::getType($type);
-      }
-
-      if ($type instanceof Type) {
-        $value     = $type->convertToDatabaseValue($value, $this->platform);
-        $bindingType = $type->getBindingType();
-      } else {
-        $bindingType = $type;
-      }
-
-      return $this->stmt->bindValue($param, $value, $bindingType);
+    /**
+     * Creates a new <tt>Statement</tt> for the given SQL and <tt>Connection</tt>.
+     *
+     * @internal The statement can be only instantiated by {@link Connection}.
+     *
+     * @param string     $sql  The SQL of the statement.
+     * @param Connection $conn The connection on which the statement should be executed.
+     */
+    public function __construct($sql, Connection $conn)
+    {
+        $this->sql      = $sql;
+        $this->stmt     = $conn->getWrappedConnection()->prepare($sql);
+        $this->conn     = $conn;
+        $this->platform = $conn->getDatabasePlatform();
     }
 
-    return $this->stmt->bindValue($param, $value);
-  }
+    /**
+     * Binds a parameter value to the statement.
+     *
+     * The value can optionally be bound with a PDO binding type or a DBAL mapping type.
+     * If bound with a DBAL mapping type, the binding type is derived from the mapping
+     * type and the value undergoes the conversion routines of the mapping type before
+     * being bound.
+     *
+     * @param string|int $param The name or position of the parameter.
+     * @param mixed      $value The value of the parameter.
+     * @param mixed      $type  Either a PDO binding type or a DBAL mapping type name or instance.
+     *
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    public function bindValue($param, $value, $type = ParameterType::STRING)
+    {
+        $this->params[$param] = $value;
+        $this->types[$param]  = $type;
+        if ($type !== null) {
+            if (is_string($type)) {
+                $type = Type::getType($type);
+            }
 
-  /**
-   * Binds a parameter to a value by reference.
-   *
-   * Binding a parameter by reference does not support DBAL mapping types.
-   *
-   * @param string|int $param  The name or position of the parameter.
-   * @param mixed    $variable The reference to the variable to bind.
-   * @param int    $type   The PDO binding type.
-   * @param int|null   $length   Must be specified when using an OUT bind
-   *               so that PHP allocates enough memory to hold the returned value.
-   *
-   * @return bool TRUE on success, FALSE on failure.
-   */
-  public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null)
-  {
-    $this->params[$param] = $variable;
-    $this->types[$param]  = $type;
+            if ($type instanceof Type) {
+                $value       = $type->convertToDatabaseValue($value, $this->platform);
+                $bindingType = $type->getBindingType();
+            } else {
+                $bindingType = $type;
+            }
 
-    return $this->stmt->bindParam($param, $variable, $type, $length);
-  }
+            return $this->stmt->bindValue($param, $value, $bindingType);
+        }
 
-  /**
-   * Executes the statement with the currently bound parameters.
+        return $this->stmt->bindValue($param, $value);
+    }
+
+    /**
+     * Binds a parameter to a value by reference.
+     *
+     * Binding a parameter by reference does not support DBAL mapping types.
+     *
+     * @param string|int $param    The name or position of the parameter.
+     * @param mixed      $variable The reference to the variable to bind.
+     * @param int        $type     The PDO binding type.
+     * @param int|null   $length   Must be specified when using an OUT bind
+     *                             so that PHP allocates enough memory to hold the returned value.
+     *
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null)
+    {
+        $this->params[$param] = $variable;
+        $this->types[$param]  = $type;
+
+        if ($this->stmt instanceof PDOStatement) {
+            $length = $length ?? 0;
+        }
+
+        return $this->stmt->bindParam($param, $variable, $type, $length);
+    }
+
+    /**
+     * Executes the statement with the currently bound parameters.
      *
      * @param mixed[]|null $params
      *
@@ -376,6 +383,47 @@ class Statement implements IteratorAggregate, DriverStatement, Result
     }
 
     /**
+     * Returns an associative array with the keys mapped to the first column and the values mapped to the second column.
+     *
+     * The result must contain at least two columns.
+     *
+     * @return array<mixed,mixed>
+     *
+     * @throws Exception
+     */
+    public function fetchAllKeyValue(): array
+    {
+        $this->ensureHasKeyValue();
+
+        $data = [];
+
+        foreach ($this->fetchAllNumeric() as [$key, $value]) {
+            $data[$key] = $value;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Returns an associative array with the keys mapped to the first column and the values being
+     * an associative array representing the rest of the columns and their values.
+     *
+     * @return array<mixed,array<string,mixed>>
+     *
+     * @throws Exception
+     */
+    public function fetchAllAssociativeIndexed(): array
+    {
+        $data = [];
+
+        foreach ($this->fetchAll(FetchMode::ASSOCIATIVE) as $row) {
+            $data[array_shift($row)] = $row;
+        }
+
+        return $data;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @throws Exception
@@ -442,6 +490,40 @@ class Statement implements IteratorAggregate, DriverStatement, Result
     }
 
     /**
+     * Returns an iterator over the result set with the keys mapped to the first column
+     * and the values mapped to the second column.
+     *
+     * The result must contain at least two columns.
+     *
+     * @return Traversable<mixed,mixed>
+     *
+     * @throws Exception
+     */
+    public function iterateKeyValue(): Traversable
+    {
+        $this->ensureHasKeyValue();
+
+        foreach ($this->iterateNumeric() as [$key, $value]) {
+            yield $key => $value;
+        }
+    }
+
+    /**
+     * Returns an iterator over the result set with the keys mapped to the first column and the values being
+     * an associative array representing the rest of the columns and their values.
+     *
+     * @return Traversable<mixed,array<string,mixed>>
+     *
+     * @throws Exception
+     */
+    public function iterateAssociativeIndexed(): Traversable
+    {
+        while (($row = $this->stmt->fetch(FetchMode::ASSOCIATIVE)) !== false) {
+            yield array_shift($row) => $row;
+        }
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return Traversable<int,mixed>
@@ -494,5 +576,14 @@ class Statement implements IteratorAggregate, DriverStatement, Result
     public function getWrappedStatement()
     {
         return $this->stmt;
+    }
+
+    private function ensureHasKeyValue(): void
+    {
+        $columnCount = $this->columnCount();
+
+        if ($columnCount < 2) {
+            throw NoKeyValue::fromColumnCount($columnCount);
+        }
     }
 }

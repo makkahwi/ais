@@ -96,7 +96,7 @@ class Payment extends \Faker\Provider\Payment
         'Banco Banif',
         'Banco BBM',
         'Banco BMG',
-        'Banco Bonsuccesso',
+        'Banco Bonsucesso',
         'Banco BTG Pactual',
         'Banco Cacique',
         'Banco Caixa Geral - Brasil',

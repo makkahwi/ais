@@ -13,61 +13,61 @@ use function date_create;
  */
 class DateTimeType extends Type implements PhpDateTimeMappingType
 {
-  /**
-   * {@inheritdoc}
-   */
-  public function getName()
-  {
-    return Types::DATETIME_MUTABLE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getSQLDeclaration(array $column, AbstractPlatform $platform)
-  {
-    return $platform->getDateTimeTypeDeclarationSQL($column);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function convertToDatabaseValue($value, AbstractPlatform $platform)
-  {
-    if ($value === null) {
-      return $value;
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return Types::DATETIME_MUTABLE;
     }
 
-    if ($value instanceof DateTimeInterface) {
-      return $value->format($platform->getDateTimeFormatString());
+    /**
+     * {@inheritdoc}
+     */
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    {
+        return $platform->getDateTimeTypeDeclarationSQL($column);
     }
 
-    throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTime']);
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    {
+        if ($value === null) {
+            return $value;
+        }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function convertToPHPValue($value, AbstractPlatform $platform)
-  {
-    if ($value === null || $value instanceof DateTimeInterface) {
-      return $value;
+        if ($value instanceof DateTimeInterface) {
+            return $value->format($platform->getDateTimeFormatString());
+        }
+
+        throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTime']);
     }
 
-    $val = DateTime::createFromFormat($platform->getDateTimeFormatString(), $value);
+    /**
+     * {@inheritdoc}
+     */
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        if ($value === null || $value instanceof DateTimeInterface) {
+            return $value;
+        }
 
-    if (! $val) {
-      $val = date_create($value);
+        $val = DateTime::createFromFormat($platform->getDateTimeFormatString(), $value);
+
+        if (! $val) {
+            $val = date_create($value);
+        }
+
+        if (! $val) {
+            throw ConversionException::conversionFailedFormat(
+                $value,
+                $this->getName(),
+                $platform->getDateTimeFormatString()
+            );
+        }
+
+        return $val;
     }
-
-    if (! $val) {
-      throw ConversionException::conversionFailedFormat(
-        $value,
-        $this->getName(),
-        $platform->getDateTimeFormatString()
-      );
-    }
-
-    return $val;
-  }
 }

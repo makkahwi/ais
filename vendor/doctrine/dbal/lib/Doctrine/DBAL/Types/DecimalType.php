@@ -9,27 +9,27 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class DecimalType extends Type
 {
-  /**
-   * {@inheritdoc}
-   */
-  public function getName()
-  {
-    return Types::DECIMAL;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return Types::DECIMAL;
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getSQLDeclaration(array $column, AbstractPlatform $platform)
-  {
-    return $platform->getDecimalTypeDeclarationSQL($column);
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    {
+        return $platform->getDecimalTypeDeclarationSQL($column);
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function convertToPHPValue($value, AbstractPlatform $platform)
-  {
-    return $value;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        return $value;
+    }
 }

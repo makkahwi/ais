@@ -17,51 +17,51 @@ use function is_string;
  */
 class BinaryType extends Type
 {
-  /**
-   * {@inheritdoc}
-   */
-  public function getSQLDeclaration(array $column, AbstractPlatform $platform)
-  {
-    return $platform->getBinaryTypeDeclarationSQL($column);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function convertToPHPValue($value, AbstractPlatform $platform)
-  {
-    if ($value === null) {
-      return null;
+    /**
+     * {@inheritdoc}
+     */
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+    {
+        return $platform->getBinaryTypeDeclarationSQL($column);
     }
 
-    if (is_string($value)) {
-      $fp = fopen('php://temp', 'rb+');
-      assert(is_resource($fp));
-      fwrite($fp, $value);
-      fseek($fp, 0);
-      $value = $fp;
+    /**
+     * {@inheritdoc}
+     */
+    public function convertToPHPValue($value, AbstractPlatform $platform)
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if (is_string($value)) {
+            $fp = fopen('php://temp', 'rb+');
+            assert(is_resource($fp));
+            fwrite($fp, $value);
+            fseek($fp, 0);
+            $value = $fp;
+        }
+
+        if (! is_resource($value)) {
+            throw ConversionException::conversionFailed($value, Types::BINARY);
+        }
+
+        return $value;
     }
 
-    if (! is_resource($value)) {
-      throw ConversionException::conversionFailed($value, Types::BINARY);
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return Types::BINARY;
     }
 
-    return $value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getName()
-  {
-    return Types::BINARY;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getBindingType()
-  {
-    return ParameterType::BINARY;
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function getBindingType()
+    {
+        return ParameterType::BINARY;
+    }
 }

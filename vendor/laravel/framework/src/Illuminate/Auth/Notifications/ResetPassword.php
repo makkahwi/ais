@@ -58,14 +58,10 @@ class ResetPassword extends Notification
 
         return (new MailMessage)
             ->subject(Lang::get('Reset Password Notification'))
-            ->greeting(Lang::get($notifiable->schoolNo.' '.$notifiable->name))
-            ->line(Lang::get('This email was sent to you because we received a password reset request for your account. If you made this request, please click the button below...'))
-            ->line(Lang::get('لقد أرسل إليكم هذا الإيميل بسبب استلامنا لطلب إعادة ضبط كلمة المرور لحسابكم, إذا كنتم أنتم من أرسل الطلب, فنرجو النقر على الزر أدناه'))
-            ->action(Lang::get('Reset Password إعادة ضبط كلمة المرور'), url(route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
+            ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
+            ->action(Lang::get('Reset Password'), url(route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
             ->line(Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
-            ->line(Lang::get('سينتهي مفعول هذا الرابط خلال :count دقيقة', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
-            ->line(Lang::get('If you did not request a password reset, please delete this email.'))
-            ->line(Lang::get('إذا لم تطلبوا إعادة ضبط كلمة المرور, نرجو حذف هذا الإيميل'));
+            ->line(Lang::get('If you did not request a password reset, no further action is required.'));
     }
 
     /**

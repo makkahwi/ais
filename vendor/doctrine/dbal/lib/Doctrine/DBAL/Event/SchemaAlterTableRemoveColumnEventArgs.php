@@ -15,68 +15,68 @@ use function is_array;
  */
 class SchemaAlterTableRemoveColumnEventArgs extends SchemaEventArgs
 {
-  /** @var Column */
-  private $column;
+    /** @var Column */
+    private $column;
 
-  /** @var TableDiff */
-  private $tableDiff;
+    /** @var TableDiff */
+    private $tableDiff;
 
-  /** @var AbstractPlatform */
-  private $platform;
+    /** @var AbstractPlatform */
+    private $platform;
 
-  /** @var string[] */
-  private $sql = [];
+    /** @var string[] */
+    private $sql = [];
 
-  public function __construct(Column $column, TableDiff $tableDiff, AbstractPlatform $platform)
-  {
-    $this->column  = $column;
-    $this->tableDiff = $tableDiff;
-    $this->platform  = $platform;
-  }
+    public function __construct(Column $column, TableDiff $tableDiff, AbstractPlatform $platform)
+    {
+        $this->column    = $column;
+        $this->tableDiff = $tableDiff;
+        $this->platform  = $platform;
+    }
 
-  /**
-   * @return Column
-   */
-  public function getColumn()
-  {
-    return $this->column;
-  }
+    /**
+     * @return Column
+     */
+    public function getColumn()
+    {
+        return $this->column;
+    }
 
-  /**
-   * @return TableDiff
-   */
-  public function getTableDiff()
-  {
-    return $this->tableDiff;
-  }
+    /**
+     * @return TableDiff
+     */
+    public function getTableDiff()
+    {
+        return $this->tableDiff;
+    }
 
-  /**
-   * @return AbstractPlatform
-   */
-  public function getPlatform()
-  {
-    return $this->platform;
-  }
+    /**
+     * @return AbstractPlatform
+     */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
 
-  /**
-   * Passing multiple SQL statements as an array is deprecated. Pass each statement as an individual argument instead.
-   *
-   * @param string|string[] $sql
-   *
-   * @return SchemaAlterTableRemoveColumnEventArgs
-   */
-  public function addSql($sql)
-  {
-    $this->sql = array_merge($this->sql, is_array($sql) ? $sql : func_get_args());
+    /**
+     * Passing multiple SQL statements as an array is deprecated. Pass each statement as an individual argument instead.
+     *
+     * @param string|string[] $sql
+     *
+     * @return SchemaAlterTableRemoveColumnEventArgs
+     */
+    public function addSql($sql)
+    {
+        $this->sql = array_merge($this->sql, is_array($sql) ? $sql : func_get_args());
 
-    return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * @return string[]
-   */
-  public function getSql()
-  {
-    return $this->sql;
-  }
+    /**
+     * @return string[]
+     */
+    public function getSql()
+    {
+        return $this->sql;
+    }
 }
