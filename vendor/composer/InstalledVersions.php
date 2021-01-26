@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'e16635278635fc3f86358e16d1180b20098bb1aa',
+    'reference' => 'aeea3850cb90f6ba6a7f0f7273f9c8fb8b6aec8e',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -405,15 +405,6 @@ private static $installed = array (
       ),
       'reference' => 'fb28d26cd0f891c80ee800cffb6c21366eab3552',
     ),
-    'infyomlabs/laravel-generator' => 
-    array (
-      'pretty_version' => '6.0.x-dev',
-      'version' => '6.0.9999999.9999999-dev',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '770469bd30f742c7a3e92a2c0b057cb5cd265d97',
-    ),
     'jakub-onderka/php-console-color' => 
     array (
       'pretty_version' => 'v0.2',
@@ -464,7 +455,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'e16635278635fc3f86358e16d1180b20098bb1aa',
+      'reference' => 'aeea3850cb90f6ba6a7f0f7273f9c8fb8b6aec8e',
     ),
     'laravel/tinker' => 
     array (
@@ -751,8 +742,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0',
-        1 => '1.0.0',
+        0 => '1.0.0',
+        1 => '1.0',
       ),
     ),
     'psr/simple-cache' => 

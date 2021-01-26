@@ -182,7 +182,6 @@ return [
 
     Collective\Html\HtmlServiceProvider::class,
     Laracasts\Flash\FlashServiceProvider::class,
-    \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
     \InfyOm\AdminLteTemplates\AdminLTETemplatesServiceProvider::class,
 
   ],
