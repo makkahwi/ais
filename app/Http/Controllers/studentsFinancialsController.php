@@ -24,7 +24,7 @@ class studentsFinancialsController extends AppBaseController
 {
   public function __construct()
   {
-      //
+    //
   }
 
   public function index(Request $request)
@@ -184,6 +184,8 @@ class studentsFinancialsController extends AppBaseController
 
   public function sfReports(Request $request) // Updating with Modal
   {
+    $this->authorize('reports', studentsFinancials::class);
+
     $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())->first();

@@ -23,14 +23,6 @@ class semsController extends AppBaseController
     $this->semsRepository = $semsRepo;
   }
 
-  /**
-   * Display a listing of the sems.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', sems::class);
@@ -43,14 +35,6 @@ class semsController extends AppBaseController
 
     return view('sems.index', compact('years', 'sems'));
   }
-
-  /**
-   * Store a newly created sems in storage.
-   *
-   * @param CreatesemsRequest $request
-   *
-   * @return Response
-   */
 
   public function store(CreatesemsRequest $request)
   {
@@ -74,15 +58,6 @@ class semsController extends AppBaseController
     return redirect(route('sems.index'));
   }
 
-  /**
-   * Update the specified sems in storage.
-   *
-   * @param int $id
-   * @param UpdatesemsRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', sems::class);
@@ -104,16 +79,6 @@ class semsController extends AppBaseController
 
     return redirect(route('sems.index'));
   }
-
-  /**
-   * Remove the specified sems from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

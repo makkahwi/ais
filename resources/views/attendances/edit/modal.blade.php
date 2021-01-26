@@ -13,18 +13,18 @@
 @endsection
 
 @push('scripts') <!-- Update Current Data /////////////////////////////////////////// -->
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      $(document).on('click', '#editing', function(data){
+    $(document).on('click', '#editing', function(data){
 
-        $("#attendanceId").val($(this).data('id'));
-        $("#semIdEd").val($(this).data('sem'));
-        $("#student_idEd").val($(this).data('student'));
-        $("#dateEd").val($(this).data('date'));
-        $("#attenEd").val($(this).data('atten'));
-        $("#noteEd").val($(this).data('note'));
+      $("#attendanceId").val($(this).data('id'));
+      $("#semIdEd").val($(this).data('sem'));
+      $("#student_idEd").val($(this).data('student'));
+      $("#dateEd").val($(this).data('date'));
+      $("#attenEd").val($(this).data('atten'));
+      $("#noteEd").val($(this).data('note'));
 
-      })
+    })
 
-    </script>
+  </script>
 @endpush

@@ -1,37 +1,35 @@
 <p hidden>{{$c=1}}</p>
 
 @foreach($studentsFinancialsDiscounts as $discount)
-    @can('view', [App\Models\studentsFinancialsDiscounts::class, $discount])
-        <tr>
-            <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
-            <td>{{ $discount->title }}</td>
-            <td>{{ $discount->description }}</td>
-            @if($discount->type == "Fixed Amount")
-                <td>RM{{ $discount->amount }}</td>
-            @else
-                <td>{{ $discount->amount }}%</td>
-            @endif
+  @can('view', [App\Models\studentsFinancialsDiscounts::class, $discount])
+    <tr>
+      <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+      <td>{{ $discount->title }}</td>
+      <td>{{ $discount->description }}</td>
+      @if($discount->type == "Fixed Amount")
+        <td>RM{{ $discount->amount }}</td>
+      @else
+        <td>{{ $discount->amount }}%</td>
+      @endif
 
-            @can('update', [App\Models\studentsFinancialsDiscounts::class, $discount])
-                <td>
-                    <div class='btn-group'>
+      @can('update', [App\Models\studentsFinancialsDiscounts::class, $discount])
+        <td>
+          <div class='btn-group'>
 
-                        <!-- Showing Button-->
-                        <button data-toggle="modal" data-target="#show-modal" id="showing" data-type="{{ $discount->type }}" data-title="{{ $discount->title }}" data-description="{{ $discount->description }}" data-amount="{{ $discount->amount }}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
+            <!-- Showing Button-->
+            <button data-toggle="modal" data-target="#show-modal" id="showing" data-type="{{ $discount->type }}" data-title="{{ $discount->title }}" data-description="{{ $discount->description }}" data-amount="{{ $discount->amount }}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
 
-                        <!-- Editing Button-->
-                        <button data-toggle="modal" id="editing" data-target="#edit-modal" id="editing" data-id="{{ $discount->id }}" data-type="{{ $discount->type }}" data-title="{{ $discount->title }}" data-description="{{ $discount->description }}" data-amount="{{ $discount->amount }}" class='btn btn-warning btn-xs'><i class="fa fa-edit"></i></button>
-                            
-                        @can('delete', App\Models\student::class)
-
-                            <!-- Deleting Button-->
-                            <button data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$discount->id}}" data-title="{{$discount->type}} | {{ $discount->title }}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
-
-                        @endcan
-
-                    </div>
-                </td>
+            <!-- Editing Button-->
+            <button data-toggle="modal" id="editing" data-target="#edit-modal" id="editing" data-id="{{ $discount->id }}" data-type="{{ $discount->type }}" data-title="{{ $discount->title }}" data-description="{{ $discount->description }}" data-amount="{{ $discount->amount }}" class='btn btn-warning btn-xs'><i class="fa fa-edit"></i></button>
+              
+            @can('delete', App\Models\student::class)
+              <!-- Deleting Button-->
+              <button data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$discount->id}}" data-title="{{$discount->type}} | {{ $discount->title }}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
             @endcan
-        </tr>
-    @endcan
+
+          </div>
+        </td>
+      @endcan
+    </tr>
+  @endcan
 @endforeach

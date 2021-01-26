@@ -38,14 +38,6 @@ class studentsController extends AppBaseController
     $this->studentsRepository = $studentsRepo;
   }
 
-  /**
-   * Display a listing of the students.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', student::class);
@@ -112,13 +104,6 @@ class studentsController extends AppBaseController
     return $pdf->download($student.' - Student Confirmation Letter.pdf');
   }
 
-  /**
-   * Store a newly created users in storage.
-   *
-   * @param CreateusersRequest $request
-   *
-   * @return Response
-   */
   public function store(Request $request)
   {
     // Generate a Student No
@@ -294,15 +279,6 @@ class studentsController extends AppBaseController
     return redirect(route('login'));
   }
 
-  /**
-   * Update the specified students in storage.
-   *
-   * @param int $id
-   * @param UpdatestudentsRequest $request
-   *
-   * @return Response
-   */
-
   public function update($id, UpdatestudentsRequest $request) // Updating with Modal
   {
     $this->authorize('update', student::class);
@@ -332,16 +308,6 @@ class studentsController extends AppBaseController
 
     return redirect(route('students.index'));
   }
-
-  /**
-   * Remove the specified students from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

@@ -20,13 +20,6 @@ class notificationsController extends AppBaseController
     $this->notificationsRepository = $notificationsRepo;
   }
 
-  /**
-   * Display a listing of the notifications.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
   public function index(Request $request)
   {
     $notifications = $this->notificationsRepository->all();
@@ -35,13 +28,6 @@ class notificationsController extends AppBaseController
       ->with('notifications', $notifications);
   }
 
-  /**
-   * Store a newly created notifications in storage.
-   *
-   * @param CreatenotificationsRequest $request
-   *
-   * @return Response
-   */
   public function store(CreatenotificationsRequest $request)
   {
     $input = $request->all();
@@ -53,16 +39,8 @@ class notificationsController extends AppBaseController
     return redirect(route('notifications.index'));
   }
 
-  /**
-   * Update the specified notifications in storage.
-   *
-   * @param int $id
-   * @param UpdatenotificationsRequest $request
-   *
-   * @return Response
-   */
   public function update($id, UpdatenotificationsRequest $request)
-{
+  {
     $notifications = $this->notificationsRepository->find($id);
 
     if (empty($notifications)) {
@@ -77,15 +55,6 @@ class notificationsController extends AppBaseController
     return redirect(route('notifications.index'));
   }
 
-  /**
-   * Remove the specified notifications from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
   public function destroy(Request $request)
   {
     $id = $request['id'];

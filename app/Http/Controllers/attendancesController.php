@@ -32,14 +32,6 @@ class attendancesController extends AppBaseController
     $this->attendancesRepository = $attendancesRepo;
   }
 
-  /**
-   * Display a listing of the attendances.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', attendances::class);
@@ -67,14 +59,6 @@ class attendancesController extends AppBaseController
     return view('attendances.index', compact('currentSem', 'sems', 'classrooms', 'students',
                                     'attendances', 'attendancesOld'));
   }
-
-  /**
-   * Store a newly created attendances in storage.
-   *
-   * @param CreateattendancesRequest $request
-   *
-   * @return Response
-   */
 
   public function store(Request $request)
   {
@@ -117,15 +101,6 @@ class attendancesController extends AppBaseController
     return redirect(route('attendances.index'));
   }
 
-  /**
-   * Update the specified attendances in storage.
-   *
-   * @param int $id
-   * @param UpdateattendancesRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', attendances::class);
@@ -143,16 +118,6 @@ class attendancesController extends AppBaseController
 
     return redirect(route('attendances.index'));
   }
-
-  /**
-   * Remove the specified attendances from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

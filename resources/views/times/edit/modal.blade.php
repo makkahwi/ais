@@ -13,16 +13,16 @@
 @endsection
 
 @push('scripts') <!-- Update Current Data /////////////////////////////////////////// -->
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      $(document).on('click', '#editing', function(data){
+    $(document).on('click', '#editing', function(data){
 
-        $("#time_id").val($(this).data('id'));
-        $("#timeNameEd").val($(this).data('tname'));
-        $("#startTimeEd").val($(this).data('stime'));
-        $("#endTimeEd").val($(this).data('etime'));
-        
-      })
+      $("#time_id").val($(this).data('id'));
+      $("#timeNameEd").val($(this).data('tname'));
+      $("#startTimeEd").val($(this).data('stime'));
+      $("#endTimeEd").val($(this).data('etime'));
+      
+    })
 
-    </script>
+  </script>
 @endpush

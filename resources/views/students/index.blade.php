@@ -44,9 +44,7 @@
   @include('students.show.modal')
 
   @can('update', App\Models\student::class)
-
     @include('students.edit.modal')
-
   @endcan
 
 @endsection

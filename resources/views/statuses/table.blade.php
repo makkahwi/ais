@@ -1,22 +1,17 @@
 <div class="table-responsive">
-    <table class="table tableTail" width="100%" id="statuses-table">
+  <table class="table tableTail" width="100%" id="statuses-table">
 
-        <thead>
-            <tr>
-                @include('statuses.tableHead')
-            </tr>
-        </thead>
+    <thead>
+      @include('statuses.tableHead')
+    </thead>
 
-        <tfoot>
-            <tr>
-                @include('statuses.tableHead')
-            </tr>
-        </tfoot>
+    <tfoot>
+      @include('statuses.tableHead')
+    </tfoot>
 
-        <tbody>
-        
-            @include('statuses.tableRow')
-            
-        </tbody>
-    </table>
+    <tbody>
+      @include('statuses.tableRow')
+    </tbody>
+
+  </table>
 </div>

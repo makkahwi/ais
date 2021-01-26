@@ -23,14 +23,6 @@ class statusController extends AppBaseController
     $this->statusRepository = $statusRepo;
   }
 
-  /**
-   * Display a listing of the status.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', statuses::class);
@@ -45,14 +37,6 @@ class statusController extends AppBaseController
     return view('statuses.index', compact('statuses', 'currentSem'));
   }
 
-  /**
-   * Store a newly created status in storage.
-   *
-   * @param CreatestatusRequest $request
-   *
-   * @return Response
-   */
-
   public function store(CreatestatusRequest $request)
   {
     $this->authorize('create', statuses::class);
@@ -65,15 +49,6 @@ class statusController extends AppBaseController
 
     return redirect(route('statuses.index'));
   }
-
-  /**
-   * Update the specified status in storage.
-   *
-   * @param int $id
-   * @param UpdatestatusRequest $request
-   *
-   * @return Response
-   */
 
   public function update(Request $request) // Updating with Modal
   {
@@ -93,18 +68,8 @@ class statusController extends AppBaseController
     return redirect(route('statuses.index'));
   }
 
-  /**
-   * Remove the specified status from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
-
   public function destroy(Request $request)
-{
+  {
     $this->authorize('delete', statuses::class);
 
     $id = $request['id'];

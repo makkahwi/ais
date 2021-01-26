@@ -27,14 +27,6 @@ class classroomsController extends AppBaseController
     $this->classroomsRepository = $classroomsRepo;
   }
 
-  /**
-   * Display a listing of the classrooms.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', classrooms::class);
@@ -70,14 +62,6 @@ class classroomsController extends AppBaseController
     return ($counter);
   }
 
-  /**
-   * Store a newly created classrooms in storage.
-   *
-   * @param CreateclassroomsRequest $request
-   *
-   * @return Response
-   */
-
   public function store(CreateclassroomsRequest $request)
   {
     $this->authorize('create', classrooms::class);
@@ -99,45 +83,26 @@ class classroomsController extends AppBaseController
     return redirect(route('classrooms.index'));
   }
 
-  /**
-   * Update the specified classrooms in storage.
-   *
-   * @param int $id
-   * @param UpdateclassroomsRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
-    {
-      $this->authorize('update', classrooms::class);
+  {
+    $this->authorize('update', classrooms::class);
 
-      $classroom = classrooms::findOrFail($request['id']);
+    $classroom = classrooms::findOrFail($request['id']);
 
-      if (empty($classroom)) {
-        Flash::error('The classroom was not found<br><br>بيانات الشعبة الدراسية المطلوبة غير موجودة');
-
-        return redirect(route('classrooms.index'));
-      }
-      
-      $check = classrooms::where('title', '=', $request['title'])
-        ->where('level_id', '=', $request['level_id'])->get();
-
-      $classroom->update($request->all());
-      Flash::success('The classroom was updated successfully<br><br>تم تحديث بيانات الشعبة الدراسية بنجاح');    
+    if (empty($classroom)) {
+      Flash::error('The classroom was not found<br><br>بيانات الشعبة الدراسية المطلوبة غير موجودة');
 
       return redirect(route('classrooms.index'));
     }
+    
+    $check = classrooms::where('title', '=', $request['title'])
+      ->where('level_id', '=', $request['level_id'])->get();
 
-  /**
-   * Remove the specified classrooms from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
+    $classroom->update($request->all());
+    Flash::success('The classroom was updated successfully<br><br>تم تحديث بيانات الشعبة الدراسية بنجاح');    
+
+    return redirect(route('classrooms.index'));
+  }
 
   public function destroy(Request $request)
   {

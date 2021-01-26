@@ -39,13 +39,6 @@ class usersController extends AppBaseController
     $this->usersRepository = $usersRepo;
   }
 
-  /**
-   * Display a listing of the users.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
   public function index(Request $request)
   {
     $this->authorize('viewAny', users::class);
@@ -202,14 +195,6 @@ class usersController extends AppBaseController
     return redirect(route('users.index'));
   }
 
-  /**
-   * Update the specified users in storage.
-   *
-   * @param int $id
-   * @param UpdateusersRequest $request
-   *
-   * @return Response
-   */
   public function update(request $request)
   {
     $this->authorize('update', users::class);
@@ -225,15 +210,6 @@ class usersController extends AppBaseController
     return redirect(route('users.index'));
   }
 
-  /**
-   * Remove the specified users from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
   public function destroy(Request $request)
   {
     $this->authorize('delete', users::class);

@@ -13,15 +13,15 @@
 @endsection
 
 @push('scripts') <!-- Update Current Data /////////////////////////////////////////// -->
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      $(document).on('click', '#editing', function(data){
-        
-        $("#day_id").val($(this).data('id'));
-        $("#dayNameEd").val($(this).data('day'));
-        
-      })
+    $(document).on('click', '#editing', function(data){
+      
+      $("#day_id").val($(this).data('id'));
+      $("#dayNameEd").val($(this).data('day'));
+      
+    })
 
-    </script>
+  </script>
 @endpush
 

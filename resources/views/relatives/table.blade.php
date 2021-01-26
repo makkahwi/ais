@@ -1,17 +1,17 @@
 <div class="table-responsive">
-    <table class="table tableTail" width="100%" id="relatives-table">
+  <table class="table tableTail" width="100%" id="relatives-table">
 
-        <thead>
-            @include('relatives.tableHead')
-        </thead>
+    <thead>
+      @include('relatives.tableHead')
+    </thead>
 
-        <tfoot>
-            @include('relatives.tableHead')
-        </tfoot>
+    <tfoot>
+      @include('relatives.tableHead')
+    </tfoot>
 
-        <tbody>
-            @include('relatives.tableRow')
-        </tbody>
+    <tbody>
+      @include('relatives.tableRow')
+    </tbody>
 
-    </table>
+  </table>
 </div>

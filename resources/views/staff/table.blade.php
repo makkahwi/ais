@@ -1,17 +1,17 @@
 <div class="table-responsive">
-    <table class="table tableTail" width="100%" id="staff-table">
+  <table class="table tableTail" width="100%" id="staff-table">
 
-        <thead>
-            @include('staff.tableHead')
-        </thead>
+    <thead>
+      @include('staff.tableHead')
+    </thead>
 
-        <tfoot>
-            @include('staff.tableHead')
-        </tfoot>
+    <tfoot>
+      @include('staff.tableHead')
+    </tfoot>
 
-        <tbody>
-            @include('staff.tableRow')
-        </tbody>
+    <tbody>
+      @include('staff.tableRow')
+    </tbody>
 
-    </table>
+  </table>
 </div>

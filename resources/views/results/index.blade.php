@@ -31,13 +31,9 @@
 @endsection
 
 @can('generateResults', App\Models\marks::class)
-
   @include('results.create.modal')
-
 @endcan
 
 @section('content')
-
   @include('results.classroomTabs')
-
 @endsection

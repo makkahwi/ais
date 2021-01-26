@@ -22,14 +22,6 @@ class levelsController extends AppBaseController
       $this->levelsRepository = $levelsRepo;
   }
 
-  /**
-   * Display a listing of the levels.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', levels::class);
@@ -38,14 +30,6 @@ class levelsController extends AppBaseController
 
     return view('levels.index',compact('levels'));
   }
-
-  /**
-   * Store a newly created levels in storage.
-   *
-   * @param CreatelevelsRequest $request
-   *
-   * @return Response
-   */
 
   public function store(CreatelevelsRequest $request)
   {
@@ -66,15 +50,6 @@ class levelsController extends AppBaseController
     return redirect(route('levels.index'));
   }
 
-  /**
-   * Update the specified levels in storage.
-   *
-   * @param int $id
-   * @param UpdatelevelsRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', levels::class);
@@ -92,16 +67,6 @@ class levelsController extends AppBaseController
 
     return redirect(route('levels.index'));
   }
-
-  /**
-   * Remove the specified levels from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

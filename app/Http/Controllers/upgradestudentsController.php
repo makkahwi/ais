@@ -33,14 +33,6 @@ class upgradestudentsController extends AppBaseController
     $this->studentsRepository = $studentsRepo;
   }
 
-  /**
-   * Display a listing of the students.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', student::class);
@@ -60,14 +52,6 @@ class upgradestudentsController extends AppBaseController
                                         'marks', 'currentSem', 'studentsFinancialsDiscounts'));
   }
 
-  /**
-   * Store a newly created students in storage.
-   *
-   * @param CreatestudentsRequest $request
-   *
-   * @return Response
-   */
-
   public function store(CreatestudentsRequest $request)
   {
     $this->authorize('create', student::class);
@@ -80,15 +64,6 @@ class upgradestudentsController extends AppBaseController
 
     return redirect(route('upgradestudents.index'));
   }
-
-  /**
-   * Update the specified students in storage.
-   *
-   * @param int $id
-   * @param UpdatestudentsRequest $request
-   *
-   * @return Response
-   */
 
   public function update(Request $request)
   {
@@ -130,16 +105,6 @@ class upgradestudentsController extends AppBaseController
 
     return Response::json($email);
   }
-
-  /**
-   * Remove the specified students from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

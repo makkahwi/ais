@@ -28,14 +28,6 @@ class coursesController extends AppBaseController
     $this->coursesRepository = $coursesRepo;
   }
 
-  /**
-   * Display a listing of the courses.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', courses::class);
@@ -52,14 +44,6 @@ class coursesController extends AppBaseController
 
     return view('courses.index', compact('currentSem', 'levels', 'statuses'));
   }
-
-  /**
-   * Store a newly created courses in storage.
-   *
-   * @param CreatecoursesRequest $request
-   *
-   * @return Response
-   */
 
   public function store(CreatecoursesRequest $request)
   {
@@ -82,15 +66,6 @@ class coursesController extends AppBaseController
     return redirect(route('courses.index'));
   }
 
-  /**
-   * Update the specified courses in storage.
-   *
-   * @param int $id
-   * @param UpdatecoursesRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', courses::class);
@@ -108,16 +83,6 @@ class coursesController extends AppBaseController
 
     return redirect(route('courses.index'));
   }
-
-  /**
-   * Remove the specified courses from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

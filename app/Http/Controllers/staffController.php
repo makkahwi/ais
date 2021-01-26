@@ -32,13 +32,6 @@ class staffController extends AppBaseController
     $this->staffRepository = $staffRepo;
   }
 
-  /**
-   * Display a listing of the staff.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
   public function index(Request $request)
   {
     $this->authorize('viewAny', staff::class);
@@ -50,13 +43,6 @@ class staffController extends AppBaseController
     return view('staff.index',compact('statuses', 'staff'));
   }
 
-  /**
-   * Store a newly created staff in storage.
-   *
-   * @param CreatestaffRequest $request
-   *
-   * @return Response
-   */
   public function store(Request $request)
   {
     $this->authorize('create', staff::class);
@@ -295,14 +281,6 @@ class staffController extends AppBaseController
     return view('auth.staffApp');
   }
 
-  /**
-   * Update the specified staff in storage.
-   *
-   * @param int $id
-   * @param UpdatestaffRequest $request
-   *
-   * @return Response
-   */
   public function update($id, UpdatestaffRequest $request)
   {
     $this->authorize('update', staff::class);
@@ -338,15 +316,6 @@ class staffController extends AppBaseController
     return redirect(route('staff.index'));
   }
 
-  /**
-   * Remove the specified staff from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
   public function destroy(Request $request)
   {
     $this->authorize('delete', staff::class);

@@ -5,7 +5,7 @@
     @csrf
     <div class="modal-body bg-success">
 
-        @include('attendances.create.table')
+      @include('attendances.create.table')
         
     </div>
 

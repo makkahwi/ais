@@ -1,30 +1,30 @@
 <div class="table-responsive">
 
-    @include('attendances.create.fieldsH')
+  @include('attendances.create.fieldsH')
 
-    <table class="table" width="100%" id="attendances-create-table">
-        <thead>
-            <tr class="theme-main">
-                <th></th>
-                <th>@include('labels.name')@include('layouts.required')</th>
-                <th colspan="3">@include('labels.atten')@include('layouts.required')</th>
-                <th>@include('labels.note')</th>
-            </tr>
-            <tr>
-                <th colspan="2"></th>
-                <th>Attended</th>
-                <th>Late</th>
-                <th>Absent</th>
-                <th></th>
-            </tr>
-        </thead>
+  <table class="table" width="100%" id="attendances-create-table">
+    <thead>
+      <tr class="theme-main">
+        <th></th>
+        <th>@include('labels.name')@include('layouts.required')</th>
+        <th colspan="3">@include('labels.atten')@include('layouts.required')</th>
+        <th>@include('labels.note')</th>
+      </tr>
+      <tr>
+        <th colspan="2"></th>
+        <th>Attended</th>
+        <th>Late</th>
+        <th>Absent</th>
+        <th></th>
+      </tr>
+    </thead>
 
-        <tbody id="attendanceslist">
-        </tbody>
+    <tbody id="attendanceslist">
+    </tbody>
 
-        <tfoot id="footer">
-        </tfoot>
-    </table>
+    <tfoot id="footer">
+    </tfoot>
+  </table>
 </div>
 
 @push('scripts') 

@@ -22,30 +22,14 @@ class yearsController extends AppBaseController
     $this->yearsRepository = $yearsRepo;
   }
 
-  /**
-   * Display a listing of the years.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', years::class);
 
-    $years = Years::orderBy('created_at', 'DESC')->get();
+    $years = years::orderBy('created_at', 'DESC')->get();
 
     return view('years.index', compact('years'));
   }
-
-  /**
-   * Store a newly created years in storage.
-   *
-   * @param CreateyearsRequest $request
-   *
-   * @return Response
-   */
 
   public function store(CreateyearsRequest $request)
   {
@@ -65,21 +49,11 @@ class yearsController extends AppBaseController
     return redirect(route('years.index'));
   }
 
-  /**
-   * Update the specified years in storage.
-   *
-   * @param int $id
-   * @param UpdateyearsRequest $request
-   *
-   * @return Response
-   */
-
-  
   public function update(Request $request) // old updating
   {
     $this->authorize('update', years::class);
 
-    $year = Years::findOrFail($request['id']);
+    $year = years::findOrFail($request['id']);
 
     if (empty($year)) {
       Flash::error('The year was not found<br><br>بيانات العام الدراسي المطلوبة غير موجودة');
@@ -92,16 +66,6 @@ class yearsController extends AppBaseController
 
     return redirect(route('years.index'));
   }
-
-  /**
-   * Remove the specified years from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-  */
 
   public function destroy(Request $request)
   {

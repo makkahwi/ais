@@ -23,14 +23,6 @@ class timesController extends AppBaseController
     $this->timesRepository = $timesRepo;
   }
 
-  /**
-   * Display a listing of the times.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', times::class);
@@ -44,14 +36,6 @@ class timesController extends AppBaseController
     return view('times.index', compact('times', 'currentSem'));
   }
 
-  /**
-   * Store a newly created times in storage.
-   *
-   * @param CreatetimesRequest $request
-   *
-   * @return Response
-   */
-
   public function store(CreatetimesRequest $request)
   {
     $this->authorize('create', times::class);
@@ -64,15 +48,6 @@ class timesController extends AppBaseController
 
     return redirect(route('times.index'));
   }
-
-  /**
-   * Update the specified times in storage.
-   *
-   * @param int $id
-   * @param UpdatetimesRequest $request
-   *
-   * @return Response
-   */
 
   public function update(Request $request) // Updating with Modal
   {
@@ -92,16 +67,6 @@ class timesController extends AppBaseController
 
     return redirect(route('times.index'));
   }
-
-  /**
-   * Remove the specified times from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

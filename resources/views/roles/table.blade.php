@@ -1,23 +1,17 @@
 <div class="table-responsive">
-    <table class="table tableTail" width="100%" id="roles-table">
+  <table class="table tableTail" width="100%" id="roles-table">
 
-        <thead>
-            <tr>
-                @include('roles.tableHead')
-            </tr>
-        </thead>
+    <thead>
+      @include('roles.tableHead')
+    </thead>
 
-        <tfoot>
-            <tr>
-                @include('roles.tableHead')
-            </tr>
-        </tfoot>
+    <tfoot>
+      @include('roles.tableHead')
+    </tfoot>
 
-        <tbody>
-        
-            @include('roles.tableRow')
+    <tbody>
+      @include('roles.tableRow')
+    </tbody>
 
-        </tbody>
-
-    </table>
+  </table>
 </div>

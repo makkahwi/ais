@@ -80,20 +80,20 @@
 </div>
 
 @push('scripts') <!-- Show Current Data /////////////////////////////////////////// -->
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      $(document).on('click', '#appeal', function(data){
+    $(document).on('click', '#appeal', function(data){
 
-        $("#nameCom").val($(this).data('mark'));
-        $("#teacher_idCom").val($(this).data('teacher'));
-        $("#semIdCom").val($(this).data('sem'));
-        $("#classroom_idCom").val($(this).data('class'));
-        $("#course_idCom").val($(this).data('course'));
-        $("#student_idCom").val($(this).data('student'));
-        $("#markValueCom").val($(this).data('markv'));
-        $("#maxCom").val($(this).data('fmark'));
+      $("#nameCom").val($(this).data('mark'));
+      $("#teacher_idCom").val($(this).data('teacher'));
+      $("#semIdCom").val($(this).data('sem'));
+      $("#classroom_idCom").val($(this).data('class'));
+      $("#course_idCom").val($(this).data('course'));
+      $("#student_idCom").val($(this).data('student'));
+      $("#markValueCom").val($(this).data('markv'));
+      $("#maxCom").val($(this).data('fmark'));
 
-      })
+    })
 
-    </script>
+  </script>
 @endpush

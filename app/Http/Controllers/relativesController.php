@@ -26,13 +26,6 @@ class relativesController extends AppBaseController
       $this->relativesRepository = $relativesRepo;
   }
 
-  /**
-   * Display a listing of the relatives.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
   public function index(Request $request)
   {
     $this->authorize('viewAny', relatives::class);
@@ -100,13 +93,6 @@ class relativesController extends AppBaseController
     return redirect(route('users.index'));
   }
 
-  /**
-   * Store a newly created relatives in storage.
-   *
-   * @param CreaterelativesRequest $request
-   *
-   * @return Response
-   */
   public function store(CreaterelativesRequest $request)
   {
     $this->authorize('create', relatives::class);
@@ -120,14 +106,6 @@ class relativesController extends AppBaseController
     return redirect(route('relatives.index'));
   }
 
-  /**
-   * Update the specified relatives in storage.
-   *
-   * @param int $id
-   * @param UpdaterelativesRequest $request
-   *
-   * @return Response
-   */
   public function update($id, UpdaterelativesRequest $request)
   {
     $this->authorize('update', relatives::class);
@@ -162,15 +140,6 @@ class relativesController extends AppBaseController
     return redirect(route('relatives.index'));
   }
 
-  /**
-   * Remove the specified relatives from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
   public function destroy(Request $request)
   {
     $this->authorize('delete', relatives::class);

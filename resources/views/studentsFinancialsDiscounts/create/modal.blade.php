@@ -14,8 +14,6 @@
 
     $('#type').on('change',function(e){+
 
-      
-
       var type = e.target.value;
 
       if (type == 'Fixed Amount')
@@ -30,6 +28,7 @@
       }
       else
         $('#sign').empty();
+
     });
 
   </script>

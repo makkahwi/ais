@@ -36,14 +36,6 @@ class examsController extends AppBaseController
     $this->examsRepository = $examsRepo;
   }
 
-  /**
-   * Display a listing of the exams.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', exams::class);
@@ -57,14 +49,6 @@ class examsController extends AppBaseController
 
     return view('exams.index', compact('currentSem', 'levels'));
   }
-
-  /**
-   * Store a newly created exams in storage.
-   *
-   * @param CreateexamsRequest $request
-   *
-   * @return Response
-   */
 
   public function store(Request $request)
   {
@@ -110,15 +94,6 @@ class examsController extends AppBaseController
     return redirect(route('exams.index'));
   }
 
-  /**
-   * Update the specified exams in storage.
-   *
-   * @param int $id
-   * @param UpdateexamsRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', exams::class);
@@ -136,16 +111,6 @@ class examsController extends AppBaseController
 
     return redirect(route('exams.index'));
   }
-
-  /**
-   * Remove the specified exams from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

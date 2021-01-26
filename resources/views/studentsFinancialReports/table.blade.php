@@ -1,17 +1,18 @@
 <div class="table-responsive">
-    <table class="table tableTail" width="100%" id="reports-table">
+  <table class="table tableTail" width="100%" id="reports-table">
 
-        <thead>
-            @include('studentsFinancialReports.tableFilter')
-            @include('studentsFinancialReports.tableHead')
-        </thead>
+    <thead>
+      @include('studentsFinancialReports.tableFilter')
+      @include('studentsFinancialReports.tableHead')
+    </thead>
 
-        <tfoot>
-            @include('studentsFinancialReports.tableHead')
-        </tfoot>
+    <tfoot>
+      @include('studentsFinancialReports.tableHead')
+    </tfoot>
 
-        <tbody>
-            @include('studentsFinancialReports.tableRow')
-        </tbody>
-    </table>
+    <tbody>
+      @include('studentsFinancialReports.tableRow')
+    </tbody>
+
+  </table>
 </div>

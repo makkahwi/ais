@@ -27,14 +27,6 @@ class applicantsController extends AppBaseController
     $this->studentsRepository = $studentsRepo;
   }
 
-  /**
-   * Display a listing of the students.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewApplicants', student::class);
@@ -55,14 +47,6 @@ class applicantsController extends AppBaseController
     return view('applicants.index', compact('currentSem', 'statuses', 'levels', 'classrooms', 'applicants'));
   }
 
-  /**
-   * Store a newly created students in storage.
-   *
-   * @param CreatestudentsRequest $request
-   *
-   * @return Response
-   */
-
   public function store(CreatestudentsRequest $request)
   {
     $this->authorize('create', student::class);
@@ -75,15 +59,6 @@ class applicantsController extends AppBaseController
 
     return redirect(route('applicants.index'));
   }
-
-  /**
-   * Update the specified students in storage.
-   *
-   * @param int $id
-   * @param UpdatestudentsRequest $request
-   *
-   * @return Response
-   */
 
   public function update(Request $request) // old updating
   {
@@ -102,16 +77,6 @@ class applicantsController extends AppBaseController
 
     return redirect(route('applicants.index'));
   }
-
-  /**
-   * Remove the specified students from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

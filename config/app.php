@@ -13,9 +13,13 @@ return [
   |
   */
 
-  'name' => env('APP_NAME', 'Laravel'),
+  'name' => env('APP_NAME', 'Portal Name'),
 
-  'sname' => env('APP_SNAME', 'Laravel'),
+  'sname' => env('APP_SNAME', 'School Arabic Name'),
+
+  'aname' => env('APP_ANAME', 'Portal Name'),
+
+  'saname' => env('APP_SANAME', 'School Arabic Name'),
 
   /*
   |--------------------------------------------------------------------------

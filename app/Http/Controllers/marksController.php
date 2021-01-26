@@ -34,14 +34,6 @@ class marksController extends AppBaseController
     $this->marksRepository = $marksRepo;
   }
 
-  /**
-   * Display a listing of the marks.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', marks::class);
@@ -136,14 +128,6 @@ class marksController extends AppBaseController
     return redirect(route('marks.index'));
   }
 
-  /**
-   * Store a newly created marks in storage.
-   *
-   * @param CreatemarksRequest $request
-   *
-   * @return Response
-   */
-
   public function store(Request $request)
   {
     $this->authorize('create', marks::class);
@@ -187,15 +171,6 @@ class marksController extends AppBaseController
     return redirect(route('marks.index'));
   }
 
-  /**
-   * Update the specified marks in storage.
-   *
-   * @param int $id
-   * @param UpdatemarksRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', marks::class);
@@ -213,16 +188,6 @@ class marksController extends AppBaseController
 
     return redirect(route('marks.index'));
   }
-
-  /**
-   * Remove the specified marks from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

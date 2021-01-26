@@ -6,6 +6,7 @@
 
     <div class="col-md-12 table-responsive">
       <table class="table tableTail" width="100%" id="sches-tableT">
+
         <thead>
           <tr>
             <th colspan="9" style="text-align:center;"><h3><b>{{$currentSem ->title}}, {{$currentSem ->year->title}}</b></h3></th>
@@ -38,6 +39,7 @@
             </tr>
           @endforeach
         </tbody>
+
       </table>
     </div>
   </div>

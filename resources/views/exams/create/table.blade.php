@@ -1,106 +1,102 @@
 <div class="table-responsive">
 
-    @include('exams.create.fields')
+  @include('exams.create.fields')
 
-    <table class="table" width="100%" id="exams-create-table">
-        <thead>
-            <tr class="theme-main">
-                <th>@include('labels.course')@include('layouts.required')</th>
-                <th>@include('labels.date')@include('layouts.required')</th>
-                <th>@include('labels.note')</th>
-                <th><a id="addexam" class="btn btn-success"><i class="fa fa-plus"></i></a></th>
-            </tr>
-        </thead>
+  <table class="table" width="100%" id="exams-create-table">
+    <thead>
+      <tr class="theme-main">
+        <th>@include('labels.course')@include('layouts.required')</th>
+        <th>@include('labels.date')@include('layouts.required')</th>
+        <th>@include('labels.note')</th>
+        <th><a id="addexam" class="btn btn-success"><i class="fa fa-plus"></i></a></th>
+      </tr>
+    </thead>
 
-        <tbody id="examslist">
-        </tbody>
+    <tbody id="examslist">
+    </tbody>
 
-        <tfoot id="notes">
-        </tfoot>
-    </table>
+    <tfoot id="notes">
+    </tfoot>
+  </table>
 </div>
 
 @push('scripts') 
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-        var counter = 0, count = 0 , list = new Array(), pid, i;
+    var counter = 0, count = 0 , list = new Array(), pid, i;
 
-        $('#addexam').on('click', function(){
+    $('#addexam').on('click', function(){
 
-            $('#submitbutton').show();
+      $('#submitbutton').show();
 
-            $('#addexam').hide();
-            
-            list[counter] = ++count;
+      $('#addexam').hide();
+      
+      list[counter] = ++count;
 
-            counter++;
+      counter++;
 
-            $('#examslist').append('@include("exams.create.fieldsN")')
+      $('#examslist').append('@include("exams.create.fieldsN")')
 
-            var level_id = document.getElementById("level_idCrH").value;
-                
-            $.get('dynamicCourse?level_id='+level_id, function(data){
-              
+      var level_id = document.getElementById("level_idCrH").value;
+        
+      $.get('dynamicCourse?level_id='+level_id, function(data){
 
-                $('#course_idCr'+count+'').empty();
+        $('#course_idCr'+count+'').empty();
 
-                $('#course_idCr'+count+'').append('<option value="">Select a Course...</option>')
-                $.each(data, function(index, cour){
-                    $('#course_idCr'+count+'').append('<option value="'+cour.id+'">'+cour.code+' | '+cour.title+'</option>')
-                });
-
-            });
-
-            $('#notes').empty();
-            for( var i = 0; i < list.length; i++){
-                $('#notes').append('<input hidden type="checkbox" checked name="list[]" value="'+list[i]+'">');
-            }
-
-            $('#addexam').show();
+        $('#course_idCr'+count+'').append('<option value="">Select a Course...</option>')
+        $.each(data, function(index, cour){
+          $('#course_idCr'+count+'').append('<option value="'+cour.id+'">'+cour.code+' | '+cour.title+'</option>')
         });
 
-        $(document).on('click', '#removeexam', function(){
-            
-            pid = this.parentNode.parentNode.id;
+      });
 
-            counter--;
+      $('#notes').empty();
+      for( var i = 0; i < list.length; i++){
+        $('#notes').append('<input hidden type="checkbox" checked name="list[]" value="'+list[i]+'">');
+      }
 
-            for( var i = 0; i < list.length; i++){
-                if ( list[i] == pid) {
-                    list.splice(i, 1);
-                }
-            }
+      $('#addexam').show();
+    });
 
-            $(this).parent().parent().remove();
+    $(document).on('click', '#removeexam', function(){
+      
+      pid = this.parentNode.parentNode.id;
 
-            $('#notes').empty();
-            for( var i = 0; i < list.length; i++){
-                $('#notes').append('<input hidden type="checkbox" checked name="list[]" value="'+list[i]+'">');
-            }
-        });
+      counter--;
 
-        $('#level_idCrH').on('change',function(e){ // Dynamic Courses Change ///////////////////
-            
-            
+      for( var i = 0; i < list.length; i++){
+        if ( list[i] == pid) {
+          list.splice(i, 1);
+        }
+      }
 
-            var level_id = e.target.value;
-            
-            $.get('dynamicCourse?level_id='+level_id, function(data){
-                  
+      $(this).parent().parent().remove();
 
-                for (var i = 0; i <= count; i++) {
+      $('#notes').empty();
+      for( var i = 0; i < list.length; i++){
+        $('#notes').append('<input hidden type="checkbox" checked name="list[]" value="'+list[i]+'">');
+      }
+    });
 
-                    $('#course_idCr'+i+'').empty();
+    $('#level_idCrH').on('change',function(e){ // Dynamic Courses Change ///////////////////
 
-                    $('#course_idCr'+i+'').append('<option value="">Select a Course...</option>')
-                    $.each(data, function(index, cour){
-                        $('#course_idCr'+i+'').append('<option value="'+cour.id+'">'+cour.code+' | '+cour.title+'</option>')
-                    });
+      var level_id = e.target.value;
+      
+      $.get('dynamicCourse?level_id='+level_id, function(data){
 
-                }
-            });
+        for (var i = 0; i <= count; i++) {
 
-        });
+          $('#course_idCr'+i+'').empty();
 
-    </script>
+          $('#course_idCr'+i+'').append('<option value="">Select a Course...</option>')
+          $.each(data, function(index, cour){
+            $('#course_idCr'+i+'').append('<option value="'+cour.id+'">'+cour.code+' | '+cour.title+'</option>')
+          });
+
+        }
+      });
+
+    });
+
+  </script>
 @endpush

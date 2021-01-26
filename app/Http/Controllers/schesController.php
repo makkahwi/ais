@@ -31,14 +31,6 @@ class schesController extends AppBaseController
   {
     $this->schesRepository = $schesRepo;
   }
-
-  /**
-   * Display a listing of the sches.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
   
   public function index(Request $request)
   {
@@ -151,14 +143,6 @@ class schesController extends AppBaseController
     return Response::json($class);
   }
 
-  /**
-   * Store a newly created sches in storage.
-   *
-   * @param CreateschesRequest $request
-   *
-   * @return Response
-   */
-
   public function store(Request $request)
   {
     $this->authorize('create', sches::class);
@@ -206,15 +190,6 @@ class schesController extends AppBaseController
     return redirect(route('sches.index'));
   }
 
-  /**
-   * Update the specified sches in storage.
-   *
-   * @param int $id
-   * @param UpdateschesRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', sches::class);
@@ -232,16 +207,6 @@ class schesController extends AppBaseController
 
     return redirect(route('sches.index'));
   }
-
-  /**
-   * Remove the specified sches from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
 
   public function destroy(Request $request)
   {

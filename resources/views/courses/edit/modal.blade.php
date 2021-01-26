@@ -14,19 +14,19 @@
 @endsection
 
 @push('scripts') <!-- Update Current Data /////////////////////////////////////////// -->
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      $(document).on('click', '#editing', function(data){
+    $(document).on('click', '#editing', function(data){
 
-        $("#course_id").val($(this).data('id'));
-        $("#titleEd").val($(this).data('name'));
-        $("#codeEd").val($(this).data('code'));
-        $("#textbookEd").val($(this).data('book'));
-        $("#level_idEd").val($(this).data('level'));
-        $("#descriptionEd").val($(this).data('desc'));
-        $("#status_idEd").val($(this).data('status'));
-        
-      })
+      $("#course_id").val($(this).data('id'));
+      $("#titleEd").val($(this).data('name'));
+      $("#codeEd").val($(this).data('code'));
+      $("#textbookEd").val($(this).data('book'));
+      $("#level_idEd").val($(this).data('level'));
+      $("#descriptionEd").val($(this).data('desc'));
+      $("#status_idEd").val($(this).data('status'));
+      
+    })
 
-    </script>
+  </script>
 @endpush

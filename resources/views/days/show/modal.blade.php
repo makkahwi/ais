@@ -5,13 +5,13 @@
 @endsection
 
 @push('scripts') <!-- Show Current Data /////////////////////////////////////////// -->
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      $(document).on('click', '#showing', function(data){
+    $(document).on('click', '#showing', function(data){
 
-        $("#dayNameSw").val($(this).data('day'));
+      $("#dayNameSw").val($(this).data('day'));
 
-      })
+    })
 
-    </script>
+  </script>
 @endpush

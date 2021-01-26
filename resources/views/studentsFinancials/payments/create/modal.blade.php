@@ -15,8 +15,6 @@
     var oriamount, discount, distype, discharge, finamount;
 
     $('#levelPaymentCr').on('change',function(e){
-            
-      
 
       var level_id = e.target.value;
 
@@ -35,8 +33,6 @@
     });
 
     $('#classroomPaymentCr').on('change',function(e){
-
-      
 
       var classroom_id = e.target.value;
 

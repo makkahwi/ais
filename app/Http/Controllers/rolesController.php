@@ -23,14 +23,6 @@ class rolesController extends AppBaseController
     $this->rolesRepository = $rolesRepo;
   }
 
-  /**
-   * Display a listing of the roles.
-   *
-   * @param Request $request
-   *
-   * @return Response
-   */
-
   public function index(Request $request)
   {
     $this->authorize('viewAny', roles::class);
@@ -44,14 +36,6 @@ class rolesController extends AppBaseController
 
     return view('roles.index', compact('roles', 'currentSem'));
   }
-
-  /**
-   * Store a newly created roles in storage.
-   *
-   * @param CreaterolesRequest $request
-   *
-   * @return Response
-   */
 
   public function store(Request $request)
   {
@@ -72,42 +56,23 @@ class rolesController extends AppBaseController
     return redirect(route('roles.index'));
   }
 
-  /**
-   * Update the specified roles in storage.
-   *
-   * @param int $id
-   * @param UpdaterolesRequest $request
-   *
-   * @return Response
-   */
-
   public function update(Request $request) // Updating with Modal
-    {
-      $this->authorize('update', roles::class);
+  {
+    $this->authorize('update', roles::class);
 
-      $role = roles::findOrFail($request->role_id);
+    $role = roles::findOrFail($request->role_id);
 
-      if (empty($role)) {
-        Flash::error('The role was not found<br><br>بيانات صلاحية الوصول المطلوبة غير موجودة');
-        return redirect(route('roles.index'));
-      }
-  
-      $role->update($request->all());
-
-      Flash::success('The role was updated successfully<br><br>تم تحديث بيانات صلاحية الوصول بنجاح');
-
+    if (empty($role)) {
+      Flash::error('The role was not found<br><br>بيانات صلاحية الوصول المطلوبة غير موجودة');
       return redirect(route('roles.index'));
     }
 
-  /**
-   * Remove the specified roles from storage.
-   *
-   * @param int $id
-   *
-   * @throws \Exception
-   *
-   * @return Response
-   */
+    $role->update($request->all());
+
+    Flash::success('The role was updated successfully<br><br>تم تحديث بيانات صلاحية الوصول بنجاح');
+
+    return redirect(route('roles.index'));
+  }
 
   public function destroy(Request $request)
   {

@@ -79,15 +79,11 @@
   @include('sches.show.modal')
 
   @can('create', App\Models\sches::class)
-
     @include('sches.create.modal')
-
   @endcan
 
   @can('update', App\Models\sches::class)
-
     @include('sches.edit.modal')
-
   @endcan
 
 @endsection

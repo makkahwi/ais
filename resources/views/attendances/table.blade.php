@@ -1,30 +1,28 @@
 <div class="table-responsive">
-    <table class="table tableTail" width="100%" id="attendances-table-{{$classroom->id}}">
+  <table class="table tableTail" width="100%" id="attendances-table-{{$classroom->id}}">
 
-        <thead>
-            @include('attendances.tableFilters')
+    <thead>
+      @include('attendances.tableFilters')
+      @include('attendances.tableHead')
+    </thead>
 
-            @include('attendances.tableHead')
-        </thead>
+    <tbody>
+      <span hidden>{{$count2 = 0, $count1 = 0, $count0 = 0}}</span>
 
-        <tbody>
+      @foreach($classroom->students as $student)
+        @foreach($student->user->attendances as $attendance)
+          @can('view', [App\Models\attendances::class, $attendance])
 
-            <span hidden>{{$count2 = 0, $count1 = 0, $count0 = 0}}</span>
+            @include('attendances.tableRow')
 
-            @foreach($classroom->students as $student)
-                @foreach($student->user->attendances as $attendance)
-                    @can('view', [App\Models\attendances::class, $attendance])
+          @endcan
+        @endforeach
+      @endforeach
+    </tbody>
 
-                        @include('attendances.tableRow')
+    <tfoot>
+      @include('attendances.tableHead')
+    </tfoot>
 
-                    @endcan
-                @endforeach
-            @endforeach
-
-        </tbody>
-
-        <tfoot>
-            @include('attendances.tableHead')
-        </tfoot>
-    </table>
+  </table>
 </div>

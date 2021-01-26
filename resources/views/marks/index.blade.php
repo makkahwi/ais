@@ -13,11 +13,11 @@
 @endsection
 
 @section('header.note')
-    @if ($currentSem->resultsDone == 0)
-      <h4 class="text-danger">Results Issuance Date {{$currentSem->results->format('d M Y')}}</h4>
-    @else
-      <h5 class="text-success">{{$currentSem->title}}, {{$currentSem->year->title}} Results already generated</h5>
-    @endif
+  @if ($currentSem->resultsDone == 0)
+    <h4 class="text-danger">Results Issuance Date {{$currentSem->results->format('d M Y')}}</h4>
+  @else
+    <h5 class="text-success">{{$currentSem->title}}, {{$currentSem->year->title}} Results already generated</h5>
+  @endif
 @endsection
 
 @can('delete', App\Models\markstypes::class)
@@ -43,27 +43,19 @@
   @include('markstypes.index')
 
   @can('create', App\Models\marks::class)
-
     @include('marks.create.modal')
-
   @endcan
 
   @can('update', App\Models\marks::class)
-
     @include('marks.edit.modal')
-
   @endcan
 
   @can('create', App\Models\markstypes::class)
-
     @include('markstypes.create.modal')
-
   @endcan
 
   @can('update', App\Models\markstypes::class)
-
     @include('markstypes.edit.modal')
-
   @endcan
   
   @include('marks.appealModal')
