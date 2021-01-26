@@ -23,7 +23,7 @@
 <div class="form-group col-md-4">
   <label for="semId">@include('labels.semester')@include('layouts.required')</label>
   <select required class="form-control" name="sem_id" id="semIdType">
-  <option value="{{$currentSem->id}}">{{$currentSem->title}} | {{ $currentSem->year->title }}</option>
+  <option value="{{$currentSem->id}}">{{$currentSem->title}}, {{ $currentSem->year->title }}</option>
   </select>
 </div>
 

@@ -8,7 +8,7 @@
         <div class='btn-group'>
 
             <!-- Showing Button-->
-            <button data-toggle="modal" data-target="#show-modal" id="showing" data-sem="{{ $exam->sem->title }} | {{ $exam->sem->year->title }}" data-level="{{ $exam->course->level->title }}" data-course="{{ $exam->course->title }}" data-type="{{ $exam->title }}" data-date="{{ date('d-m-Y', strtotime($exam->date)) }}" data-note="{{ $exam->note }}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
+            <button data-toggle="modal" data-target="#show-modal" id="showing" data-sem="{{ $exam->sem->title }}, {{ $exam->sem->year->title }}" data-level="{{ $exam->course->level->title }}" data-course="{{ $exam->course->title }}" data-type="{{ $exam->title }}" data-date="{{ date('d-m-Y', strtotime($exam->date)) }}" data-note="{{ $exam->note }}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
 
             @can('update', App\Models\exams::class)
 

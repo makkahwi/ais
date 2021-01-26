@@ -3,7 +3,7 @@
     <label for="semId">@include('labels.semester')</label>
     <select readonly class="form-control" name="sem_id" id="semIdEd">
     @foreach($sems as $sem)
-        <option value="{{$sem->id}}">{{$sem->title}} | {{$sem->year->title}}</option>
+        <option value="{{$sem->id}}">{{$sem->title}},  {{$sem->year->title}}</option>
     @endforeach
     </select>
 </div>

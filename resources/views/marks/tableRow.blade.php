@@ -26,7 +26,7 @@
         <div class='btn-group'>
 
             <!-- Showing Button-->
-            <button data-toggle="modal" data-target="#show-modal" id="showing" data-mark="{{$marktype->title}}" data-sem="{{ $marktype->sem->title }} | {{ $marktype->sem->year->title }}" data-class="{{$classroom->title}}" data-course="{{$course->title}}" data-student="{{$mark->student->user->name}}" data-markv="{{$mark->markValue}}" data-fmark="{{$marktype->max}}" data-note="{{$mark->note}}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
+            <button data-toggle="modal" data-target="#show-modal" id="showing" data-mark="{{$marktype->title}}" data-sem="{{ $marktype->sem->title }}, {{ $marktype->sem->year->title }}" data-class="{{$classroom->title}}" data-course="{{$course->title}}" data-student="{{$mark->student->user->name}}" data-markv="{{$mark->markValue}}" data-fmark="{{$marktype->max}}" data-note="{{$mark->note}}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
 
             @can('update', App\Models\marks::class)
                 @if(Auth::user()->role_id <6 || $editby < $mark->created_at)

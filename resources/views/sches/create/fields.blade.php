@@ -3,7 +3,7 @@
     <label for="semId">@include('labels.semester')@include('layouts.required')</label>
     <select required class="form-control" name="sem_id" id="semIdCrH">
         @foreach($cnSem as $sem)
-            <option value="{{$sem->id}}">{{$sem->title}} | {{ $sem->year->title }}</option>
+            <option value="{{$sem->id}}">{{$sem->title}}, {{ $sem->year->title }}</option>
         @endforeach
     </select>
 </div>

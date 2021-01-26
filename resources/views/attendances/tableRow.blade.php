@@ -1,5 +1,5 @@
 <tr>
-    <td>{{ $attendance->sem->title }} | {{ $attendance->sem->year->title }}</td>
+    <td>{{ $attendance->sem->title }}, {{ $attendance->sem->year->title }}</td>
     <td>{{ $attendance->schoolNo }} | {{ $attendance->user->name }}</td>
     <td class="table-column">{{ date("Y-m-d", strtotime($attendance->date)) }}</td>
 
@@ -20,7 +20,7 @@
         <div class='btn-group'>
 
             <!-- Showing Button-->
-            <button data-toggle="modal" data-target="#show-modal" id="showing" data-sem="{{ $attendance->sem->title }} | {{ $attendance->sem->year->title }}" data-student="{{ $attendance->schoolNo }} | {{ $attendance->user->name }}" data-date="{{ date('d-m-Y', strtotime($attendance->date)) }}" data-atten="{{ $attendance->attendance }}" data-note="{{ $attendance->note }}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
+            <button data-toggle="modal" data-target="#show-modal" id="showing" data-sem="{{ $attendance->sem->title }}, {{ $attendance->sem->year->title }}" data-student="{{ $attendance->schoolNo }} | {{ $attendance->user->name }}" data-date="{{ date('d-m-Y', strtotime($attendance->date)) }}" data-atten="{{ $attendance->attendance }}" data-note="{{ $attendance->note }}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
 
             <!-- Editing Button-->
             @can('update', App\Models\attendances::class)
@@ -30,7 +30,7 @@
             @can('delete', App\Models\attendances::class)
 
                 <!-- Deleting Button-->
-                <button data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$attendance->id}}" data-title="{{ $attendance->schoolNo }} {{ $attendance->user->name }} | {{ date('d-m-Y', strtotime($attendance->date)) }}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
+                <button data-toggle="modal" data-target="#delete-modal" id="deleting" data-id="{{$attendance->id}}" data-title="{{ $attendance->schoolNo }} {{ $attendance->user->name }}  {{ date('d-m-Y', strtotime($attendance->date)) }}" class='btn btn-danger btn-xs'><i class="fa fa-trash-alt"></i></button>
 
             @endcan
 

@@ -73,6 +73,7 @@ class schesController extends AppBaseController
 
     $cnSem = sems::with('year')
       ->where('end', '>=', today())
+      ->orderBy('created_at', 'DESC')
       ->get();
 
     $nextSem = sems::with('year')

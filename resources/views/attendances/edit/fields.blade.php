@@ -2,7 +2,7 @@
 <div class="form-group col-md-6">
   <label for="semIdEd">@include('labels.semester')</label>
   <select readonly class="form-control" name="sem_id" id="semIdEd">
-    <option value="{{$currentSem->id}}">{{$currentSem->title}} | {{ $currentSem->year->title }}</option>
+    <option value="{{$currentSem->id}}">{{$currentSem->title}}, {{ $currentSem->year->title }}</option>
   </select>
 </div>
 

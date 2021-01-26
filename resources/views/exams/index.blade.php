@@ -21,7 +21,7 @@
 @endsection
 
 @section('dataTableTitle')
-  title: 'Exams Timetable | {{$currentSem ->title}}, {{$currentSem ->year->title}} | {{Auth::user()->schoolNo}}',
+  title: 'Exams Timetable | {{$currentSem->title}}, {{$currentSem->year->title}} | {{Auth::user()->schoolNo}}',
 @endsection
 
 @section('dataTableColumns')
