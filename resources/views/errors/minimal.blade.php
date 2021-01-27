@@ -10,86 +10,58 @@
         display: flex;
         justify-content: center;
       }
+      body {
+        height: 10vh;
+        padding-top: 5%;
+        background-color: #dbeeff
+      }
     </style>
   </head>
 
   <body class="skin-blue sidebar-mini">
-    @if (!Auth::guest())
+    <div class="content">
 
-      <div class="wrapper">
+      <div class="clearfix"></div>
 
-        @include('layouts.topbar')
+      @include('flash::message')
+      @include('adminlte-templates::common.errors') 
 
-        @include('layouts.sidebar')
+      <div class="clearfix"></div>
 
-        <div class="content-wrapper">
-          <section class="content-header">
-            <h1 class="theme-main col-md-8">
-              @yield('header.title')
-            </h1>
+      <div class="flex-center">
 
-            <h4 class="col-md-4">
-              <div class="pull-right">
-                <div class="btn-group row">
-                  @yield('header')
-                </div>
+        <table>
+          <tr>
+            <td>
+              <div class="flex-center">
+                <a href="{{ url ('/dashboard') }}"><img src=" {{ asset('img/logo2.png') }}" width="180"></a>
               </div>
-            </h4>
-          </section>
+            </td>
+          </tr>
 
-          <div class="content">
+          <tr><td></td></tr>
+          <tr><td></td></tr>
+          <tr><td></td></tr>
+          <tr><td></td></tr>
+          <tr><td></td></tr>
 
-            <div class="clearfix"></div>
+          <tr class="flex-center theme-main">
+            <td>
+              <h3>@yield('code') | @yield('message')</h3>
+            </td>
+          </tr>
 
-            @include('flash::message')
-            @include('adminlte-templates::common.errors') 
-
-            <div class="clearfix"></div>
-
-            <div class="flex-center">
-
-              <table>
-                <tr>
-                  <td colspan="2">
-                    <div class="flex-center">
-                      <a href="{{ url ('/dashboard') }}"><img src=" {{ asset('img/logo2.png') }}" width="180"></a>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr><td></td></tr>
-                <tr><td></td></tr>
-                <tr><td></td></tr>
-                <tr><td></td></tr>
-                <tr><td></td></tr>
-
-                <tr>
-                  <td class="flex-center">
-                    <div class="theme-main">
-                      <h2>@yield('code')</h2>
-                    </div>
-                  </td>
-                  <td class="flex-center">
-                    <div class="theme-main">
-                      <h3>@yield('message')</h3>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-                
-            </div>
-
-            <div class="text-center"></div>
-          </div>
-        </div>
-
-        @include('layouts.footer')
-
+          <tr class="flex-center theme-main">
+            <td>
+              <h3><u><a href="{{ url ('/dashboard') }}">Back to Home Page  العودة إلى الصفحة الرئيسية</a></u></h3>
+            </td>
+          </tr>
+          
+        </table>
+          
       </div>
 
-    @endif
-
+      <div class="text-center"></div>
+    </div>
   </body>
-        
-  @include('layouts.tail')
 </html>
