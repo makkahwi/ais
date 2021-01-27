@@ -1,35 +1,41 @@
-<!-- title Field -->
-<div class="form-group col-md-6">
-  <label for="title">@include('labels.semester')</label>
-  <select required class="form-control" name="title" id="title">
-    <option value="">Select a semester...</option>
-    <option value="Sem 1">Sem 1</option>
-    <option value="Sem 2">Sem 2</option>
-    <option value="Sem 3">Sem 3</option>
-  </select>
-</div>
+<div class="table-responsive">
+  <table class="table" width="100%" id="marks-table">
 
-<!-- start Field -->
-<div class="form-group col-md-6">
-  <label for="start">@include('labels.sdate')</label>
-  <input required type="date" min={{today()}} max="2030-12-31" class="form-control" name="start" id="start">
-</div>
+    <thead>
+      <tr>
+        <th>@include('labels.level')</th>
+        <th>Marks Entry<br>Completed?</th>
+        <th>Results Issue</th>
+      </tr>
+    </thead>
 
-<!-- join Field -->
-<div class="form-group col-md-6">
-  <label for="join">@include('labels.jdate')</label>
-  <input required type="date" min={{today()}} max="2030-12-31" class="form-control" name="join" id="join">
-</div>
-
-<!-- results Field -->
-<div class="form-group col-md-6">
-  <label for="results">@include('labels.rdate')</label>
-  <input required type="date" min={{today()}} max="2030-12-31" class="form-control" name="results" id="results">
-</div>
-
-<!-- end Field -->
-<div class="form-group col-md-6">
-  <label for="end">@include('labels.edate')</label>
-  <input required type="date" min={{today()}} max="2030-12-31" class="form-control" name="end" id="end">
-  <label style="color:red; text-align:justify;">Please set the end date to be one day before next semester start date</label>
+    <tbody>
+      @foreach($levels as $level)
+        <tr>
+          <td>{{$level->title}}</td>
+          @if ($level->done)
+            <td class="text-success">
+              Yes
+            </td>
+          @if ($level->issued)
+            <td class="text-success">
+              Done Already
+            </td>
+          @else
+            <td>
+              <input class="form-check-input" type="checkbox" checked value="{{$level->id}}" name="levels[]">
+            </td>
+          @endif
+          @else
+          <td class="text-danger">
+            No
+          </td>
+          <td class="text-danger">
+            <i class="fas fa-arrow-left"></i> Can't issue yet
+          </td>
+          @endif
+        </tr>
+      @endforeach
+    </tbody>
+  </table>
 </div>

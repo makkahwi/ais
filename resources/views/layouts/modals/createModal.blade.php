@@ -4,7 +4,7 @@
     <div class="modal-content">
       
       <div class="modal-header bg-success">
-        <h4 class="modal-title text-success" id="exampleModalCenterTItle"><i class="fa fa-plus"></i> Add New @yield('modal.title')</h4>
+        <h4 class="modal-title text-success" id="exampleModalCenterTItle"><i class="fa fa-plus"></i> Create New @yield('modal.title')</h4>
       </div>
     
       @yield('crModalForm')

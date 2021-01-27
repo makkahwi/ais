@@ -4,7 +4,7 @@
     <div class="modal-content">
 
       <div class="modal-header bg-success">
-        <h4 class="modal-title text-success" id="exampleModalCenterTItle">Add New @include('marks.title')s Types</h4>
+        <h4 class="modal-title text-success" id="exampleModalCenterTItle">Create New @include('marks.title')s Types</h4>
       </div>
 
       <form action="{{ route ('markstypes.store') }}" method="post">
