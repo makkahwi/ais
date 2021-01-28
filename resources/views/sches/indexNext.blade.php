@@ -12,7 +12,7 @@
 
       @foreach($classrooms as $classroom)
         <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#{{$classroom->title}}N">{{$classroom->title}}</a>
+          <a class="nav-link" data-toggle="pill" href="#{{$classroom->id}}N">{{$classroom->title}}</a>
         </li>
       @endforeach
     </ul>
@@ -24,7 +24,7 @@
       </div>
 
       @foreach($classrooms as $classroom)
-        <div class="box tab-pane container" id="{{$classroom->title}}N">
+        <div class="box tab-pane container" id="{{$classroom->id}}N">
           <br>
           @include('sches.tableNext')
         </div>

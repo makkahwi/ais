@@ -38,15 +38,17 @@ class resultsController extends AppBaseController
       ->orderBy('created_at', 'desc')
       ->get();
 
-    $levels = levels::with('courses.markstypes')
+    $levels = levels::
+      with(['courses' => function($q) {
+        $q->where('status_id', 2)
+          ->with('markstypes')
+        ;}])
       ->get();
 
     $classrooms = classrooms::with('students.user','students.marks.type')
       ->get();
 
-    // return $classrooms;
-
-    return view('results.index', compact('classrooms', 'currentSem', 'levels', 'sems'));
+    return view('results.index', compact('currentSem', 'classrooms', 'levels', 'sems'));
   }
 
   public function generate(CreatemarksRequest $request)
@@ -70,9 +72,48 @@ class resultsController extends AppBaseController
 
   // Create Data ////////////////////////////////////////////
 
-  public function store(CreatemarksRequest $request)
+  public function store(request $request)
   {
     $this->authorize('create', marks::class);
+
+    $levels = $request->levels;
+
+    if (!$levels)
+    {
+      Flash::error('No Levels were selected to generate results for<br><br> لم يتم اختيار اية صفوف دراسية لإصدار النتائج الخاصة بها');
+      return redirect(route('results.index'));
+    }
+
+    foreach ($levels as $level)
+    {
+      $lev = levels::where('id', $level)
+        ->with(['classrooms', function($q)
+          {
+            $q->where(['status_id', 2])
+            ->whereHas(['students', function($qu)
+              {
+                $qu->whereHas(['user', function($que)
+                  {
+                    $que->where('status_id', 2)
+                    ->get();
+                  }])
+                ->with('marks.type')
+                ->get();
+              }])
+            ->get();
+          }])
+        ->get();
+
+      return $lev;
+
+      foreach($lev->classrooms as $classroom)
+      {
+        foreach($classroom->students as $student)
+        {
+          
+        }
+      }
+    }
 
     $classroom = $request['classroom'];
 

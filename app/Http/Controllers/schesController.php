@@ -55,13 +55,17 @@ class schesController extends AppBaseController
 
     $levels = levels::all();
 
-    $classrooms = classrooms::with('level', 'sches')
-      ->where('status_id', 2)
-      ->get();
-
     $currentSem = $this->getCurrentSem();
 
     $csem = $currentSem['id'];
+
+    $classrooms = classrooms::with('level')
+      ->with(['sches' => function($q) use ($csem)
+        {
+          $q->where('sem_id', $csem)
+            ->where('status_id', 2);
+        }])
+      ->get();
 
     $cnSem = sems::with('year')
       ->where('end', '>=', today())
@@ -72,30 +76,15 @@ class schesController extends AppBaseController
       ->where('start', '>', today())
       ->first();
 
-    $nsem = $nextSem->get('id');
-
-    $sches = sches::with('classroom', 'course', 'teacher.user')
-      ->where('status_id', 2)
-      ->where('sem_id', $csem)
-      ->get();
-    
-    $schesOld = sches::with('classroom', 'course', 'teacher')
-      ->where('status_id', 2)
-      ->where('sem_id', '!=', $csem)
-      ->where('sem_id', '!=', $nsem)
-      ->get();
+    $nsem = $nextSem['id'];
 
     $schesNext = sches::with('classroom', 'course', 'teacher')
       ->where('status_id', 2)
       ->where('sem_id', $nsem)
-      ->get(); 
-
-    $schesDe = sches::with('course', 'teacher', 'sem', 'classroom', 'day','time', 'status')
-      ->where('status_id', 1)
       ->get();
 
-    return view('sches.index', compact('currentSem', 'nextSem', 'statuses', 'days', 'sches', 'schesNext',
-                                        'schesOld', 'schesDe', 'classrooms', 'courses', 'staff',
+    return view('sches.index', compact('currentSem', 'nextSem', 'statuses', 'days', 'schesNext',
+                                        'classrooms', 'courses', 'staff',
                                         'sems', 'levels', 'cnSem', 'times', 'csem'));
   }
 

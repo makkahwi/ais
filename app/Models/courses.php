@@ -15,7 +15,7 @@ class courses extends Model
   const UPDATED_AT = 'updated_at';
 
   protected $dates = ['deleted_at'];
-  protected $appends = ['markstypesWeights', 'unusedMarkstypes', 'issuedResults'];
+  protected $appends = ['markstypesWeights', 'unusedmarkstypes', 'issuedResults'];
 
   protected $primaryKey = 'id';
 
@@ -75,13 +75,13 @@ class courses extends Model
     return $this->hasMany(exams::class, 'course_id');
   }
 
-  public function getMarkstypesWeightsAttribute()
+  public function getmarkstypesWeightsAttribute()
   {
     return $this->markstypes()
       ->sum('weight');
   }
 
-  public function getUnusedMarkstypesAttribute()
+  public function getUnusedmarkstypesAttribute()
   {
     return $this->markstypes()
       ->where('used', 0)
@@ -91,7 +91,7 @@ class courses extends Model
   public function getIssuedResultsAttribute()
   {
     return $this->markstypes()
-      ->where('title', 'Course Result')
+      ->where('title', 'Course Final Result')
       ->count();
   }
 }

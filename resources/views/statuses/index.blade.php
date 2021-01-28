@@ -37,7 +37,7 @@
   @can('create', App\Models\statuses::class)
     <a data-toggle="modal" data-target="#create-modal" class="btn btn-success pull-right" style="margin-top: -10px;margin-bottom: 5px"><i class="fa fa-plus"></i> New @include('statuses.title')</a>
   @else
-    {{$currentSem ->title}}, {{$currentSem ->year->title}}
+    {{$currentSem->title}}, {{$currentSem->year->title}}
   @endcan
 @endsection
 

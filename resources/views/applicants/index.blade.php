@@ -25,7 +25,7 @@
 @endsection
 
 @section('header')
-  {{$currentSem ->title}}, {{$currentSem ->year->title}}
+  {{$currentSem->title}}, {{$currentSem->year->title}}
 @endsection
 
 @section('content')

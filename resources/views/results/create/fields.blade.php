@@ -16,10 +16,10 @@
           <td>{{$level->title}} <p hidden>{{$ready = 'Yes'}}</p> </td>
           <td class="text-danger">
             @foreach($level->courses as $course)
-              @if (count($course->unusedMarkstypes))
+              @if (count($course->unusedmarkstypes))
                 <p hidden>{{$ready = 'No'}}</p>
                 {{$course->code}} | {{$course->title}}<br>
-                @foreach($course->unusedMarkstypes as $type)
+                @foreach($course->unusedmarkstypes as $type)
                   &nbsp;&nbsp;{{$type->title}}, 
                 @endforeach
                 <br>
@@ -38,7 +38,7 @@
           @if ($ready == 'No')
             <td class="text-danger">Cannot Issue Yet</td>
           @else
-            @if($level->course->resultsIssued != 0)
+            @if($level->courses[0]->issuedResults != 0)
               <td class="text-success">Issued Already</td>
             @else
               <td>

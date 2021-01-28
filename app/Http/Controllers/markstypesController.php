@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatemarkstypesRequest;
 use App\Http\Requests\UpdatemarkstypesRequest;
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\marksTypesRepository;
+use App\Repositories\markstypesRepository;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -20,7 +20,7 @@ use App\Models\marks;
 use App\Models\levels;
 use App\Models\courses;
 use App\Models\students;
-use App\Models\marksTypes;
+use App\Models\markstypes;
 use App\Models\classrooms;
 
 class markstypesController extends AppBaseController
@@ -57,7 +57,7 @@ class markstypesController extends AppBaseController
   {
     $this->authorize('update', markstypes::class);
 
-    $mark = markstypes::findOrFail($request->markId);
+    $mark = $this->markstypesRepository->find($request['id']);
 
     if (empty($mark)) {
       Flash::error('The mark was not found بيانات العلامة المطلوبة غير موجودة');
