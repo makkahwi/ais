@@ -16,23 +16,25 @@ use App\Models\referances;
 use App\Models\studentsPayments;
 use App\Models\studentsFinancials;
 
-class studentsPaymentsController extends Controller
+class studentsPaymentsController extends AppBaseController
 {
   public function __construct()
   {
     //
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', studentsPayments::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
 
     return view('studentsFinancials.index', compact('currentSem'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -47,7 +49,7 @@ class studentsPaymentsController extends Controller
     $splitDate = explode(" ",$splitToday[2]);
 
     $referances = referances::where('created_at', '>=', today())
-      ->orderby('created_at', 'desc')->where('type', '=', 'SPR')
+      ->orderby('created_at', 'desc')->where('type', 'SPR')
       ->first();
 
     if (empty($referances))
@@ -65,7 +67,7 @@ class studentsPaymentsController extends Controller
 
     $data += ['ref' => $ref['ref']];
 
-    $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
+    $student = student::where('studentNo', $data['studentNo'])->get('eName');
 
     $data += ['name' => $student[0]['eName']];
 
@@ -89,6 +91,8 @@ class studentsPaymentsController extends Controller
 
     return redirect(route('sFinancials.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -116,7 +120,7 @@ class studentsPaymentsController extends Controller
 
     $path = 'docs/students/payment_receipts/'.$data['studentNo'].'/';
 
-    $student = student::where('studentNo', '=', $data['studentNo'])->get('eName');
+    $student = student::where('studentNo', $data['studentNo'])->get('eName');
 
     $data += ['name' => $student[0]['eName']];
 

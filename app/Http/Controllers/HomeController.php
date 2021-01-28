@@ -19,6 +19,8 @@ class HomeController extends Controller
     $this->middleware('auth');
   }
 
+  // Index Page //////////////////////
+
   public function index()
   {
     // $users = users::all();

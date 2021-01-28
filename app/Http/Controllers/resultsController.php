@@ -2,27 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatemarksRequest;
 use App\Http\Requests\UpdatemarksRequest;
 use App\Repositories\marksRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
 
 use App\Models\sems;
-use App\Models\years;
 use App\Models\marks;
-use App\Models\sches;
 use App\Models\levels;
-use App\Models\courses;
 use App\Models\student;
 use App\Models\classrooms;
 use App\Models\markstypes;
 
 class resultsController extends AppBaseController
 {
-  /** @var  marksRepository */
   private $marksRepository;
 
   public function __construct(marksRepository $marksRepo)
@@ -30,29 +26,27 @@ class resultsController extends AppBaseController
     $this->marksRepository = $marksRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', marks::class);
 
-    $currentSem = sems::with('year')
-      ->where('sems.start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
-    $students = student::
-      with(['classroom.level.courses.markstypes' => function($q) use ($currentSem){
-        $q->where('sem_id', '=', $currentSem[0]['id'])
-        ->with('marks');
-      }])
+    $sems = sems::with('year')
+      ->orderBy('created_at', 'desc')
       ->get();
 
-    $editby = date("Y-m-d H:i:s", strtotime('-1 day', strtotime(now())));
+    $levels = levels::with('courses.markstypes')
+      ->get();
 
-    $levels = levels::all();
-    $classrooms = classrooms::with('level.courses.markstypes.marks.student.user')->get();
-    $courses = courses::all();
+    $classrooms = classrooms::with('students.user','students.marks.type')
+      ->get();
 
-    return view('results.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
+    // return $classrooms;
+
+    return view('results.index', compact('classrooms', 'currentSem', 'levels', 'sems'));
   }
 
   public function generate(CreatemarksRequest $request)
@@ -61,16 +55,11 @@ class resultsController extends AppBaseController
 
     $students = student::with('classroom.level')->all();
 
-    return $students;
-
     $classroom = $request['classroom'];
 
-    $currentSem = sems::
-      where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
-    $marks = markstypes::where('sem_id', '=', $currentSem['id']);
+    $marks = markstypes::where('sem_id', $currentSem['id']);
 
     $marks = $this->marksRepository->create($input);
 
@@ -78,6 +67,8 @@ class resultsController extends AppBaseController
 
     return redirect(route('results.index'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatemarksRequest $request)
   {
@@ -85,12 +76,9 @@ class resultsController extends AppBaseController
 
     $classroom = $request['classroom'];
 
-    $currentSem = sems::
-      where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
-    $marks = markstypes::where('sem_id', '=', $currentSem['id']);
+    $marks = markstypes::where('sem_id', $currentSem['id']);
 
     $marks = $this->marksRepository->create($input);
 
@@ -98,6 +86,8 @@ class resultsController extends AppBaseController
 
     return redirect(route('results.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -116,6 +106,8 @@ class resultsController extends AppBaseController
 
     return redirect(route('results.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

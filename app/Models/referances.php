@@ -18,18 +18,21 @@ class referances extends Model
 
   protected $primaryKey = 'refId';
 
-  public $fillable = [
+  public $fillable =
+  [
     'type',
     'ref'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'refId' => 'integer',
     'type' => 'string',
     'ref' => 'string',
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'type' => 'required',
     'ref' => 'required',
   ];

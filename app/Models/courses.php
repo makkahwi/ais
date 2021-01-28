@@ -15,10 +15,12 @@ class courses extends Model
   const UPDATED_AT = 'updated_at';
 
   protected $dates = ['deleted_at'];
+  protected $appends = ['markstypesWeights', 'unusedMarkstypes', 'issuedResults'];
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'title',
     'code',
     'textbook',
@@ -27,7 +29,8 @@ class courses extends Model
     'status_id'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'title' => 'string',
     'code' => 'string',
@@ -37,7 +40,8 @@ class courses extends Model
     'status_id' => 'integer'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'title' => 'required',
     'code' => 'required',
     'textbook' => 'required',
@@ -69,5 +73,25 @@ class courses extends Model
   public function exams()
   {
     return $this->hasMany(exams::class, 'course_id');
+  }
+
+  public function getMarkstypesWeightsAttribute()
+  {
+    return $this->markstypes()
+      ->sum('weight');
+  }
+
+  public function getUnusedMarkstypesAttribute()
+  {
+    return $this->markstypes()
+      ->where('used', 0)
+      ->get();
+  }
+
+  public function getIssuedResultsAttribute()
+  {
+    return $this->markstypes()
+      ->where('title', 'Course Result')
+      ->count();
   }
 }

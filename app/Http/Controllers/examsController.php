@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateexamsRequest;
 use App\Http\Requests\UpdateexamsRequest;
 use App\Repositories\examsRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -28,7 +28,6 @@ class examsController extends AppBaseController
 
   use Notifiable;
 
-  /** @var  examsRepository */
   private $examsRepository;
 
   public function __construct(examsRepository $examsRepo)
@@ -36,19 +35,21 @@ class examsController extends AppBaseController
     $this->examsRepository = $examsRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', exams::class);
     
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
-    $levels = Levels::with('courses')->get();
+    $levels = Levels::with('courses')
+      ->get();
 
     return view('exams.index', compact('currentSem', 'levels'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -94,6 +95,8 @@ class examsController extends AppBaseController
     return redirect(route('exams.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', exams::class);
@@ -111,6 +114,8 @@ class examsController extends AppBaseController
 
     return redirect(route('exams.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

@@ -18,7 +18,8 @@ class student extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'studentNo',
     'eName',
     'aName',
@@ -30,7 +31,8 @@ class student extends Model
     'trans'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'studentNo' => 'integer',
     'eName' => 'string',
@@ -43,7 +45,8 @@ class student extends Model
     'trans' => 'boolean'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'studentNo' => 'required',
     'eName' => 'required',
     'aName' => 'required',

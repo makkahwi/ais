@@ -18,20 +18,23 @@ class times extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'title',
     'start',
     'end'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'title' => 'string',
     'start' => 'time',
     'end' => 'time',
   ];
   
-  public static $rules = [
+  public static $rules =
+  [
     'title' => 'required',
     'start' => 'required',
     'end' => 'required'

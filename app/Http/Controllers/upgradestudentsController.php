@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatestudentsRequest;
 use App\Http\Requests\UpdatestudentsRequest;
-use App\Repositories\studentsRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\studentsRepository;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -25,7 +25,6 @@ use App\Models\studentsFinancialsDiscounts;
 
 class upgradestudentsController extends AppBaseController
 {
-  /** @var  studentsRepository */
   private $studentsRepository;
 
   public function __construct(studentsRepository $studentsRepo)
@@ -33,24 +32,29 @@ class upgradestudentsController extends AppBaseController
     $this->studentsRepository = $studentsRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', student::class);
 
     $marks = marks::all();
-    $statuses = statuses::where('id', '<', 6)->get();
-    $classrooms = Classrooms::with('students.user.contact')->where('status_id', '=', 2)->orderBy('level_id', 'desc')->get();
-    $classroomss = Classrooms::where('status_id', '=', 2)->orderBy('level_id', 'asc')->get();
+    $statuses = statuses::where('id', '<', 6)
+      ->get();
+    $classrooms = Classrooms::with('students.user.contact')->where('status_id', 2)->orderBy('level_id', 'desc')
+      ->get();
+    $classroomss = Classrooms::where('status_id', 2)->orderBy('level_id', 'asc')
+      ->get();
 
-    $currentSem = Sems::with('year')
-      ->where('sems.start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
 
     $studentsFinancialsDiscounts = studentsFinancialsDiscounts::all();
 
     return view('upgradestudents.index', compact('statuses', 'classrooms', 'classroomss',
                                         'marks', 'currentSem', 'studentsFinancialsDiscounts'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatestudentsRequest $request)
   {
@@ -65,6 +69,8 @@ class upgradestudentsController extends AppBaseController
     return redirect(route('upgradestudents.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request)
   {
     $this->authorize('update', student::class);
@@ -73,7 +79,7 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = users::where('schoolNo', '=', $studentNo);
+    $student = users::where('schoolNo', $studentNo);
 
     if ($status == 2)
       $student->update(['status_id' => $status, 'leaveDate' => NULL, 'role_id' => 7]);
@@ -82,29 +88,31 @@ class upgradestudentsController extends AppBaseController
 
     $classroom = $request['classroom'];
 
-    $student = student::where('studentNo', '=', $studentNo);
+    $student = student::where('studentNo', $studentNo);
     
     $student->update(['classroom_id' => $classroom]);
 
     $newStudentNo = $request['newStudentNo'];
 
-    $users = users::where('schoolNo', '=', $studentNo)
+    $users = users::where('schoolNo', $studentNo)
       ->update(['schoolNo' => $newStudentNo]);
 
-    $student = student::where('studentNo', '=', $studentNo)
+    $student = student::where('studentNo', $studentNo)
       ->update(['studentNo' => $newStudentNo]);
 
-    $contact = contacts::where('schoolNo', '=', $studentNo)
+    $contact = contacts::where('schoolNo', $studentNo)
       ->update(['schoolNo' => $newStudentNo]);
 
     $data = ['studentNo' => $newStudentNo];
 
-    $email = users::where('schoolNo', '=', $newStudentNo)->get('email');
+    $email = users::where('schoolNo', $newStudentNo)->get('email');
 
     Mail::to($email)->send(new applicantUpdate($data));
 
     return Response::json($email);
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {
@@ -132,7 +140,7 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', '=', $studentNo);
+    $student = student::where('studentNo', $studentNo);
     
     $student->update(['financial' => $financial]);
 
@@ -152,7 +160,7 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', '=', $studentNo);
+    $student = student::where('studentNo', $studentNo);
     
     $student->update(['classroom_id' => $classroom]);
 
@@ -175,7 +183,7 @@ class upgradestudentsController extends AppBaseController
     if ($status == 7)
     $this->issueNewStudentFinancials($studentNo);
 
-    $student = users::where('schoolNo', '=', $studentNo);
+    $student = users::where('schoolNo', $studentNo);
 
     if ($status == 2)
       $student->update(['status_id' => $status, 'leaveDate' => NULL, 'role_id' => 7]);
@@ -198,7 +206,7 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', '=', $studentNo);
+    $student = student::where('studentNo', $studentNo);
     
     $student->update(['sponsor' => $sponsor]);
 
@@ -218,7 +226,7 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', '=', $studentNo);
+    $student = student::where('studentNo', $studentNo);
     
     $student->update(['tuitionfreq' => $tuitionfreq]);
 

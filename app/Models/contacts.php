@@ -18,7 +18,8 @@ class contacts extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'schoolNo',
     'dob',
     'gender',
@@ -39,7 +40,8 @@ class contacts extends Model
     'doc3'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'schoolNo' => 'integer',
     'dob' => 'date',
@@ -61,7 +63,8 @@ class contacts extends Model
     'doc3' => 'text'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'schoolNo' => 'required',
     'dob' => 'required',
     'gender' => 'required',

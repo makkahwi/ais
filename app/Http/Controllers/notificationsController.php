@@ -12,13 +12,14 @@ use Flash;
 
 class notificationsController extends AppBaseController
 {
-  /** @var  notificationsRepository */
   private $notificationsRepository;
 
   public function __construct(notificationsRepository $notificationsRepo)
   {
     $this->notificationsRepository = $notificationsRepo;
   }
+
+  // Index Page //////////////////////
 
   public function index(Request $request)
   {
@@ -27,6 +28,8 @@ class notificationsController extends AppBaseController
     return view('notifications.index')
       ->with('notifications', $notifications);
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatenotificationsRequest $request)
   {
@@ -38,6 +41,8 @@ class notificationsController extends AppBaseController
 
     return redirect(route('notifications.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update($id, UpdatenotificationsRequest $request)
   {
@@ -54,6 +59,8 @@ class notificationsController extends AppBaseController
 
     return redirect(route('notifications.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

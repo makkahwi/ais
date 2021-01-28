@@ -18,18 +18,21 @@ class statuses extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'title',
     'description'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'title' => 'string',
     'description' => 'text'
   ];
   
-  public static $rules = [
+  public static $rules =
+  [
     'title' => 'required',
     'description' => 'required'
   ];

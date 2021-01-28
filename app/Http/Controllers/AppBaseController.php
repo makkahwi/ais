@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
 
-/**
+use App\Models\sems;
+/*
  * @SWG\Swagger(
  *   basePath="/api/v1",
  *   @SWG\Info(
@@ -34,5 +35,13 @@ class AppBaseController extends Controller
       'success' => true,
       'message' => $message
     ], 200);
+  }
+
+  public function getCurrentSem()
+  {
+    return $currentSem = sems::with('year')
+      ->where('start', '<=', today())
+      ->where('end', '>=', today())
+      ->first();
   }
 }

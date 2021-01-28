@@ -13,7 +13,8 @@ class notifications extends Model
 
   protected $dates = ['deleted_at'];
 
-  public $fillable = [
+  public $fillable =
+  [
     'type',
     'notifiable_type',
     'notifiable_id',
@@ -21,7 +22,8 @@ class notifications extends Model
     'read_at'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'string',
     'type' => 'string',
     'notifiable_type' => 'string',
@@ -30,7 +32,8 @@ class notifications extends Model
     'read_at' => 'datetime'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'type' => 'required',
     'notifiable_type' => 'required',
     'notifiable_id' => 'required',

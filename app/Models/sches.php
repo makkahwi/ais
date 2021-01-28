@@ -18,7 +18,8 @@ class sches extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'sem_id',
     'classroom_id',
     'course_id',
@@ -28,7 +29,8 @@ class sches extends Model
     'status_id'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'sem_id' => 'integer',
     'classroom_id' => 'integer',
@@ -39,7 +41,8 @@ class sches extends Model
     'status_id' => 'integer'
   ];
   
-  public static $rules = [
+  public static $rules =
+  [
     'sem_id' => 'required',
     'classroom_id' => 'required',
     'course_id' => 'required',

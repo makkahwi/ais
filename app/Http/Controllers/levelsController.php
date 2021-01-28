@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatelevelsRequest;
 use App\Http\Requests\UpdatelevelsRequest;
 use App\Repositories\levelsRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -14,13 +14,14 @@ use App\Models\levels;
 
 class levelsController extends AppBaseController
 {
-  /** @var  levelsRepository */
   private $levelsRepository;
 
   public function __construct(levelsRepository $levelsRepo)
   {
       $this->levelsRepository = $levelsRepo;
   }
+
+  // Index Page //////////////////////
 
   public function index(Request $request)
   {
@@ -30,6 +31,8 @@ class levelsController extends AppBaseController
 
     return view('levels.index',compact('levels'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatelevelsRequest $request)
   {
@@ -50,6 +53,8 @@ class levelsController extends AppBaseController
     return redirect(route('levels.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', levels::class);
@@ -67,6 +72,8 @@ class levelsController extends AppBaseController
 
     return redirect(route('levels.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

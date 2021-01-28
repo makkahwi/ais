@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateusersRequest;
 use App\Http\Requests\UpdateusersRequest;
 use App\Repositories\usersRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Response;
@@ -31,7 +31,6 @@ class usersController extends AppBaseController
 {
   use Notifiable;
   
-  /** @var  usersRepository */
   private $usersRepository;
 
   public function __construct(usersRepository $usersRepo)
@@ -39,21 +38,25 @@ class usersController extends AppBaseController
     $this->usersRepository = $usersRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', users::class);
 
-    $currentSem = Sems::with('year')
-      ->where('sems.start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
 
-    $applicants = student::with('classroom', 'user')->get();
+    $applicants = student::with('classroom', 'user')
+      ->get();
 
-    $users = users::with('role', 'status')->get();
+    $users = users::with('role', 'status')
+      ->get();
 
-    $teachers = staff::with('user')->get();
+    $teachers = staff::with('user')
+      ->get();
 
-    $students = student::with('classroom', 'user')->get();
+    $students = student::with('classroom', 'user')
+      ->get();
 
     $relatives = Relatives::all();
 
@@ -186,7 +189,7 @@ class usersController extends AppBaseController
       $data += ['doc3Newf' => $data['doc3']];
     }
 
-    $secretary = users::where('role_id', '=', 4)->where('status_id', '=', 2)->get('email');
+    $secretary = users::where('role_id', 4)->where('status_id', 2)->get('email');
 
     Mail::to($secretary[0]['email'])->send(new requestStaffStudentDataUpdate($data));
 
@@ -194,6 +197,8 @@ class usersController extends AppBaseController
 
     return redirect(route('users.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(request $request)
   {
@@ -209,6 +214,8 @@ class usersController extends AppBaseController
 
     return redirect(route('users.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

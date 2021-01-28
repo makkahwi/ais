@@ -10,21 +10,7 @@
     </tfoot>
 
     <tbody>
-      @foreach($course->markstypes as $type)
-        @if($type->title == 'Course Result')
-          <tr>
-            <td>
-              {{$type->title}}
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        @endif
-      @endforeach
+      @include('results.tableRow')
     </tbody>
   </table>
 </div>

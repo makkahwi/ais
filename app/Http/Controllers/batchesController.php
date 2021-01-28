@@ -17,6 +17,8 @@ class batchesController extends AppBaseController
     //
   }
 
+  // Create Data ////////////////////////////////////////////
+
   public function store(Request $request)
   {
     $this->authorize('create', batches::class);

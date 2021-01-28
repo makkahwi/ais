@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateclassroomsRequest;
 use App\Http\Requests\UpdateclassroomsRequest;
-use App\Repositories\classroomsRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\classroomsRepository;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -19,7 +19,6 @@ use App\Models\classrooms;
 
 class classroomsController extends AppBaseController
 {
-  /** @var  classroomsRepository */
   private $classroomsRepository;
 
   public function __construct(classroomsRepository $classroomsRepo)
@@ -27,20 +26,22 @@ class classroomsController extends AppBaseController
     $this->classroomsRepository = $classroomsRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', classrooms::class);
     
     $levels = levels::all();
-    $statuses = statuses::orderBy('id', 'DESC')->get();
-    $staff = staff::with('user')->get();
+    $statuses = statuses::orderBy('id', 'DESC')
+      ->get();
+    $staff = staff::with('user')
+      ->get();
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
-    $students = student::with('user')->get();
+    $students = student::with('user')
+      ->get();
 
     $classrooms = classrooms::with('level', 'status', 'supervisor', 'students')
       ->orderBy('status_id', 'desc')
@@ -54,13 +55,15 @@ class classroomsController extends AppBaseController
 
   public function counter(Request $request)
   {
-    $count = student::where('classroom_id', '=', $request->classroom_id)
-      ->where('status_id', '=', 2);
+    $count = student::where('classroom_id', $request->classroom_id)
+      ->where('status_id', 2);
 
     $counter = collect($count)->count();
 
     return ($counter);
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreateclassroomsRequest $request)
   {
@@ -83,6 +86,8 @@ class classroomsController extends AppBaseController
     return redirect(route('classrooms.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', classrooms::class);
@@ -95,14 +100,17 @@ class classroomsController extends AppBaseController
       return redirect(route('classrooms.index'));
     }
     
-    $check = classrooms::where('title', '=', $request['title'])
-      ->where('level_id', '=', $request['level_id'])->get();
+    $check = classrooms::where('title', $request['title'])
+      ->where('level_id', $request['level_id'])
+      ->get();
 
     $classroom->update($request->all());
     Flash::success('The classroom was updated successfully<br><br>تم تحديث بيانات الشعبة الدراسية بنجاح');    
 
     return redirect(route('classrooms.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

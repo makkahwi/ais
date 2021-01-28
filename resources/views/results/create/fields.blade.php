@@ -4,7 +4,8 @@
     <thead>
       <tr>
         <th>@include('labels.level')</th>
-        <th>Marks Entry<br>Completed?</th>
+        <th>Courses with marks<br>categories not filled yet</th>
+        <th>Courses with total marks<br>weights below or above 100</th>
         <th>Results Issue</th>
       </tr>
     </thead>
@@ -12,30 +13,43 @@
     <tbody>
       @foreach($levels as $level)
         <tr>
-          <td>{{$level->title}}</td>
-          @if ($level->done)
-            <td class="text-success">
-              Yes
-            </td>
-          @if ($level->issued)
-            <td class="text-success">
-              Done Already
-            </td>
-          @else
-            <td>
-              <input class="form-check-input" type="checkbox" checked value="{{$level->id}}" name="levels[]">
-            </td>
-          @endif
-          @else
+          <td>{{$level->title}} <p hidden>{{$ready = 'Yes'}}</p> </td>
           <td class="text-danger">
-            No
+            @foreach($level->courses as $course)
+              @if (count($course->unusedMarkstypes))
+                <p hidden>{{$ready = 'No'}}</p>
+                {{$course->code}} | {{$course->title}}<br>
+                @foreach($course->unusedMarkstypes as $type)
+                  &nbsp;&nbsp;{{$type->title}}, 
+                @endforeach
+                <br>
+                <br>
+              @endif
+            @endforeach
           </td>
           <td class="text-danger">
-            <i class="fas fa-arrow-left"></i> Can't issue yet
+            @foreach($level->courses as $course)
+              @if ($course->markstypesWeights != 100)
+                <p hidden>{{$ready = 'No'}}</p>
+                {{$course->code}} | {{$course->title}}<br>
+              @endif
+            @endforeach
           </td>
+          @if ($ready == 'No')
+            <td class="text-danger">Cannot Issue Yet</td>
+          @else
+            @if($level->course->resultsIssued != 0)
+              <td class="text-success">Issued Already</td>
+            @else
+              <td>
+                <input class="form-check-input" type="checkbox" checked value="{{$level->id}}" name="levels[]">
+              </td>
+            @endif
           @endif
         </tr>
       @endforeach
     </tbody>
   </table>
 </div>
+
+

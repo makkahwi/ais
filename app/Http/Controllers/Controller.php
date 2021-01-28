@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -57,9 +57,9 @@ class Controller extends BaseController
     $teacher_id = $request['teacher_id'];
 
     $course = courses::with('sches', 'sems')
-      ->where('classroom_id', '=', $classroom_id)
-      ->where('status_id', '=', 2)
-      ->where('teacher_id', '=', $teacher_id)
+      ->where('classroom_id', $classroom_id)
+      ->where('status_id', 2)
+      ->where('teacher_id', $teacher_id)
       ->where('sems.start', '<=', today())
       ->where('end', '>=', today())
       ->get();
@@ -74,9 +74,9 @@ class Controller extends BaseController
     $level_id = $request->get('level_id');
 
     $classrooms = classrooms::with('levels')
-      ->where('teacher_id', '=', $teacher_id)
-      ->where('level_id', '=', $level_id)
-      ->where('status_id', '=', 2)
+      ->where('teacher_id', $teacher_id)
+      ->where('level_id', $level_id)
+      ->where('status_id', 2)
       ->get();
 
     return Response::json($classrooms);
@@ -86,7 +86,8 @@ class Controller extends BaseController
   {
     $title = $request->get('title');
 
-    $level = levels::where('title', '=', $title)->get();
+    $level = levels::where('title', $title)
+      ->get();
 
     return Response::json($level);
   }
@@ -95,7 +96,8 @@ class Controller extends BaseController
   {
     $level_id = $request['level_id'];
 
-    $level = levels::where('id', '=', $level_id)->get();
+    $level = levels::where('id', $level_id)
+      ->get();
 
     return Response::json($level);
   }
@@ -104,7 +106,8 @@ class Controller extends BaseController
   {
     $category_id = $request['category_id'];
 
-    $category = studentsFinancialsCategories::where('id', '=', $category_id)->get();
+    $category = studentsFinancialsCategories::where('id', $category_id)
+      ->get();
 
     return Response::json($category);
   }
@@ -117,7 +120,8 @@ class Controller extends BaseController
     $med = $ori[0].$ori[1].$ori[2];
     $final = (int)$med;
 
-    $batches = batches::orderBy('batch', 'desc')->get();
+    $batches = batches::orderBy('batch', 'desc')
+      ->get();
     
     foreach ($batches as $batch){
       if ($final >= $batch['batch']){
@@ -130,11 +134,11 @@ class Controller extends BaseController
     $level = $student['classroom']['level_id'];
 
     $category = studentsFinancialsCategories::with('batch', 'level')
-      ->where(function ($query) use ($level) {
-          $query->where('level_id', '=', $level)
-              ->orWhere('level_id', '=', 0);
+      ->where(function ($q) use ($level) {
+          $q->where('level_id', $level)
+              ->orWhere('level_id', 0);
       })
-      ->where('batch_id', '=', $bat['id'])
+      ->where('batch_id', $bat['id'])
       ->get();
 
     return Response::json($category);
@@ -144,14 +148,16 @@ class Controller extends BaseController
   {
     $discount_id = $request['discount_id'];
 
-    $discount = studentsFinancialsDiscounts::where('id', '=', $discount_id)->get();
+    $discount = studentsFinancialsDiscounts::where('id', $discount_id)
+      ->get();
 
     return Response::json($discount);
   }
 
   public function calculator()
   { 
-    $batches = batches::orderBy('batch', 'DESC')->get();
+    $batches = batches::orderBy('batch', 'DESC')
+      ->get();
 
     $levels = levels::all();
 
@@ -175,7 +181,8 @@ class Controller extends BaseController
       return redirect(route('calculator'));
     }
 
-    $batches = batches::orderBy('batch', 'desc')->get();
+    $batches = batches::orderBy('batch', 'desc')
+      ->get();
     
     foreach ($batches as $batch){
       if ($final >= $batch['batch']){
@@ -188,12 +195,12 @@ class Controller extends BaseController
     $discountsList = array();
 
     $Semesterly = studentsFinancialsCategories::
-      where(function ($query) use ($request) {
-        $query->where('level_id', '=', $request['level'])
-          ->orWhere('level_id', '=', 0);
+      where(function ($q) use ($request) {
+        $q->where('level_id', $request['level'])
+          ->orWhere('level_id', 0);
       })
-      ->where('batch_id', '=', $bat['id'])
-      ->where('frequency', '=', 'Semesterly')
+      ->where('batch_id', $bat['id'])
+      ->where('frequency', 'Semesterly')
       ->get();
 
     foreach ($Semesterly as $semesterFees)
@@ -206,24 +213,24 @@ class Controller extends BaseController
     if ($newStudent == 1)
     {
       $firstTimes = studentsFinancialsCategories::
-        where(function ($query) use ($request) {
-          $query->where('level_id', '=', $request['level'])
-            ->orWhere('level_id', '=', 0);
+        where(function ($q) use ($request) {
+          $q->where('level_id', $request['level'])
+            ->orWhere('level_id', 0);
         })
-        ->where('batch_id', '=', $bat['id'])
-        ->where('frequency', '=', 'One-time')
+        ->where('batch_id', $bat['id'])
+        ->where('frequency', 'One-time')
         ->get();
 
       foreach ($firstTimes as $firstTime)
         array_push($feesList, ["Title" => $firstTime['title'], "Amount" => $firstTime['amount']]);
 
       $yearly = studentsFinancialsCategories::
-        where(function ($query) use ($request) {
-          $query->where('level_id', '=', $request['level'])
-            ->orWhere('level_id', '=', 0);
+        where(function ($q) use ($request) {
+          $q->where('level_id', $request['level'])
+            ->orWhere('level_id', 0);
         })
-        ->where('batch_id', '=', $bat['id'])
-        ->where('frequency', '=', 'Yearly')
+        ->where('batch_id', $bat['id'])
+        ->where('frequency', 'Yearly')
         ->where('Title', '!=', 'Visa Renewal')
         ->get();
 
@@ -233,12 +240,12 @@ class Controller extends BaseController
     elseif ($sem == 1)
     {
       $yearly = studentsFinancialsCategories::
-        where(function ($query) use ($request) {
-          $query->where('level_id', '=', $request['level'])
-            ->orWhere('level_id', '=', 0);
+        where(function ($q) use ($request) {
+          $q->where('level_id', $request['level'])
+            ->orWhere('level_id', 0);
         })
-        ->where('batch_id', '=', $bat['id'])
-        ->where('frequency', '=', 'Yearly')
+        ->where('batch_id', $bat['id'])
+        ->where('frequency', 'Yearly')
         ->get();
 
       foreach ($yearly as $yearfees)
@@ -250,12 +257,12 @@ class Controller extends BaseController
 
     if ($transporation) {
       $trans = studentsFinancialsCategories::
-        where(function ($query) use ($request) {
-          $query->where('level_id', '=', $request['level'])
-            ->orWhere('level_id', '=', 0);
+        where(function ($q) use ($request) {
+          $q->where('level_id', $request['level'])
+            ->orWhere('level_id', 0);
         })
-        ->where('batch_id', '=', $bat['id'])
-        ->where('title', '=', 'Transportation')
+        ->where('batch_id', $bat['id'])
+        ->where('title', 'Transportation')
         ->first();
 
       array_push($feesList, ["Title" => $trans['title'], "Amount" => $trans['amount']*4]);
@@ -263,13 +270,13 @@ class Controller extends BaseController
 
     if ($request['discounts'])
     {
-      $tution = studentsFinancialsCategories::where('batch_id', '=', $bat['id'])
-        ->where('title', '=', 'Tuition Fees')
-        ->where('level_id', '=', $request['level'])
+      $tution = studentsFinancialsCategories::where('batch_id', $bat['id'])
+        ->where('title', 'Tuition Fees')
+        ->where('level_id', $request['level'])
         ->first();
 
       foreach ($request['discounts'] as $discount) {
-        $discount = studentsFinancialsDiscounts::where('title', '=', $discount)
+        $discount = studentsFinancialsDiscounts::where('title', $discount)
           ->first();
 
         if ($discount['type'] == "Percentage")
@@ -281,7 +288,7 @@ class Controller extends BaseController
       }
     }
 
-    $level = levels::where('id', '=', $request['level'])->first();
+    $level = levels::where('id', $request['level'])->first();
 
     $data = ["feesList" => $feesList, "discountsList" => $discountsList, "batch" => $bat, "level" => $level, "sem" => $sem, "newStudent" => $newStudent, "visa" => $visa];
 

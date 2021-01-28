@@ -18,7 +18,8 @@ class sems extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'title',
     'year_id',
     'start',
@@ -28,7 +29,8 @@ class sems extends Model
     'end'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'title' => 'string',
     'year_id' => 'integer',
@@ -39,7 +41,8 @@ class sems extends Model
     'end' => 'date'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'title' => 'required',
     'year_id' => 'required',
     'start' => 'required',

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateyearsRequest;
 use App\Http\Requests\UpdateyearsRequest;
 use App\Repositories\yearsRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -14,7 +14,6 @@ use App\Models\years;
 
 class yearsController extends AppBaseController
 {
-  /** @var  yearsRepository */
   private $yearsRepository;
 
   public function __construct(yearsRepository $yearsRepo)
@@ -22,14 +21,19 @@ class yearsController extends AppBaseController
     $this->yearsRepository = $yearsRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', years::class);
 
-    $years = years::orderBy('created_at', 'DESC')->get();
+    $years = years::orderBy('created_at', 'DESC')
+      ->get();
 
     return view('years.index', compact('years'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreateyearsRequest $request)
   {
@@ -49,6 +53,8 @@ class yearsController extends AppBaseController
     return redirect(route('years.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // old updating
   {
     $this->authorize('update', years::class);
@@ -66,6 +72,8 @@ class yearsController extends AppBaseController
 
     return redirect(route('years.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

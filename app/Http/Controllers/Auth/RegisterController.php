@@ -37,7 +37,7 @@ class RegisterController extends Controller
       
   }
 
-  protected function create(Request $data)
+  protected function store(Request $data)
   {
       
   }

@@ -23,7 +23,7 @@
 @section('header')
   @can('generateResults', App\Models\marks::class)
     @if ($currentSem->resultsDone == 0)
-      <a data-toggle="modal" data-target="#create-modal" class="btn btn-success" style="margin-top: -10px;margin-bottom: 5px"><i class="fa fa-plus"></i> Create {{$currentSem->title}}, {{$currentSem->year->title}} @include('results.title')s</a>
+      <a data-toggle="modal" data-target="#create-big-modal" class="btn btn-success" style="margin-top: -10px;margin-bottom: 5px"><i class="fa fa-plus"></i> Create {{$currentSem->title}}, {{$currentSem->year->title}} @include('results.title')s</a>
     @endif
   @else
     {{$currentSem->title}}, {{$currentSem->year->title}}
@@ -35,5 +35,5 @@
 @endcan
 
 @section('content')
-  @include('results.classroomTabs')
+  @include('results.semTabs')
 @endsection

@@ -18,7 +18,8 @@ class attendances extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'sem_id',
     'schoolNo',
     'date',
@@ -26,7 +27,8 @@ class attendances extends Model
     'note'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'sem_id' => 'integer',
     'schoolNo' => 'integer',
@@ -35,7 +37,8 @@ class attendances extends Model
     'note' => 'string'
   ];
   
-  public static $rules = [
+  public static $rules =
+  [
     'sem_id' => 'required',
     'schoolNo' => 'required',
     'date' => 'required',

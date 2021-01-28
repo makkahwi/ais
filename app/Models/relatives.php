@@ -18,7 +18,8 @@ class relatives extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'eName',
     'aName',
     'name',
@@ -38,7 +39,8 @@ class relatives extends Model
     'visa'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'eName' => 'string',
     'aName' => 'string',
@@ -59,7 +61,8 @@ class relatives extends Model
     'visa' => 'string'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'eName' => 'required',
     'aName' => 'required',
     'name' => 'required',

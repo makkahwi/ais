@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatemarkstypesRequest;
 use App\Http\Requests\UpdatemarkstypesRequest;
-use App\Repositories\marksTypesRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\marksTypesRepository;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -25,13 +25,14 @@ use App\Models\classrooms;
 
 class markstypesController extends AppBaseController
 {
-  /** @var  markstypesRepository */
   private $markstypesRepository;
 
   public function __construct(markstypesRepository $markstypesRepo)
   {
     $this->markstypesRepository = $markstypesRepo;
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatemarkstypesRequest $request)
   {
@@ -49,6 +50,8 @@ class markstypesController extends AppBaseController
 
     return redirect(route('marks.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -68,6 +71,8 @@ class markstypesController extends AppBaseController
     return redirect(route('marks.index'));
   }
 
+  // Destroy Data ////////////////////////////////////////////
+
   public function destroy(Request $request)
   {
     $this->authorize('delete', markstypes::class);
@@ -82,6 +87,14 @@ class markstypesController extends AppBaseController
     }
 
     $this->markstypesRepository->delete($id);
+
+    $marks = marks::where('type_id', $id)
+      ->get();
+
+    foreach ($marks as $mark)
+    {
+      $this->marksRepository->delete($id);
+    }
 
     Flash::success('The mark category was deleted successfully تم حذف بيانات العلامة بنجاح');
 

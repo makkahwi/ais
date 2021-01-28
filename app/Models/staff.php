@@ -18,20 +18,23 @@ class staff extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'staffNo',
     'eName',
     'aName'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'staffNo' => 'integer',
     'eName' => 'string',
     'aName' => 'string'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'staffNo' => 'required',
     'eName' => 'required',
     'aName' => 'required'

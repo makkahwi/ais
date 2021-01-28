@@ -18,7 +18,8 @@ class classrooms extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'title',
     'level_id',
     'roomNo',
@@ -28,7 +29,8 @@ class classrooms extends Model
     'status_id'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'title' => 'string',
     'level_id' => 'integer',
@@ -39,7 +41,8 @@ class classrooms extends Model
     'status_id' => 'integer'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'title' => 'required',
     'level_id' => 'required',
     'roomNo' => 'required',

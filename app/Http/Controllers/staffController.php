@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatestaffRequest;
 use App\Http\Requests\UpdatestaffRequest;
 use App\Repositories\staffRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Response;
@@ -24,7 +24,6 @@ use App\Models\relatives;
 
 class staffController extends AppBaseController
 {
-  /** @var  staffRepository */
   private $staffRepository;
 
   public function __construct(staffRepository $staffRepo)
@@ -32,16 +31,22 @@ class staffController extends AppBaseController
     $this->staffRepository = $staffRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', staff::class);
 
-    $statuses = statuses::where('id','<', 5)->where('id','>', 1)->get();
+    $statuses = statuses::where('id','<', 5)->where('id','>', 1)
+      ->get();
 
-    $staff = staff::with('user')->get();
+    $staff = staff::with('user')
+      ->get();
 
     return view('staff.index',compact('statuses', 'staff'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -113,8 +118,8 @@ class staffController extends AppBaseController
     }
     else
     {
-      $rel = relatives::where('eName', '=', $request['reName'])
-        ->where('aName', '=', $request['raName'])
+      $rel = relatives::where('eName', $request['reName'])
+        ->where('aName', $request['raName'])
         ->update(['name' => $name,
         'gender' => $request['rgender'],
         'job' => $request['job'],
@@ -267,7 +272,7 @@ class staffController extends AppBaseController
       $data += ['additional2'=>'None'];
     }
 
-    $vice = users::where('role_id', '=', 3)->get('email');
+    $vice = users::where('role_id', 3)->get('email');
 
     Mail::to($request['email'])->cc($vice[0])->send(new jobApp($data));
 
@@ -280,6 +285,8 @@ class staffController extends AppBaseController
   {
     return view('auth.staffApp');
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update($id, UpdatestaffRequest $request)
   {
@@ -295,9 +302,9 @@ class staffController extends AppBaseController
 
     $staff = $this->staffRepository->update($request->all(), $request['id']);
 
-    $contact = contacts::where('schoolNo', '=', $request['staffNo'])->get('email');
+    $contact = contacts::where('schoolNo', $request['staffNo'])->get('email');
 
-    contacts::where('schoolNo', '=', $request['staffNo'])
+    contacts::where('schoolNo', $request['staffNo'])
       ->update(['dob' => $request['dob'], 'gender' => $request['gender'],
       'email' => $request['email'],  'phone' => $request['phone'],
       'address' => $request['address'], 'nation' => $request['nation'],
@@ -307,7 +314,7 @@ class staffController extends AppBaseController
       'doc2' => $request['doc2'], 'doc3' => $request['doc3'],
       'visaExpiry' => $request['visaExpiry'],]);
 
-    users::where('schoolNo', '=', $request['staffNo'])
+    users::where('schoolNo', $request['staffNo'])
       ->update(['name' => $request['name'], 'email' => $request['email'],
       'status_id' => $request['status'], 'leaveDate' => $request['leaveDate']]);
 
@@ -315,6 +322,8 @@ class staffController extends AppBaseController
 
     return redirect(route('staff.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

@@ -18,7 +18,8 @@ class markstypes extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'sem_id',
     'classroom_id',
     'course_id',
@@ -30,7 +31,8 @@ class markstypes extends Model
     'used'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'sem_id' => 'integer',
     'classroom_id' => 'integer',
@@ -43,7 +45,8 @@ class markstypes extends Model
     'used' => 'integer'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'sem_id' => 'required',
     'classroom_id' => 'required',
     'course_id' => 'required',

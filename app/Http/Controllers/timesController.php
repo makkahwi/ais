@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatetimesRequest;
 use App\Http\Requests\UpdatetimesRequest;
 use App\Repositories\timesRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -15,7 +15,6 @@ use App\Models\times;
 
 class timesController extends AppBaseController
 {
-  /** @var  timesRepository */
   private $timesRepository;
 
   public function __construct(timesRepository $timesRepo)
@@ -23,18 +22,20 @@ class timesController extends AppBaseController
     $this->timesRepository = $timesRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', times::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
 
     $times = times::all();
 
     return view('times.index', compact('times', 'currentSem'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatetimesRequest $request)
   {
@@ -48,6 +49,8 @@ class timesController extends AppBaseController
 
     return redirect(route('times.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -67,6 +70,8 @@ class timesController extends AppBaseController
 
     return redirect(route('times.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

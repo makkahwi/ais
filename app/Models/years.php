@@ -18,16 +18,19 @@ class years extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'title'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'title' => 'string'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'title' => 'required'
   ];
 

@@ -22,7 +22,8 @@ class users extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'role_id',
     'status_id',
     'leaveDate',
@@ -39,7 +40,8 @@ class users extends Model
     'remember_token'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'role_id' => 'integer',
     'status_id' => 'integer',
@@ -52,7 +54,8 @@ class users extends Model
     'remember_token' => 'string'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'role_id' => 'required',
     'status_id' => 'required',
     'schoolNo' => 'required',

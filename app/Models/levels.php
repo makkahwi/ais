@@ -18,18 +18,21 @@ class levels extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'title',
     'description'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'title' => 'string',
     'description' => 'text'
   ];
   
-  public static $rules = [
+  public static $rules =
+  [
     'title' => 'required',
     'description' => 'required'
   ];
@@ -42,5 +45,12 @@ class levels extends Model
   public function courses()
   {
     return $this->hasMany(courses::class, 'level_id');
+  }
+
+  public function getIssuedResultsAttribute()
+  {
+    return $this->courses()
+      ->where('issuedResults', '!=', 0)
+      ->get();
   }
 }

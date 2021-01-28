@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatestudentsRequest;
 use App\Http\Requests\UpdatestudentsRequest;
-use App\Repositories\studentsRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\studentsRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -30,7 +30,6 @@ use App\Models\classrooms;
 
 class studentsController extends AppBaseController
 {
-  /** @var  studentsRepository */
   private $studentsRepository;
 
   public function __construct(studentsRepository $studentsRepo)
@@ -38,18 +37,19 @@ class studentsController extends AppBaseController
     $this->studentsRepository = $studentsRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', student::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
 
     $statuses = statuses::all();
     $levels = Levels::all();
     $relatives = relatives::all();
-    $classrooms = Classrooms::with('students', 'students.user.contact.relative', 'students.user.status', 'students.classroom.level')->get();
+    $classrooms = Classrooms::with('students', 'students.user.contact.relative', 'students.user.status', 'students.classroom.level')
+      ->get();
 
     return view('students.index', compact('currentSem', 'statuses', 'levels', 'classrooms', 'relatives'));
   }
@@ -70,7 +70,7 @@ class studentsController extends AppBaseController
 
     $referances = Referances::where('created_at', '>=', today())
       ->orderby('created_at', 'desc')
-      ->where('type', '=', 'SCL')
+      ->where('type', 'SCL')
       ->first();
 
     if (empty($referances))
@@ -103,6 +103,8 @@ class studentsController extends AppBaseController
 
     return $pdf->download($student.' - Student Confirmation Letter.pdf');
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -206,8 +208,8 @@ class studentsController extends AppBaseController
       $rel = relatives::orderby('relatives.updated_at', 'DESC')->first();
     }
     else {
-      $rel = relatives::where('nation', '=', $request['rnation'])
-        ->where('ppno', '=', $request['rppno'])
+      $rel = relatives::where('nation', $request['rnation'])
+        ->where('ppno', $request['rppno'])
         ->update(['eName' => $request['reName'],
         'aName' => $request['raName'],
         'name' => $rName,
@@ -279,6 +281,8 @@ class studentsController extends AppBaseController
     return redirect(route('login'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update($id, UpdatestudentsRequest $request) // Updating with Modal
   {
     $this->authorize('update', student::class);
@@ -292,7 +296,7 @@ class studentsController extends AppBaseController
 
     $student = $this->studentsRepository->update($request->all(), $request['id']);
 
-    contacts::where('schoolNo', '=', $request['studentNo'])
+    contacts::where('schoolNo', $request['studentNo'])
       ->update(['email' => $request['email'], 'phone' => $request['phone'],
       'address' => $request['address'], 'nation' => $request['nation'],
       'dob' => $request['dob'], 'gender' => $request['gender'],
@@ -301,13 +305,15 @@ class studentsController extends AppBaseController
       'visa' => $request['visa'], 'doc1' => $request['doc1'], 'relation' => $request['relation'],
       'doc2' => $request['doc2'], 'visaExpiry' => $request['visaExpiry']]);
 
-    users::where('schoolNo', '=', $request['studentNo'])
+    users::where('schoolNo', $request['studentNo'])
       ->update(['name' => $request['name']]);
 
     Flash::success('The student data was updated successfully<br><br>تم تحديث بيانات الطالب بنجاح');
 
     return redirect(route('students.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

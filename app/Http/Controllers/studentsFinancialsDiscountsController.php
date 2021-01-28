@@ -20,13 +20,13 @@ class studentsFinancialsDiscountsController extends AppBaseController
     //
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', studentsFinancialsDiscounts::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
       
     $levels = levels::all();
 
@@ -44,6 +44,8 @@ class studentsFinancialsDiscountsController extends AppBaseController
                                                       'studentsFinancialsDiscounts', 'statuses'));
   }
 
+  // Create Data ////////////////////////////////////////////
+
   public function store(Request $request)
   {
     $this->authorize('create', studentsFinancialsDiscounts::class);
@@ -54,6 +56,8 @@ class studentsFinancialsDiscountsController extends AppBaseController
 
     return redirect(route('sfDiscounts.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -72,6 +76,8 @@ class studentsFinancialsDiscountsController extends AppBaseController
 
     return redirect(route('sfDiscounts.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

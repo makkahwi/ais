@@ -18,7 +18,8 @@ class exams extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'sem_id',
     'course_id',
     'title',
@@ -26,7 +27,8 @@ class exams extends Model
     'note'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'sem_id' => 'integer',
     'course_id' => 'integer',
@@ -35,7 +37,8 @@ class exams extends Model
     'note' => 'text'
   ];
   
-  public static $rules = [
+  public static $rules =
+  [
     'sem_id' => 'required',
     'course_id' => 'required',
     'title' => 'required',

@@ -21,13 +21,13 @@ class studentsFinancialsCategoriesController extends AppBaseController
     //
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', studentsFinancialsCategories::class);
     
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
     
     $levels = levels::all();
 
@@ -39,13 +39,16 @@ class studentsFinancialsCategoriesController extends AppBaseController
 
     $statuses = statuses::all();
 
-    $batches = batches::with('categories')->orderby('batch', 'desc')->get();
+    $batches = batches::with('categories')->orderby('batch', 'desc')
+      ->get();
 
     $studentsFinancialsCategories = studentsFinancialsCategories::all();
 
     return view('studentsFinancialsCategories.index', compact('currentSem', 'levels', 'classrooms',
                                             'batches', 'studentsFinancialsCategories', 'statuses'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -74,6 +77,8 @@ class studentsFinancialsCategoriesController extends AppBaseController
     Flash::success('All categories were saved successfully<br><br>تم حفظ كل بيانات التصنيفات المالية بنجاح');
     return redirect(route('sfCategories.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {

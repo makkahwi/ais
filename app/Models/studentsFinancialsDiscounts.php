@@ -18,14 +18,16 @@ class studentsFinancialsDiscounts extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'type',
     'title',
     'description',
     'amount',
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'type' => 'string',
     'title' => 'string',
@@ -33,7 +35,8 @@ class studentsFinancialsDiscounts extends Model
     'amount' => 'float',
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'type' => 'required',
     'title' => 'required',
     'description' => 'required',

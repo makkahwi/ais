@@ -1,6 +1,6 @@
-@section('crModalForm')
+@section('crBigModalForm')
       
-  <form action="{{ route ('sems.store') }}" method="post">
+  <form action="{{ route ('results.store') }}" method="post">
 
     @csrf
 

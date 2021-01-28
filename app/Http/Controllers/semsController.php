@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatesemsRequest;
 use App\Http\Requests\UpdatesemsRequest;
 use App\Repositories\semsRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -15,7 +15,6 @@ use App\Models\years;
 
 class semsController extends AppBaseController
 {
-  /** @var  semsRepository */
   private $semsRepository;
 
   public function __construct(semsRepository $semsRepo)
@@ -23,11 +22,14 @@ class semsController extends AppBaseController
     $this->semsRepository = $semsRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', sems::class);
 
-    $years = Years::orderBy('id', 'DESC')->get();
+    $years = Years::orderBy('id', 'DESC')
+      ->get();
 
     $sems = sems::with('year')
       ->orderBy('created_at', 'DESC')
@@ -35,6 +37,8 @@ class semsController extends AppBaseController
 
     return view('sems.index', compact('years', 'sems'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatesemsRequest $request)
   {
@@ -58,6 +62,8 @@ class semsController extends AppBaseController
     return redirect(route('sems.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', sems::class);
@@ -71,14 +77,17 @@ class semsController extends AppBaseController
     }
 
     $check = sems::with('year')
-      ->where('title', '=', $request['title'])
-      ->where('year_id', '=', $request['year_id'])->get();
+      ->where('title', $request['title'])
+      ->where('year_id', $request['year_id'])
+      ->get();
 
     $sem->update($request->all());
     Flash::success('The semester was updated successfully<br><br>تم تحديث بيانات الفصل الدراسي بنجاح');
 
     return redirect(route('sems.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

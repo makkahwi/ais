@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatemarksRequest;
 use App\Http\Requests\UpdatemarksRequest;
 use App\Repositories\marksRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -26,7 +26,6 @@ use App\Models\classrooms;
 
 class marksController extends AppBaseController
 {
-  /** @var  marksRepository */
   private $marksRepository;
 
   public function __construct(marksRepository $marksRepo)
@@ -34,20 +33,20 @@ class marksController extends AppBaseController
     $this->marksRepository = $marksRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', marks::class);
     
     $editby = date("Y-m-d H:i:s", strtotime('-1 day', strtotime(now())));
 
-    $currentSem = Sems::with('year')
-      ->where('sems.start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
     $levels = Levels::all();
-    $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user', 'level.courses.markstypes.sem.year')->get();
     $courses = Courses::all();
+    $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user')
+      ->get();
 
     return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
   }
@@ -57,7 +56,7 @@ class marksController extends AppBaseController
     $classroom_id = $request->get('classroom_id');
 
     $students = student::with('user')
-    ->where('classroom_id', '=', $classroom_id)
+    ->where('classroom_id', $classroom_id)
     ->get();
 
     return Response::json($students);
@@ -67,10 +66,10 @@ class marksController extends AppBaseController
   {
     $classroom = $request->get('classroom');
 
-    $classroom_id = classrooms::where('title', '=', $classroom)->first();
+    $classroom_id = classrooms::where('title', $classroom)->first();
 
     $students = student::with('user')
-      ->where('classroom_id', '=', $classroom_id['id'])
+      ->where('classroom_id', $classroom_id['id'])
       ->get();
 
     return Response::json($students);
@@ -80,8 +79,9 @@ class marksController extends AppBaseController
   {
     $course = $request->get('course_id');
 
-    $type = markstypes::with('sem')->where('course_id', '=', $course)
-      ->where('used', '=', 0)->get();
+    $type = markstypes::with('sem')->where('course_id', $course)
+      ->where('used', 0)
+      ->get();
 
     return Response::json($type);
   }
@@ -90,7 +90,8 @@ class marksController extends AppBaseController
   {
     $course = $request->get('course_id');
 
-    $type = markstypes::where('course_id', '=', $course)->get();
+    $type = markstypes::where('course_id', $course)
+      ->get();
 
     return Response::json($type);
   }
@@ -101,16 +102,18 @@ class marksController extends AppBaseController
 
     $classroomId = $request->get('classroomId');
 
-    $classroom = classrooms::where('id', '=', $classroomId)->get();
+    $classroom = classrooms::where('id', $classroomId)
+      ->get();
 
     $level = $classroom->get('level_id');
 
-    $courses = courses::where('level_id', '=', $level)
-      ->where('courseName', '=', $courseName);
+    $courses = courses::where('level_id', $level)
+      ->where('courseName', $courseName);
 
     $course = $courses->get('id');
 
-    $type = markstypes::where('course_id', '=', $course)->get();
+    $type = markstypes::where('course_id', $course)
+      ->get();
 
     return Response::json($type);
   }
@@ -119,7 +122,7 @@ class marksController extends AppBaseController
   {
     $data = $request->all();
 
-    $teacher = users::where('schoolNo', '=', $request['teacher_id'])->get('email');
+    $teacher = users::where('schoolNo', $request['teacher_id'])->get('email');
 
     Mail::to($teacher)->cc('principal@aqsa.edu.my')->send(new markComplain($data));
 
@@ -127,6 +130,8 @@ class marksController extends AppBaseController
 
     return redirect(route('marks.index'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -155,7 +160,7 @@ class marksController extends AppBaseController
       }
     }
 
-    markstypes::where('id', '=', $request['type_id'])->update(['used' => true]);
+    markstypes::where('id', $request['type_id'])->update(['used' => true]);
 
     if(empty($failure)){
       Flash::success('All of Student(s) Marks were saved successfully<br><br>تم حفظ كل بيانات علامات الطلاب بنجاح');
@@ -170,6 +175,8 @@ class marksController extends AppBaseController
 
     return redirect(route('marks.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -189,10 +196,10 @@ class marksController extends AppBaseController
     return redirect(route('marks.index'));
   }
 
+  // Destroy Data ////////////////////////////////////////////
+
   public function destroy(Request $request)
   {
-    $this->authorize('delete', marks::class);
-
     $id = $request['id'];
     
     $marks = $this->marksRepository->find($id);

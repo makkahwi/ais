@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreaterelativesRequest;
 use App\Http\Requests\UpdaterelativesRequest;
-use App\Repositories\relativesRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\relativesRepository;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -18,7 +18,6 @@ use App\Models\relatives;
 
 class relativesController extends AppBaseController
 {
-  /** @var  relativesRepository */
   private $relativesRepository;
 
   public function __construct(relativesRepository $relativesRepo)
@@ -26,11 +25,14 @@ class relativesController extends AppBaseController
       $this->relativesRepository = $relativesRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', relatives::class);
 
-    $relatives = relatives::with('contacts.user')->get();
+    $relatives = relatives::with('contacts.user')
+      ->get();
 
     return view('relatives.index',compact('relatives'));
   }
@@ -84,7 +86,7 @@ class relativesController extends AppBaseController
       $data += ['visaNewf' => $data['visa']];
     }
 
-    $secretary = users::where('role_id', '=', 4)->where('status_id', '=', 2)->get('email');
+    $secretary = users::where('role_id', 4)->where('status_id', 2)->get('email');
 
     Mail::to($secretary[0])->cc('principal@aqsa.edu.my')->send(new requestGuardianDataUpdate($data));
 
@@ -92,6 +94,8 @@ class relativesController extends AppBaseController
 
     return redirect(route('users.index'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreaterelativesRequest $request)
   {
@@ -106,6 +110,8 @@ class relativesController extends AppBaseController
     return redirect(route('relatives.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update($id, UpdaterelativesRequest $request)
   {
     $this->authorize('update', relatives::class);
@@ -117,7 +123,7 @@ class relativesController extends AppBaseController
       return redirect(route('relatives.index'));
     }
 
-    relatives::where('id', '=', $request['id'])
+    relatives::where('id', $request['id'])
       ->update(['eName' => $request['eName'], 'aName' => $request['aName'],
       'name' => $request['name'], 'gender' => $request['gender'],
       'relation' => $request['relation'], 'job' => $request['job'],
@@ -132,13 +138,15 @@ class relativesController extends AppBaseController
 
     foreach ($users as $user)
       if ($user->email == $relative->rEmail)
-        users::where('id', '=', $user->id)
+        users::where('id', $user->id)
           ->update(['email' => $request['email']]);
 
     Flash::success('The Relative Data was updated successfully<br><br>تم تحديث بيانات القريب بنجاح');
 
     return redirect(route('relatives.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

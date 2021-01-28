@@ -96,5 +96,5 @@
 <!-- deadline Field -->
 <div class="form-group col-md-4">
   <label for="deadline">@include('labels.date')@include('layouts.required')</label>
-  <input required type="date" min={{today()}} class="form-control" name="deadline" id="deadlineTypeEd">
+  <input required type="date" class="form-control" name="deadline" id="deadlineTypeEd">
 </div>

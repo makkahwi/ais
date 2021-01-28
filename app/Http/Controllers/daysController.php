@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatedaysRequest;
 use App\Http\Requests\UpdatedaysRequest;
 use App\Repositories\daysRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -19,13 +19,14 @@ use App\Models\users;
 
 class daysController extends AppBaseController
 {
-  /** @var  daysRepository */
   private $daysRepository;
 
   public function __construct(daysRepository $daysRepo)
   {
     $this->daysRepository = $daysRepo;
   }
+
+  // Index Page //////////////////////
 
   public function index(Request $request)
   {
@@ -40,15 +41,14 @@ class daysController extends AppBaseController
 
     // Flash::success('All Students\' were notified of system launching');
   
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
     $days = days::all();
 
     return view('days.index', compact('days', 'currentSem'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatedaysRequest $request)
   {
@@ -62,6 +62,8 @@ class daysController extends AppBaseController
 
     return redirect(route('days.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -80,6 +82,8 @@ class daysController extends AppBaseController
 
     return redirect(route('days.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

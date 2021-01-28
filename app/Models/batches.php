@@ -18,15 +18,18 @@ class batches extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'batch',
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'batch' => 'string',
   ];
-  public static $rules = [
+  public static $rules =
+  [
     'batch' => 'required',
   ];
 

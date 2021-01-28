@@ -19,7 +19,8 @@ class students extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'studentNo',
     'eName',
     'aName',
@@ -29,7 +30,8 @@ class students extends Model
     'visa_id'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'studentNo' => 'integer',
     'eName' => 'string',
@@ -40,7 +42,8 @@ class students extends Model
     'visa_id' => 'integer'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'studentNo' => 'required',
     'eName' => 'required',
     'aName' => 'required',

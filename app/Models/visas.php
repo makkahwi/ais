@@ -18,7 +18,8 @@ class visas extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'studentNo',
     'status',
     'firstEntry',
@@ -26,7 +27,8 @@ class visas extends Model
     'visaExpiry'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'studentNo' => 'integer',
     'status' => 'string',
@@ -35,7 +37,8 @@ class visas extends Model
     'visaExpiry' => 'date'
   ];
   
-  public static $rules = [
+  public static $rules =
+  [
     'studentNo' => 'required',
     'status' => 'required',
     'firstEntry' => 'required',

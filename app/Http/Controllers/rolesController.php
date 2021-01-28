@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreaterolesRequest;
 use App\Http\Requests\UpdaterolesRequest;
 use App\Repositories\rolesRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -15,7 +15,6 @@ use App\Models\roles;
 
 class rolesController extends AppBaseController
 {
-  /** @var  rolesRepository */
   private $rolesRepository;
 
   public function __construct(rolesRepository $rolesRepo)
@@ -23,19 +22,20 @@ class rolesController extends AppBaseController
     $this->rolesRepository = $rolesRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', roles::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
     
     $roles = roles::all();
 
     return view('roles.index', compact('roles', 'currentSem'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -56,6 +56,8 @@ class rolesController extends AppBaseController
     return redirect(route('roles.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', roles::class);
@@ -73,6 +75,8 @@ class rolesController extends AppBaseController
 
     return redirect(route('roles.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

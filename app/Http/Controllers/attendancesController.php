@@ -24,7 +24,6 @@ class attendancesController extends AppBaseController
 
   use Notifiable;
 
-  /** @var  attendancesRepository */
   private $attendancesRepository;
 
   public function __construct(attendancesRepository $attendancesRepo)
@@ -32,33 +31,37 @@ class attendancesController extends AppBaseController
     $this->attendancesRepository = $attendancesRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', attendances::class);
     
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
-    $sems = sems::with('year')->get();
+    $sems = sems::with('year')
+      ->get();
     
     $classrooms = Classrooms::with('level')
-      ->where('status_id', '=', 2)->get();
+      ->where('status_id', 2)
+      ->get();
 
-    $students = student::with('user')->get();
+    $students = student::with('user')
+      ->get();
 
     $attendances = attendances::with('sem', 'user')
       ->orderby('date', 'desc')
       ->get();
 
     $attendancesOld = attendances::with('sem', 'user')
-      ->where('date', '=', NULL)
+      ->where('date', NULL)
       ->get();
 
     return view('attendances.index', compact('currentSem', 'sems', 'classrooms', 'students',
                                     'attendances', 'attendancesOld'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -101,6 +104,8 @@ class attendancesController extends AppBaseController
     return redirect(route('attendances.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', attendances::class);
@@ -118,6 +123,8 @@ class attendancesController extends AppBaseController
 
     return redirect(route('attendances.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

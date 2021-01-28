@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatestatusRequest;
 use App\Http\Requests\UpdatestatusRequest;
 use App\Repositories\statusRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -15,7 +15,6 @@ use App\Models\statuses;
 
 class statusController extends AppBaseController
 {
-  /** @var  statusRepository */
   private $statusRepository;
 
   public function __construct(statusRepository $statusRepo)
@@ -23,19 +22,20 @@ class statusController extends AppBaseController
     $this->statusRepository = $statusRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', statuses::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
     
     $statuses = statuses::all();
 
     return view('statuses.index', compact('statuses', 'currentSem'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatestatusRequest $request)
   {
@@ -49,6 +49,8 @@ class statusController extends AppBaseController
 
     return redirect(route('statuses.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // Updating with Modal
   {
@@ -67,6 +69,8 @@ class statusController extends AppBaseController
 
     return redirect(route('statuses.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

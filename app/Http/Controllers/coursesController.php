@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatecoursesRequest;
 use App\Http\Requests\UpdatecoursesRequest;
 use App\Repositories\coursesRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -20,7 +20,6 @@ use App\Models\classrooms;
 
 class coursesController extends AppBaseController
 {
-  /** @var  coursesRepository */
   private $coursesRepository;
 
   public function __construct(coursesRepository $coursesRepo)
@@ -28,22 +27,25 @@ class coursesController extends AppBaseController
     $this->coursesRepository = $coursesRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', courses::class);
     
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
-    $levels = levels::with('courses')->get();
+    $levels = levels::with('courses')
+      ->get();
       
     $statuses = statuses::where('id', '<', 3)
-      ->orderBy('id', 'DESC')->get();
+      ->orderBy('id', 'DESC')
+      ->get();
 
     return view('courses.index', compact('currentSem', 'levels', 'statuses'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatecoursesRequest $request)
   {
@@ -66,6 +68,8 @@ class coursesController extends AppBaseController
     return redirect(route('courses.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', courses::class);
@@ -83,6 +87,8 @@ class coursesController extends AppBaseController
 
     return redirect(route('courses.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

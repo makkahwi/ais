@@ -18,7 +18,8 @@ class studentsFinancialsCategories extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'batch_id',
     'frequency',
     'title',
@@ -26,7 +27,8 @@ class studentsFinancialsCategories extends Model
     'level_id',
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'batch_id' => 'integer',
     'frequency' => 'string',
@@ -35,7 +37,8 @@ class studentsFinancialsCategories extends Model
     'level_id' => 'integer',
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'batch_id' => 'required',
     'frequency' => 'required',
     'title' => 'required',

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateschesRequest;
 use App\Http\Requests\UpdateschesRequest;
 use App\Repositories\schesRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -24,7 +24,6 @@ use App\Models\classrooms;
 
 class schesController extends AppBaseController
 {
-  /** @var  schesRepository */
   private $schesRepository;
 
   public function __construct(schesRepository $schesRepo)
@@ -32,6 +31,8 @@ class schesController extends AppBaseController
     $this->schesRepository = $schesRepo;
   }
   
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', sches::class);
@@ -40,7 +41,8 @@ class schesController extends AppBaseController
       ->orderBy('created_at', 'DESC')
       ->get();
 
-    $courses = Courses::with('level')->get();
+    $courses = Courses::with('level')
+      ->get();
 
     $staff = staff::with('user')
       ->orderBy('eName', 'asc')
@@ -48,18 +50,16 @@ class schesController extends AppBaseController
 
     $days = Days::all();
     $times = Times::all();
-    $statuses = statuses::orderBy('id', 'DESC')->get();
+    $statuses = statuses::orderBy('id', 'DESC')
+      ->get();
 
     $levels = levels::all();
 
     $classrooms = classrooms::with('level', 'sches')
-      ->where('status_id', '=', 2)
+      ->where('status_id', 2)
       ->get();
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
     $csem = $currentSem['id'];
 
@@ -75,23 +75,23 @@ class schesController extends AppBaseController
     $nsem = $nextSem->get('id');
 
     $sches = sches::with('classroom', 'course', 'teacher.user')
-      ->where('status_id', '=', 2)
-      ->where('sem_id', '=', $csem)
+      ->where('status_id', 2)
+      ->where('sem_id', $csem)
       ->get();
     
     $schesOld = sches::with('classroom', 'course', 'teacher')
-      ->where('status_id', '=', 2)
+      ->where('status_id', 2)
       ->where('sem_id', '!=', $csem)
       ->where('sem_id', '!=', $nsem)
       ->get();
 
     $schesNext = sches::with('classroom', 'course', 'teacher')
-      ->where('status_id', '=', 2)
-      ->where('sem_id', '=', $nsem)
+      ->where('status_id', 2)
+      ->where('sem_id', $nsem)
       ->get(); 
 
     $schesDe = sches::with('course', 'teacher', 'sem', 'classroom', 'day','time', 'status')
-      ->where('status_id', '=', 1)
+      ->where('status_id', 1)
       ->get();
 
     return view('sches.index', compact('currentSem', 'nextSem', 'statuses', 'days', 'sches', 'schesNext',
@@ -103,7 +103,8 @@ class schesController extends AppBaseController
   {
     $level_id = $request->get('level_id');
 
-    $classroom = Classrooms::where('level_id', '=', $level_id)->where('status_id', '=', 2)->get();
+    $classroom = Classrooms::where('level_id', $level_id)->where('status_id', 2)
+      ->get();
 
     return Response::json($classroom);
   }
@@ -112,9 +113,10 @@ class schesController extends AppBaseController
   {
     $level = $request->get('level');
 
-    $level_id = levels::where('title', '=', $level)->first();
+    $level_id = levels::where('title', $level)->first();
 
-    $classroom = Classrooms::where('level_id', '=', $level_id['id'])->where('status_id', '=', 2)->get();
+    $classroom = Classrooms::where('level_id', $level_id['id'])->where('status_id', 2)
+      ->get();
 
     return Response::json($classroom);
   }
@@ -123,7 +125,8 @@ class schesController extends AppBaseController
   {
     $level_id = $request->get('level_id');
 
-    $course = Courses::where('level_id', '=', $level_id)->where('status_id', '=', 2)->get();
+    $course = Courses::where('level_id', $level_id)->where('status_id', 2)
+      ->get();
 
     return Response::json($course);
   }
@@ -136,12 +139,15 @@ class schesController extends AppBaseController
 
     $classroom_id = $request->get('classroom_id');
 
-    $class = Sches::where('status_id', '=', 2)
-      ->where('day_id', '=', $day_id)->where('time_id', '=', $time_id)
-      ->where('classroom_id', '=', $classroom_id)->get();
+    $class = Sches::where('status_id', 2)
+      ->where('day_id', $day_id)->where('time_id', $time_id)
+      ->where('classroom_id', $classroom_id)
+      ->get();
 
     return Response::json($class);
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -190,6 +196,8 @@ class schesController extends AppBaseController
     return redirect(route('sches.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', sches::class);
@@ -207,6 +215,8 @@ class schesController extends AppBaseController
 
     return redirect(route('sches.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

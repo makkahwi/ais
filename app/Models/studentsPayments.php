@@ -18,7 +18,8 @@ class studentsPayments extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'sem_id',
     'date',
     'studentNo',
@@ -29,7 +30,8 @@ class studentsPayments extends Model
     'note',
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'sem_id' => 'integer',
     'date' => 'date',
@@ -41,7 +43,8 @@ class studentsPayments extends Model
     'note' => 'string',
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'sem_id' => 'required',
     'date' => 'required',
     'studentNo' => 'required',

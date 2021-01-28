@@ -18,7 +18,8 @@ class studentsFinancials extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'sem_id',
     'studentNo',
     'category_id',
@@ -26,7 +27,8 @@ class studentsFinancials extends Model
     'finalAmount',
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'sem_id' => 'integer',
     'studentNo' => 'integer',
@@ -35,7 +37,8 @@ class studentsFinancials extends Model
     'finalAmount' => 'float',
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'sem_id' => 'required',
     'studentNo' => 'required',
     'category_id' => 'required',

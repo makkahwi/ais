@@ -27,18 +27,19 @@ class studentsFinancialsController extends AppBaseController
     //
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewAny', studentsFinancials::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
     
     $levels = levels::all();
 
     $cnSem = sems::with('year')
-      ->where('end', '>=', today())->get();
+      ->where('end', '>=', today())
+      ->get();
 
     $sfCategories = studentsFinancialsCategories::all();
     $sfDiscounts = studentsFinancialsDiscounts::all();
@@ -56,6 +57,8 @@ class studentsFinancialsController extends AppBaseController
     return view('studentsFinancials.index', compact('currentSem', 'levels', 'classrooms', 'cnSem',
                                 'sfDiscounts', 'sfCategories', 'studentsFinancials', 'statuses'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(Request $request)
   {
@@ -86,6 +89,8 @@ class studentsFinancialsController extends AppBaseController
     return redirect(route('sFinancials.index'));
   }
 
+  // Update Data ////////////////////////////////////////////
+
   public function update(Request $request) // Updating with Modal
   {
     $this->authorize('update', studentsFinancials::class);
@@ -112,7 +117,7 @@ class studentsFinancialsController extends AppBaseController
 
     $s = $request['id'];
 
-    $student = student::where('studentNo', '=', $s)->with('classroom.level','user.contact','user.status')->first();
+    $student = student::where('studentNo', $s)->with('classroom.level','user.contact','user.status')->first();
 
     if (empty($student)) {
       Flash::error('The student data was not found<br><br>بيانات الطالب غير موجودة');
@@ -121,13 +126,13 @@ class studentsFinancialsController extends AppBaseController
 
     $sems = sems::whereHas('payments')->with('year', 'dues.category', 'dues.discount')
       ->with(['payments' => function($q) use ($s){
-        $q->where('studentNo', '=', $s);}])
+        $q->where('studentNo', $s);}])
       ->orWhereHas('dues')->with(['dues' => function($a) use ($s){
-        $a->where('studentNo', '=', $s);}])
+        $a->where('studentNo', $s);}])
       ->withCount(['payments' => function($q) use ($s){
-        $q->where('studentNo', '=', $s);}])
+        $q->where('studentNo', $s);}])
       ->withCount(['dues' => function($q) use ($s){
-        $q->where('studentNo', '=', $s);}])
+        $q->where('studentNo', $s);}])
       ->get();
 
     // return $sems;
@@ -137,8 +142,8 @@ class studentsFinancialsController extends AppBaseController
     // return $semesters;
 
     // $semesters = sems::with('dues', 'payments')
-    //     ->where('dues.studentNo', '=', $request['id'])
-    //     ->orWhere('payments.studentNo', '=', $request['id'])
+    //     ->where('dues.studentNo', $request['id'])
+    //     ->orWhere('payments.studentNo', $request['id'])
     //     ->get();
 
     // return $semesters;
@@ -171,9 +176,7 @@ class studentsFinancialsController extends AppBaseController
 
     // $data = ["student" => $student, "semesters" => $semesters];
     
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
     
     $data = ["student" => $student, "sems" => $sems, "currentSem" => $currentSem];
 
@@ -186,20 +189,21 @@ class studentsFinancialsController extends AppBaseController
   {
     $this->authorize('reports', studentsFinancials::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())->first();
+    $currentSem = $this->getCurrentSem();
     
     $levels = levels::with('classrooms.students.user', 'classrooms.students.dues.sem.year',
       'classrooms.students.dues.category', 'classrooms.students.dues.discount',
       'classrooms.students.payments', 'classrooms.students.payments.sem.year')
       ->get();
 
-    $classrooms = classrooms::with('level')->get();
+    $classrooms = classrooms::with('level')
+      ->get();
 
-    $sems = sems::with('year')->get();
+    $sems = sems::with('year')
+      ->get();
 
-    $studentsFinancials = studentsFinancials::with('category', 'discount')->get();
+    $studentsFinancials = studentsFinancials::with('category', 'discount')
+      ->get();
 
     $sfCategories = studentsFinancialsCategories::groupBy('title')->get('title');
 

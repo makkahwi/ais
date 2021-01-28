@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreatestudentsRequest;
 use App\Http\Requests\UpdatestudentsRequest;
 use App\Repositories\studentsRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -19,7 +19,6 @@ use App\Models\classrooms;
 
 class applicantsController extends AppBaseController
 {
-  /** @var  studentsRepository */
   private $studentsRepository;
 
   public function __construct(studentsRepository $studentsRepo)
@@ -27,18 +26,18 @@ class applicantsController extends AppBaseController
     $this->studentsRepository = $studentsRepo;
   }
 
+  // Index Page //////////////////////
+
   public function index(Request $request)
   {
     $this->authorize('viewApplicants', student::class);
 
-    $currentSem = sems::with('year')
-      ->where('start', '<=', today())
-      ->where('end', '>=', today())
-      ->first();
+    $currentSem = $this->getCurrentSem();
 
     $statuses = statuses::all();
     $levels = Levels::all();
-    $classrooms = Classrooms::with('level')->get();
+    $classrooms = Classrooms::with('level')
+      ->get();
 
     $applicants = student::with('user', 'classroom')
       ->orderBy('eName', 'asc')
@@ -46,6 +45,8 @@ class applicantsController extends AppBaseController
 
     return view('applicants.index', compact('currentSem', 'statuses', 'levels', 'classrooms', 'applicants'));
   }
+
+  // Create Data ////////////////////////////////////////////
 
   public function store(CreatestudentsRequest $request)
   {
@@ -59,6 +60,8 @@ class applicantsController extends AppBaseController
 
     return redirect(route('applicants.index'));
   }
+
+  // Update Data ////////////////////////////////////////////
 
   public function update(Request $request) // old updating
   {
@@ -77,6 +80,8 @@ class applicantsController extends AppBaseController
 
     return redirect(route('applicants.index'));
   }
+
+  // Destroy Data ////////////////////////////////////////////
 
   public function destroy(Request $request)
   {

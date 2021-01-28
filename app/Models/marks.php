@@ -18,14 +18,16 @@ class marks extends Model
 
   protected $primaryKey = 'id';
 
-  public $fillable = [
+  public $fillable =
+  [
     'type_id',
     'studentNo',
     'markValue',
     'note'
   ];
 
-  protected $casts = [
+  protected $casts =
+  [
     'id' => 'integer',
     'type_id' => 'integer',
     'studentNo' => 'integer',
@@ -33,7 +35,8 @@ class marks extends Model
     'note' => 'text'
   ];
 
-  public static $rules = [
+  public static $rules =
+  [
     'type_id' => 'required',
     'studentNo' => 'required',
     'markValue' => 'required',
