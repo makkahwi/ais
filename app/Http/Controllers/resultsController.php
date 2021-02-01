@@ -9,6 +9,7 @@ use App\Repositories\marksRepository;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
+use PDF;
 
 use App\Models\sems;
 use App\Models\marks;
@@ -35,6 +36,7 @@ class resultsController extends AppBaseController
     $currentSem = $this->getCurrentSem();
 
     $sems = sems::with('year')
+      ->where('start', '<=', today())
       ->orderBy('created_at', 'desc')
       ->get();
 
@@ -51,23 +53,29 @@ class resultsController extends AppBaseController
     return view('results.index', compact('currentSem', 'classrooms', 'levels', 'sems'));
   }
 
-  public function generate(CreatemarksRequest $request)
+  public function transcript(request $request)
   {
-    $this->authorize('generate', marks::class);
+    $sno = $request->sno;
+    $sem = $request->sem;
+    $semester = $request->semSw;
 
-    $students = student::with('classroom.level')->all();
+    $marks = marks::where('studentNo', $sno)
+      ->whereHas('type', function($q) use($sem){
+        $q->where('sem_id', $sem)
+          ->where('weight', 0);
+      })
+      ->with('type.course')
+      ->get();
 
-    $classroom = $request['classroom'];
+    $student = student::where('studentNo', $sno)
+      ->with('user.contact', 'classroom.level')
+      ->first();
 
-    $currentSem = $this->getCurrentSem();
+    $data = ['marks' => $marks, 'student' => $student, 'semester' => $semester];
 
-    $marks = markstypes::where('sem_id', $currentSem['id']);
+    $pdf = PDF::loadView('results.studentTranscript', $data);
 
-    $marks = $this->marksRepository->create($input);
-
-    Flash::success('The results of '.$classroom.' were created successfully<br><br> تم إصدار النتائج للصف الدراسي'.$classroom.' بنجاح');
-
-    return redirect(route('results.index'));
+    return $pdf->download($sno.' - Student Transcript.pdf');
   }
 
   // Create Data ////////////////////////////////////////////
@@ -76,56 +84,131 @@ class resultsController extends AppBaseController
   {
     $this->authorize('create', marks::class);
 
+    $currentSem = $this->getCurrentSem();
+
     $levels = $request->levels;
 
     if (!$levels)
     {
-      Flash::error('No Levels were selected to generate results for<br><br> لم يتم اختيار اية صفوف دراسية لإصدار النتائج الخاصة بها');
+      Flash::error('No Levels were selected to generate results for<br><br> لم يتم اختيار اي مراحل دراسية لإصدار النتائج الخاصة بها');
       return redirect(route('results.index'));
     }
 
     foreach ($levels as $level)
     {
       $lev = levels::where('id', $level)
-        ->with(['classrooms', function($q)
-          {
-            $q->where(['status_id', 2])
-            ->whereHas(['students', function($qu)
-              {
-                $qu->whereHas(['user', function($que)
-                  {
-                    $que->where('status_id', 2)
-                    ->get();
-                  }])
-                ->with('marks.type')
-                ->get();
-              }])
-            ->get();
-          }])
-        ->get();
-
-      return $lev;
+        ->with('classrooms.students.user')
+        ->first();
 
       foreach($lev->classrooms as $classroom)
       {
         foreach($classroom->students as $student)
         {
-          
+          if ($student->user->status_id == 2)
+          {
+            $studentmarks = collect(
+              markstypes::where('sem_id', $currentSem->id)
+                ->where('title', '!=', 'Course Final Result')
+                ->where('title', '!=', 'Semester Final Result')
+                ->where('classroom_id', $classroom->id)
+                ->with(['marks' => function($q) use ($student){
+                  $q->where('studentNo', $student->studentNo)
+                  ->get();
+                }])
+                ->get()
+              )
+              ->groupBy('course_id');
+
+            $semestertotal = 0;
+            $count = 0;
+
+            foreach ($studentmarks as $coursemarks)
+            {
+
+              $coursetotal = 0;
+              
+              $finaltype = markstypes::firstOrCreate([
+                'title' => 'Course Final Result',
+                'sem_id' => $currentSem->id,
+                'course_id' => $coursemarks[0]->course_id,
+                'classroom_id' => $classroom->id,
+                'teacher_id' => 161111,
+                'max' => 100,
+                'weight' => 0,
+                'deadline' => $currentSem->results,
+                'used' => 1
+              ]);
+              
+              foreach ($coursemarks as $type)
+              {
+                if(count($type->marks))
+                {
+                  $coursetotal += $type->marks[0]->markValue / $type->max * $type->weight;
+                }
+              }
+
+              $note = $this->grade(number_format($coursetotal, 2));
+              
+              $courseresult = marks::create([
+                'type_id' => $finaltype['id'],
+                'studentNo' => $student->studentNo,
+                'markValue' => number_format($coursetotal, 2),
+                'note' => $note
+              ]);
+
+              $semestertotal += number_format($coursetotal, 2);
+              $count++;
+            }
+
+            $finalsem = markstypes::firstOrCreate([
+              'title' => 'Semester Final Result',
+              'sem_id' => $currentSem->id,
+              'course_id' => 0,
+              'classroom_id' => $classroom->id,
+              'teacher_id' => 161111,
+              'max' => 100,
+              'weight' => 0,
+              'deadline' => $currentSem->results,
+              'used' => 1
+            ]);
+
+            $semestertotal /= $count;
+
+            $note = $this->grade(number_format($semestertotal, 2));
+            
+            $semresult = marks::create([
+              'type_id' => $finalsem->id,
+              'studentNo' => $student->studentNo,
+              'markValue' => number_format($semestertotal, 2),
+              'note' => $note
+            ]);
+
+          }
         }
       }
     }
 
-    $classroom = $request['classroom'];
-
-    $currentSem = $this->getCurrentSem();
-
-    $marks = markstypes::where('sem_id', $currentSem['id']);
-
-    $marks = $this->marksRepository->create($input);
-
-    Flash::success('The results of '.$classroom.' were created successfully<br><br> تم إصدار النتائج للصف الدراسي'.$classroom.' بنجاح');
+    Flash::success('The results of selected levels were created successfully<br><br> تم إصدار النتائج للمراحل الدراسية المختارة بنجاح');
 
     return redirect(route('results.index'));
+  }
+
+  public function grade($mark)
+  {
+    if($mark >= 90)
+      return 'Excellent';
+    elseif($mark >= 80)
+      return 'Very good';
+    elseif($mark >= 70)
+      return 'Good';
+    elseif($mark >= 60)
+      return 'Average';
+    elseif($mark >= 50)
+      return 'Satisfactory';
+    elseif($mark >= 0)
+      return 'Failed';
+    else
+      return 'Error';
   }
 
   // Update Data ////////////////////////////////////////////

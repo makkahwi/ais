@@ -116,6 +116,7 @@ Route::group(['middleware' => 'verified'], function () {
   
   // PDF Generators
   Route::get('/studentConf', ['as' => 'confLetter', 'uses' => 'studentsController@confLetter']);
+  Route::get('/transcript', ['as' => 'transcript', 'uses' => 'resultsController@transcript']);
   Route::get('/sfStatement', ['as' => 'sfStatement', 'uses' => 'studentsFinancialsController@sfStatement']);
   Route::get('/sfReports', ['as' => 'sfReports', 'uses' => 'studentsFinancialsController@sfReports']);
 

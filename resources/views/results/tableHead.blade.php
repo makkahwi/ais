@@ -3,5 +3,6 @@
   <th>@include('labels.classroom')</th>
   <th>@include('labels.student')</th>
   <th>@include('labels.marks')</th>
+  <th>@include('labels.grade')</th>
   <th>@include('labels.action')</th>
 </tr>

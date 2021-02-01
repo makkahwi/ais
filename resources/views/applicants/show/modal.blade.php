@@ -21,7 +21,7 @@
   </div>
 </div>
 
-@push('scripts') <!-- Show Current Data /////////////////////////////////////////// -->
+@push('scripts')
   <script type="text/javascript">
 
     $(document).on('click', '#showing', function(data){

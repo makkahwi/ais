@@ -86,15 +86,15 @@ class markstypesController extends AppBaseController
       return redirect(route('marks.index'));
     }
 
-    $this->markstypesRepository->delete($id);
-
     $marks = marks::where('type_id', $id)
       ->get();
 
     foreach ($marks as $mark)
     {
-      $this->marksRepository->delete($id);
+      app('App\Http\Controllers\marksController')->destroy($mark->id);
     }
+
+    $this->markstypesRepository->delete($id);
 
     Flash::success('The mark category was deleted successfully تم حذف بيانات العلامة بنجاح');
 

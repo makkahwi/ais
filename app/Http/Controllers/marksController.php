@@ -43,12 +43,18 @@ class marksController extends AppBaseController
 
     $currentSem = $this->getCurrentSem();
 
-    $levels = Levels::all();
-    $courses = Courses::all();
-    $classrooms = Classrooms::with('level.courses.markstypes.marks.student.user')
+    $levels = levels::all();
+    $courses = courses::all();
+    $classroomss = classrooms::with('level.courses.markstypes')
+      ->get();
+    $classrooms = classrooms::
+      with(['level.courses.markstypes' => function($q) {
+        $q->orderBy('deadline', 'asc')
+          ->with('marks.student.user')
+        ;}])
       ->get();
 
-    return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
+    return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'classroomss', 'levels', 'courses'));
   }
 
   public function dynamicStudents(Request $request) // Dynamic Classroom Show ///////////////////////////////////////////
@@ -198,21 +204,12 @@ class marksController extends AppBaseController
 
   // Destroy Data ////////////////////////////////////////////
 
-  public function destroy(Request $request)
-  {
-    $id = $request['id'];
-    
+  public function destroy($id)
+  {    
     $marks = $this->marksRepository->find($id);
 
-    if (empty($marks)) {
-      Flash::error('The mark was not found<br><br>بيانات العلامة المطلوبة غير موجودة');
-      return redirect(route('marks.index'));
+    if (!empty($marks)) {
+      $this->marksRepository->delete($id);
     }
-
-    $this->marksRepository->delete($id);
-
-    Flash::success('The mark was deleted successfully<br><br>تم حذف بيانات العلامة بنجاح');
-
-    return redirect(route('marks.index'));
   }
 }

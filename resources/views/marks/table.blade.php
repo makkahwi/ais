@@ -19,13 +19,7 @@
     </tfoot>
 
     <tbody>
-      @foreach($marktype->marks as $mark)
-        @can('view', [App\Models\marks::class, $mark])
-
-          @include('marks.tableRow')
-
-        @endcan
-      @endforeach
+      @include('marks.tableRow')
     </tbody>
 
   </table>

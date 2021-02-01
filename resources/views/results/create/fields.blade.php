@@ -39,10 +39,10 @@
             <td class="text-danger">Cannot Issue Yet</td>
           @else
             @if($level->courses[0]->issuedResults != 0)
-              <td class="text-success">Issued Already</td>
+              <td class="text-success"><b>Issued Already</b></td>
             @else
               <td>
-                <input class="form-check-input" type="checkbox" checked value="{{$level->id}}" name="levels[]">
+                <input class="form-check-input" type="checkbox" checked value="{{$level->id}}" name="levels[]"> <p class="text-success"><b>Ready for issuance</b></p>
               </td>
             @endif
           @endif

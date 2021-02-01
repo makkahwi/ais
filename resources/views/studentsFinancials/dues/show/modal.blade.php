@@ -8,7 +8,7 @@
 
 @endsection
 
-@push('scripts') <!-- Show Current Data /////////////////////////////////////////// -->
+@push('scripts')
   <script type="text/javascript">
 
     $(document).on('click', '#show', function(data){

@@ -36,4 +36,6 @@
 
 @section('content')
   @include('results.semTabs')
+
+  @include('results.show.modal')
 @endsection

@@ -186,8 +186,6 @@
 
   $('#semName').on('change',function(e){
     
-    
-
     var sem = e.target.value;
     var year = sem.split(" ");
     var yearTitle = year[3];
