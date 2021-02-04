@@ -54,7 +54,7 @@
 
         <tr>
           <td colspan="5">
-            <h3 class="text-center"><br>Student Transcript<br><br><br></h3>
+            <h3 class="text-center">Student Transcript<br><br></h3>
           </td>
         </tr>
 

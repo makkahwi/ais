@@ -11,6 +11,9 @@ use Response;
 use Flash;
 use PDF;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\resultsNotification;
+
 use App\Models\sems;
 use App\Models\marks;
 use App\Models\levels;
@@ -97,7 +100,7 @@ class resultsController extends AppBaseController
     foreach ($levels as $level)
     {
       $lev = levels::where('id', $level)
-        ->with('classrooms.students.user')
+        ->with('classrooms.students.user.contact')
         ->first();
 
       foreach($lev->classrooms as $classroom)
@@ -182,6 +185,13 @@ class resultsController extends AppBaseController
               'markValue' => number_format($semestertotal, 2),
               'note' => $note
             ]);
+
+            // $data = $student;
+
+            // if ($student->user->email != $student->user->contact->email)
+            //   Mail::to('arromi.creatives@gmail.com')->cc('arromi.creatives@gmail.com')->send(new resultsNotification($data));
+            // else
+            //   Mail::to('arromi.creatives@gmail.com')->send(new resultsNotification($data));
 
           }
         }

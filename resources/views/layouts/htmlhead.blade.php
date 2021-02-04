@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/fc-3.3.0/fh-3.1.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.css"/>
-  <link href="{{asset('css/dataTable.css')}}" rel="stylesheet" type="text/css"/>
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/5650d922ae.js" crossorigin="anonymous"></script>
