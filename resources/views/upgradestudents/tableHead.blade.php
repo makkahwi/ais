@@ -5,7 +5,7 @@
 
   @can('updateFinancial', App\Models\student::class)
     <th>@include('labels.sponsor')</th>
-    <th>Tuition Fees Discounts</th>
+    <th>Tuition Fees Discounts<br><h6 class="text-danger"><b>Use your mouse + Ctrl to select / deselect</b></h6></th>
     <th>@include('labels.tfrequency')</th>
   @endcan
 

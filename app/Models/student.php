@@ -39,7 +39,6 @@ class student extends Model
     'aName' => 'string',
     'classroom_id' => 'integer',
     'sponsor' => 'string',
-    'tuitiondiscounts' => 'string',
     'tuitionfreq' => 'boolean',
     'financial' => 'boolean',
     'trans' => 'boolean'
@@ -52,7 +51,6 @@ class student extends Model
     'aName' => 'required',
     'classroom_id' => 'required',
     'sponsor' => 'required',
-    'tuitiondiscounts' => 'required',
     'tuitionfreq' => 'required',
     'financial' => 'required',
     'trans' => 'required',
@@ -81,5 +79,10 @@ class student extends Model
   public function payments()
   {
     return $this->hasMany(studentsPayments::class, 'studentNo', 'studentNo');
+  }
+
+  public function tuitionDiscounts()
+  {
+    return $this->hasMany(studentsFinancialsDiscounts::class, 'studentNo');
   }
 }

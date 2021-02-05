@@ -6,23 +6,23 @@
 <table style="border: none;">
   <tr>
     <td>
-      <p style="text-align:justify;">This is an auto generated confirmation email from {{ config('app.name') }}, please do not reply to it. For any concerns, email us at principal@aqsa.edu.my<br> </p>
+      <p class="text-justify">This is an auto generated confirmation email from {{ config('app.name') }}, please do not reply to it. For any concerns, email us at principal@aqsa.edu.my<br> </p>
     </td>
     <td style="width:30%;"></td>
     <td>
-      <p style="text-align:justify; direction: rtl;">هذه الرسالة تم إرسالها بشكل آلي من {{ config('app.aname') }} - {{ config('app.saname') }}, نرجو عدم الرد عليها. في حال وجود أي استفسارات, يمنكم التواصل عبر البريد الإلكتروني principal@aqsa.edu.my<br> </p>
+      <p class="text-justify" style="direction: rtl;">هذه الرسالة تم إرسالها بشكل آلي من {{ config('app.aname') }} - {{ config('app.saname') }}, نرجو عدم الرد عليها. في حال وجود أي استفسارات, يمنكم التواصل عبر البريد الإلكتروني principal@aqsa.edu.my<br> </p>
     </td>
   </tr>
   <tr>
     <td>
-      <p style="text-align:justify;">Dear Madam / Sir the guardian of school student <b>{{$data['name']}}</b><br>Good Day to you<br><br>This is to notify you that
+      <p class="text-justify">Dear Madam / Sir the guardian of school student <b>{{$data['name']}}</b><br>Good Day to you<br><br>This is to notify you that
       {{ config('app.sname') }} have built a new students portal to help you following your child's academic
       performance and some other uses you could see yourself.<br><br><a target="_blank" href="{{ config('app.url') }}">This is the portal URL</a>
       , and you can sign in to our portal using these credentials.<br></p>
     </td>
     <td style="width:20%;"></td>
     <td>
-      <p style="text-align:justify;">عزيزنا ولي الأمر الطالب(ة) بالمدرسة<br><b>{{$data['name']}}</b><br>طاب يومكم<br><br>هذا الإيميل لإبلاغكم بأن
+      <p class="text-justify">عزيزنا ولي الأمر الطالب(ة) بالمدرسة<br><b>{{$data['name']}}</b><br>طاب يومكم<br><br>هذا الإيميل لإبلاغكم بأن
       مدرسة الأقصى التكاملية قامت ببناء بوابة جديدة للطلاب لتساعدكم في متابعة أداء أبنائكم الأكاديمي
       وبعض الأمور الأخرى التي يمكنكم الاطلاع عليها داخل البوابة.<br><br><a target="_blank" href="{{ config('app.url') }}">هذا هو رابط البوابة</a>,
       يمكنكم تسجيل الدخول إلى النظام عبر معلومات الدخول التالية<br></p>
@@ -61,9 +61,9 @@
 </table>
 <br><br>
 
-<p style="text-align: justify;">You may recieve this email multiple times this week. So please ignore them (if they have the same title / subject) and we aplogize for that inconvenience in advance.<br></p>
-<p style="text-align: justify;">قد تستلمون هذا الإيميل عدة مرات. يمكنكم تجاهل الإيميلات إذا حملت نفس العنوان, ونعتذر مقدماً عن هذا الازعاج.<br></p>
+<p class="text-justify">You may recieve this email multiple times this week. So please ignore them (if they have the same title / subject) and we aplogize for that inconvenience in advance.<br></p>
+<p class="text-justify">قد تستلمون هذا الإيميل عدة مرات. يمكنكم تجاهل الإيميلات إذا حملت نفس العنوان, ونعتذر مقدماً عن هذا الازعاج.<br></p>
 
-<p style="text-align: justify;">Thank you and welcome back to Al-Aqsa big family.<br></p>
+<p class="text-justify">Thank you and welcome back to Al-Aqsa big family.<br></p>
 {{ config('app.name') }}
 @endcomponent

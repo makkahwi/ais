@@ -298,6 +298,6 @@
 
 <br><br>
 
-<p style="text-align: justify;">Thank you for updating you data, soon we'll plug the updates in the system after authenticating<br></p>
+<p class="text-justify">Thank you for updating you data, soon we'll plug the updates in the system after authenticating<br></p>
 {{ config('app.name') }}
 @endcomponent

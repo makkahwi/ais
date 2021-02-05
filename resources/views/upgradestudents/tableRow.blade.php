@@ -20,17 +20,17 @@
           <p id="sponsorUpdateConfirmation"></p>
         </td>
         <td>
-          <select class="form-control discounts" name="discounts" id="discounts" multiple>
+          <select class="form-control discounts" name="discounts[]" id="discounts" multiple>
             @foreach($studentsFinancialsDiscounts as $discount)
-              @if ($student->tuitiondiscounts && $student->tuitiondiscounts != "null")
-                @if (array_search($discount->id, json_decode($student->tuitiondiscounts), true))
+              <!-- @if ($student->tuitionDiscounts && $student->tuitionDiscounts != "null")
+                @if (array_search($discount->id, $student->tuitionDiscounts, true))
                   <option selected value="{{$discount->id}}">{{$discount->title}} | @if($discount->type == "Percentage"){{$discount->amount}}% @else RM{{$discount->amount}} @endif</option>
                 @else
                   <option value="{{$discount->id}}">{{$discount->title}} | @if($discount->type == "Percentage"){{$discount->amount}}% @else RM{{$discount->amount}} @endif</option>
                 @endif
-              @else
+              @else -->
                 <option value="{{$discount->id}}">{{$discount->title}} | @if($discount->type == "Percentage"){{$discount->amount}}% @else RM{{$discount->amount}} @endif</option>
-              @endif
+              <!-- @endif -->
             @endforeach
           </select>
         </td>

@@ -6,16 +6,16 @@
 <table style="border: none;">
   <tr>
     <td>
-      <p style="text-align:justify;">This is an auto generated confirmation email from {{ config('app.name') }}, please do not reply to it. For any concerns, email us at principal@aqsa.edu.my<br> </p>
+      <p class="text-justify">This is an auto generated confirmation email from {{ config('app.name') }}, please do not reply to it. For any concerns, email us at principal@aqsa.edu.my<br> </p>
     </td>
     <td style="width:30%;"></td>
     <td>
-      <p style="text-align:justify; direction: rtl;">هذه الرسالة تم إرسالها بشكل آلي من {{ config('app.aname') }} - {{ config('app.saname') }}, نرجو عدم الرد عليها. في حال وجود أي استفسارات, يمنكم التواصل عبر البريد الإلكتروني principal@aqsa.edu.my<br> </p>
+      <p class="text-justify" style="direction: rtl;">هذه الرسالة تم إرسالها بشكل آلي من {{ config('app.aname') }} - {{ config('app.saname') }}, نرجو عدم الرد عليها. في حال وجود أي استفسارات, يمنكم التواصل عبر البريد الإلكتروني principal@aqsa.edu.my<br> </p>
     </td>
   </tr>
   <tr>
     <td>
-      <p style="text-align:justify;">We happily received your application for a job vacancy<br></p>
+      <p class="text-justify">We happily received your application for a job vacancy<br></p>
     </td>
     <td style="width:30%;"></td>
     <td>
@@ -109,9 +109,9 @@
     <td colspan="3"><br><br></td>
   </tr>
   <tr>
-    <td><p style="text-align: justify;">Thank you for applying to our school, we will contact you soon to have an interview. We hope you would be accpeted & be part of our big family.<br></p></td>
+    <td><p class="text-justify">Thank you for applying to our school, we will contact you soon to have an interview. We hope you would be accpeted & be part of our big family.<br></p></td>
     <td></td>
-    <td><p style="text-align: justify; direction:rtl;">نشكركم على التقديم للعمل بمدرستنا, سنتواصل معكم قريباً لترتيب مقابلة العمل. نرجو أن تقبلوا للوظيفة وتكونوا جزءاً من أسرة مدرستنا الكبيرة.<br></p></td>
+    <td><p class="text-justify" style="direction: rtl;">نشكركم على التقديم للعمل بمدرستنا, سنتواصل معكم قريباً لترتيب مقابلة العمل. نرجو أن تقبلوا للوظيفة وتكونوا جزءاً من أسرة مدرستنا الكبيرة.<br></p></td>
   </tr>
 </table>
 

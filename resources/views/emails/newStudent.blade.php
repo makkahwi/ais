@@ -6,16 +6,16 @@
 <table style="border: none;">
   <tr>
     <td>
-      <p style="text-align:justify;">This is an auto generated confirmation email from {{ config('app.name') }}, please do not reply to it. For any concerns, email us at principal@aqsa.edu.my<br> </p>
+      <p class="text-justify">This is an auto generated confirmation email from {{ config('app.name') }}, please do not reply to it. For any concerns, email us at principal@aqsa.edu.my<br> </p>
     </td>
     <td style="width:30%;"></td>
     <td>
-      <p style="text-align:justify; direction: rtl;">هذه الرسالة تم إرسالها بشكل آلي من {{ config('app.aname') }} - {{ config('app.saname') }}, نرجو عدم الرد عليها. في حال وجود أي استفسارات, يمنكم التواصل عبر البريد الإلكتروني principal@aqsa.edu.my<br> </p>
+      <p class="text-justify" style="direction: rtl;">هذه الرسالة تم إرسالها بشكل آلي من {{ config('app.aname') }} - {{ config('app.saname') }}, نرجو عدم الرد عليها. في حال وجود أي استفسارات, يمنكم التواصل عبر البريد الإلكتروني principal@aqsa.edu.my<br> </p>
     </td>
   </tr>
   <tr>
     <td>
-      <p style="text-align:justify;">We happily received your application for new student. From now on, you can
+      <p class="text-justify">We happily received your application for new student. From now on, you can
       <a target="_blank" href="{{ config('app.url') }}/login">Login</a> to our portal
       to follow up your application process using these credentials.<br></p>
     </td>
@@ -181,6 +181,6 @@
 
 <br><br>
 
-<p style="text-align: justify;">Thank you for applying to our school, once you are accepted we will email you. We hope you would be accpeted & be part of our big family<br></p>
+<p class="text-justify">Thank you for applying to our school, once you are accepted we will email you. We hope you would be accpeted & be part of our big family<br></p>
 {{ config('app.name') }}
 @endcomponent

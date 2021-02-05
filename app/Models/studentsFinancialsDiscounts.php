@@ -47,4 +47,9 @@ class studentsFinancialsDiscounts extends Model
   {
     return $this->hasMany(studentsFinancials::class);
   }
+
+  public function grantedStudents()
+  {
+    return $this->hasMany(student::class);
+  }
 }

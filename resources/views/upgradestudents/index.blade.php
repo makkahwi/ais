@@ -133,6 +133,14 @@
 
     });
 
+    $('.discounts').on('change',function(e){
+
+      var discounts = e.target.value;
+
+      console.log(discounts);
+
+    });
+
     $('.tuitionfreq').on('change',function(e){
 
       var tuitionfreq = e.target.value;
