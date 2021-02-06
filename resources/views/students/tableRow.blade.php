@@ -1,9 +1,9 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
 
 @foreach($classroom->students as $student)
   @can('view', [App\Models\student::class, $student])
     <tr>
-      <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+      <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
       <td>{{ $student->studentNo }}</td>
           
       @if($student->user->status_id == 2)

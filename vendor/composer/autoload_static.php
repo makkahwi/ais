@@ -586,6 +586,7 @@ class ComposerStaticInitc328b46b85263e6a61c99480657bb50c
         'App\\Mail\\newUser' => __DIR__ . '/../..' . '/app/Mail/newUser.php',
         'App\\Mail\\requestGuardianDataUpdate' => __DIR__ . '/../..' . '/app/Mail/requestGuardianDataUpdate.php',
         'App\\Mail\\requestStaffStudentDataUpdate' => __DIR__ . '/../..' . '/app/Mail/requestStaffStudentDataUpdate.php',
+        'App\\Mail\\resultsNotification' => __DIR__ . '/../..' . '/app/Mail/resultsNotification.php',
         'App\\Models\\attendances' => __DIR__ . '/../..' . '/app/Models/attendances.php',
         'App\\Models\\batches' => __DIR__ . '/../..' . '/app/Models/batches.php',
         'App\\Models\\classrooms' => __DIR__ . '/../..' . '/app/Models/classrooms.php',

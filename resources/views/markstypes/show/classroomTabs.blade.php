@@ -4,7 +4,7 @@
     <a class="nav-link" data-toggle="pill" href="#homeM">Please choose</a>
   </li>
 
-  @foreach($classroomss as $classroom)
+  @foreach($classrooms as $classroom)
     @can('viewStudents', [App\Models\classrooms::class, $classroom])
       <li class="nav-item">
         <a class="nav-link" data-toggle="pill" href="#{{$classroom->id}}M">{{$classroom->title}}</a>

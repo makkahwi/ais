@@ -39,11 +39,24 @@ class upgradestudentsController extends AppBaseController
     $this->authorize('viewAny', student::class);
 
     $marks = marks::all();
+
     $statuses = statuses::where('id', '<', 6)
       ->get();
-    $classrooms = Classrooms::with('students.user.contact')->where('status_id', 2)->orderBy('level_id', 'desc')
+      
+    $classrooms = classrooms::
+      with(['level.courses' => function($q) {
+        $q->where('status_id', 2);
+      }])
+      ->with(['students' => function($q) {
+        $q->with('user.contact')
+          ->with('gradntedDiscounts');
+      }])
+      ->where('status_id', 2)
+      ->orderBy('level_id', 'desc')
       ->get();
-    $classroomss = Classrooms::where('status_id', 2)->orderBy('level_id', 'asc')
+
+    $classroomss = classrooms::where('status_id', 2)
+      ->orderBy('level_id', 'asc')
       ->get();
 
     $currentSem = $this->getCurrentSem();
@@ -79,7 +92,7 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = users::where('schoolNo', $studentNo);
+    $student = users::where('schoolNo', $studentNo)->first();
 
     if ($status == 2)
       $student->update(['status_id' => $status, 'leaveDate' => NULL, 'role_id' => 7]);
@@ -88,7 +101,7 @@ class upgradestudentsController extends AppBaseController
 
     $classroom = $request['classroom'];
 
-    $student = student::where('studentNo', $studentNo);
+    $student = student::where('studentNo', $studentNo)->first();
     
     $student->update(['classroom_id' => $classroom]);
 
@@ -134,20 +147,20 @@ class upgradestudentsController extends AppBaseController
     return redirect(route('upgradestudents.index'));
   }
 
+  // Instant Data Update ////////////////////////////////////////////
+
   public function financialUpdate(Request $request)
   {
     $financial = $request['financial'];
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', $studentNo);
+    $student = student::where('studentNo', $studentNo)->first();
     
     $student->update(['financial' => $financial]);
 
     if ($student->wasChanged())
-      $done = 1;
-    else
-      $done = 0;
+      $done = true;
 
     return Response::json($done);
   }
@@ -160,14 +173,12 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', $studentNo);
+    $student = student::where('studentNo', $studentNo)->first();
     
     $student->update(['classroom_id' => $classroom]);
 
     if ($student->wasChanged())
-      $done = 1;
-    else
-      $done = 0;
+      $done = true;
 
     return Response::json($done);
   }
@@ -183,7 +194,7 @@ class upgradestudentsController extends AppBaseController
     if ($status == 7)
     $this->issueNewStudentFinancials($studentNo);
 
-    $student = users::where('schoolNo', $studentNo);
+    $student = users::where('schoolNo', $studentNo)->first();
 
     if ($status == 2)
       $student->update(['status_id' => $status, 'leaveDate' => NULL, 'role_id' => 7]);
@@ -191,9 +202,7 @@ class upgradestudentsController extends AppBaseController
       $student->update(['status_id' => $status, 'leaveDate' => today()]);
 
     if ($student->wasChanged())
-      $done = 1;
-    else
-      $done = 0;
+      $done = true;
 
     return Response::json($done);
   }
@@ -206,14 +215,12 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', $studentNo);
+    $student = student::where('studentNo', $studentNo)->first();
     
     $student->update(['sponsor' => $sponsor]);
 
     if ($student->wasChanged())
-      $done = 1;
-    else
-      $done = 0;
+      $done = true;
 
     return Response::json($done);
   }
@@ -226,14 +233,54 @@ class upgradestudentsController extends AppBaseController
 
     $studentNo = $request['studentNo'];
 
-    $student = student::where('studentNo', $studentNo);
+    $student = student::where('studentNo', $studentNo)->first();
     
     $student->update(['tuitionfreq' => $tuitionfreq]);
 
     if ($student->wasChanged())
-      $done = 1;
+      $done = true;
+
+    return Response::json($done);
+  }
+
+  public function gradntedDiscountsUpdate(Request $request)
+  {
+    $this->authorize('updateFinancial', student::class);
+
+    $gradntedDiscounts = $request['gradntedDiscounts'];
+
+    $studentNo = $request['studentNo'];
+
+    $student = student::where('studentNo', $studentNo)->first();
+
+    if ($student->gradntedDiscounts()->find($gradntedDiscounts))
+      $student->gradntedDiscounts()->detach([$gradntedDiscounts]);
     else
-      $done = 0;
+      $student->gradntedDiscounts()->attach([$gradntedDiscounts]);
+
+    if ($student->wasChanged())
+      $done = true;
+
+    return Response::json($done);
+  }
+
+  public function exceptedCoursesUpdate(Request $request)
+  {
+    $this->authorize('upgradeStudents', student::class);
+
+    $exceptedCourses = $request['exceptedCourses'];
+
+    $studentNo = $request['studentNo'];
+
+    $student = student::where('studentNo', $studentNo)->first();
+
+    if ($student->exceptedCourses()->find($exceptedCourses))
+      $student->exceptedCourses()->detach([$exceptedCourses]);
+    else
+      $student->exceptedCourses()->attach([$exceptedCourses]);
+
+    if ($student->wasChanged())
+      $done = true;
 
     return Response::json($done);
   }

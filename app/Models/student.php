@@ -81,8 +81,15 @@ class student extends Model
     return $this->hasMany(studentsPayments::class, 'studentNo', 'studentNo');
   }
 
-  public function tuitionDiscounts()
+  public function gradntedDiscounts()
   {
-    return $this->hasMany(studentsFinancialsDiscounts::class, 'studentNo');
+    return $this->belongsToMany(studentsFinancialsDiscounts::class, 'granted_discounts', 'studentNo', 'discount_id')
+      ->withTimestamps();
+  }
+
+  public function exceptedCourses()
+  {
+    return $this->belongsToMany(courses::class, 'courses_exceptions', 'studentNo', 'course_id')
+      ->withTimestamps();
   }
 }

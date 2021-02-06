@@ -1,11 +1,10 @@
 <tr class="theme-main">
   <th>@include('labels.matricno')</th>
   <th class="table-column">@include('labels.name')</th>
-  <th>@include('labels.gender')</th>
 
   @can('updateFinancial', App\Models\student::class)
     <th>@include('labels.sponsor')</th>
-    <th>Tuition Fees Discounts<br><h6 class="text-danger"><b>Use your mouse + Ctrl to select / deselect</b></h6></th>
+    <th>@include('labels.grantes')<br></th>
     <th>@include('labels.tfrequency')</th>
   @endcan
 
@@ -14,9 +13,9 @@
   @endcan
   
   @can('upgradeStudents', App\Models\student::class)
-    <th>Last @include('labels.level') السابق</th>
-    <th>@include('labels.results')</th>
+    <th>Current @include('labels.level') الحالي</th>
     <th>New @include('labels.level') الجديد</th>
+    <th>@include('labels.exceptedCourses')</th>
     <th>@include('labels.status')</th>
   @else
     <th>@include('labels.level')</th>

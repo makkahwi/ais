@@ -1,9 +1,9 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
 
 @foreach($studentsFinancialsDiscounts as $discount)
   @can('view', [App\Models\studentsFinancialsDiscounts::class, $discount])
     <tr>
-      <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+      <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
       <td>{{ $discount->title }}</td>
       <td>{{ $discount->description }}</td>
       @if($discount->type == "Fixed Amount")
@@ -11,6 +11,13 @@
       @else
         <td>{{ $discount->amount }}%</td>
       @endif
+      <td>
+        @foreach($discount->grantedStudents as $student)
+          @if($student->user->status_id == 2)
+            {{$student->studentNo}} | {{$student->user->name}}<br>
+          @endif
+        @endforeach
+      </td>
 
       @can('update', [App\Models\studentsFinancialsDiscounts::class, $discount])
         <td>

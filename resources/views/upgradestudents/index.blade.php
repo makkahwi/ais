@@ -133,11 +133,49 @@
 
     });
 
-    $('.discounts').on('change',function(e){
+    $('.gradntedDiscounts').on('change',function(e){
 
-      var discounts = e.target.value;
+      var gradntedDiscounts = [];
+      gradntedDiscounts = e.target.value;
 
-      console.log(discounts);
+      var studentNo = $(this).parent().parent().find('#studentNo').val();
+      var $updateConfirmation = $(this).parent().parent().find('#gradntedDiscountsUpdateConfirmation');
+      
+      $updateConfirmation.empty();
+
+      $.get('gradntedDiscountsUpdate?gradntedDiscounts='+gradntedDiscounts+'&studentNo='+studentNo, function(data){
+        $.each(data, function(index, done){
+          if (done)
+            $updateConfirmation.append('@include("layouts.updated")');
+          else
+            $updateConfirmation.append('@include("layouts.failed")');
+        });
+      });
+      
+      $updateConfirmation.append('@include("layouts.updated")');
+
+    });
+
+    $('.exceptedCourses').on('change',function(e){
+
+      var exceptedCourses = [];
+      exceptedCourses = e.target.value;
+
+      var studentNo = $(this).parent().parent().find('#studentNo').val();
+      var $updateConfirmation = $(this).parent().parent().find('#exceptedCoursesUpdateConfirmation');
+      
+      $updateConfirmation.empty();
+
+      $.get('exceptedCoursesUpdate?exceptedCourses='+exceptedCourses+'&studentNo='+studentNo, function(data){
+        $.each(data, function(index, done){
+          if (done)
+            $updateConfirmation.append('@include("layouts.updated")');
+          else
+            $updateConfirmation.append('@include("layouts.failed")');
+        });
+      });
+      
+      $updateConfirmation.append('@include("layouts.updated")');
 
     });
 

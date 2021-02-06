@@ -100,6 +100,7 @@ return array(
     'App\\Mail\\newUser' => $baseDir . '/app/Mail/newUser.php',
     'App\\Mail\\requestGuardianDataUpdate' => $baseDir . '/app/Mail/requestGuardianDataUpdate.php',
     'App\\Mail\\requestStaffStudentDataUpdate' => $baseDir . '/app/Mail/requestStaffStudentDataUpdate.php',
+    'App\\Mail\\resultsNotification' => $baseDir . '/app/Mail/resultsNotification.php',
     'App\\Models\\attendances' => $baseDir . '/app/Models/attendances.php',
     'App\\Models\\batches' => $baseDir . '/app/Models/batches.php',
     'App\\Models\\classrooms' => $baseDir . '/app/Models/classrooms.php',

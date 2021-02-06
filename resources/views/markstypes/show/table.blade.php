@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table tableTail" width="100%" width="100%" id="markstypes-table-{{$course->course_id}}" >
+  <table class="table tableTail" width="100%" width="100%" id="markstypes-table-{{$course->id}}" >
 
     <thead>
       @can('create', App\Models\markstypes::class)

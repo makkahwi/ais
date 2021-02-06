@@ -93,14 +93,20 @@ class resultsController extends AppBaseController
 
     if (!$levels)
     {
-      Flash::error('No Levels were selected to generate results for<br><br> لم يتم اختيار اي مراحل دراسية لإصدار النتائج الخاصة بها');
+      Flash::error('No Levels were selected to generate results for<br><br> لم يتم اختيار أي مراحل دراسية لإصدار النتائج الخاصة بها');
       return redirect(route('results.index'));
     }
 
     foreach ($levels as $level)
     {
       $lev = levels::where('id', $level)
-        ->with('classrooms.students.user.contact')
+        ->with(['classrooms' => function($q) {
+          $q->where('status_id', 2)
+            ->with(['students' => function($qu) {
+              $qu->with('user.contact')
+                ->with('exceptedCourses');
+            }]);
+        }])
         ->first();
 
       foreach($lev->classrooms as $classroom)
@@ -114,6 +120,7 @@ class resultsController extends AppBaseController
                 ->where('title', '!=', 'Course Final Result')
                 ->where('title', '!=', 'Semester Final Result')
                 ->where('classroom_id', $classroom->id)
+                ->with('course')
                 ->with(['marks' => function($q) use ($student){
                   $q->where('studentNo', $student->studentNo)
                   ->get();
@@ -127,40 +134,42 @@ class resultsController extends AppBaseController
 
             foreach ($studentmarks as $coursemarks)
             {
-
-              $coursetotal = 0;
-              
-              $finaltype = markstypes::firstOrCreate([
-                'title' => 'Course Final Result',
-                'sem_id' => $currentSem->id,
-                'course_id' => $coursemarks[0]->course_id,
-                'classroom_id' => $classroom->id,
-                'teacher_id' => 161111,
-                'max' => 100,
-                'weight' => 0,
-                'deadline' => $currentSem->results,
-                'used' => 1
-              ]);
-              
-              foreach ($coursemarks as $type)
+              if (!$student->exceptedCourses->contains($coursemarks[0]->course))
               {
-                if(count($type->marks))
+                $coursetotal = 0;
+                
+                $finaltype = markstypes::firstOrCreate([
+                  'title' => 'Course Final Result',
+                  'sem_id' => $currentSem->id,
+                  'course_id' => $coursemarks[0]->course_id,
+                  'classroom_id' => $classroom->id,
+                  'teacher_id' => 161111,
+                  'max' => 100,
+                  'weight' => 0,
+                  'deadline' => $currentSem->results,
+                  'used' => 1
+                ]);
+                
+                foreach ($coursemarks as $type)
                 {
-                  $coursetotal += $type->marks[0]->markValue / $type->max * $type->weight;
+                  if(count($type->marks))
+                  {
+                    $coursetotal += $type->marks[0]->markValue / $type->max * $type->weight;
+                  }
                 }
+
+                $note = $this->grade(number_format($coursetotal, 2));
+                
+                $courseresult = marks::create([
+                  'type_id' => $finaltype['id'],
+                  'studentNo' => $student->studentNo,
+                  'markValue' => number_format($coursetotal, 2),
+                  'note' => $note
+                ]);
+
+                $semestertotal += number_format($coursetotal, 2);
+                $count++;
               }
-
-              $note = $this->grade(number_format($coursetotal, 2));
-              
-              $courseresult = marks::create([
-                'type_id' => $finaltype['id'],
-                'studentNo' => $student->studentNo,
-                'markValue' => number_format($coursetotal, 2),
-                'note' => $note
-              ]);
-
-              $semestertotal += number_format($coursetotal, 2);
-              $count++;
             }
 
             $finalsem = markstypes::firstOrCreate([

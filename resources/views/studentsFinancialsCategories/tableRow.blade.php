@@ -1,9 +1,9 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
 
 @foreach($batch->categories as $category)
   @can('view', [App\Models\studentsFinancialsCategories::class, $category])
     <tr>
-      <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+      <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
       <td>{{ $batch->batch }}</td>
       <td>{{ $category->frequency }}</td>
       <td>{{ $category->title }}</td>

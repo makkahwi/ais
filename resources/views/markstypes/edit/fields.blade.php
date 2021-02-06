@@ -3,7 +3,7 @@
   <label for="course_id">@include('labels.course')</label>
   <select readonly class="form-control" name="course_id" id="course_idTypeEd">
     @foreach($courses as $course)
-      <option value="{{$course->course_id}}">{{$course->code}} | {{ $course->title }}</option>
+      <option value="{{$course->id}}">{{$course->code}} | {{ $course->title }}</option>
     @endforeach
   </select>
 </div>

@@ -44,17 +44,20 @@ class marksController extends AppBaseController
     $currentSem = $this->getCurrentSem();
 
     $levels = levels::all();
+
     $courses = courses::all();
-    $classroomss = classrooms::with('level.courses.markstypes')
-      ->get();
+
     $classrooms = classrooms::
       with(['level.courses.markstypes' => function($q) {
         $q->orderBy('deadline', 'asc')
           ->with('marks.student.user')
+          ->with('sem.year')
         ;}])
       ->get();
 
-    return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'classroomss', 'levels', 'courses'));
+    return $classrooms;
+
+    return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
   }
 
   public function dynamicStudents(Request $request) // Dynamic Classroom Show ///////////////////////////////////////////
@@ -62,8 +65,8 @@ class marksController extends AppBaseController
     $classroom_id = $request->get('classroom_id');
 
     $students = student::with('user')
-    ->where('classroom_id', $classroom_id)
-    ->get();
+      ->where('classroom_id', $classroom_id)
+      ->get();
 
     return Response::json($students);
   }

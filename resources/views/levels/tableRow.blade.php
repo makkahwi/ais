@@ -1,8 +1,8 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
 
 @foreach($levels as $level)
   <tr>
-    <td><b class="theme-main">{{$c}}</b></td> <!-- List Numbering ---------------->
+    <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
     <td>{{ $level->title }}</td>
     <td class="table-column">{{ $level->description }}</td>
     <td>
@@ -27,8 +27,5 @@
 
       </div>
     </td>
-  </tr>
-
-  <p hidden>{{$c++}}</p>
-      
+  </tr>      
 @endforeach

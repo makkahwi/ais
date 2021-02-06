@@ -102,6 +102,8 @@ Route::group(['middleware' => 'verified'], function () {
   Route::get('/statusUpdate', ['as' => 'statusUpdate', 'uses' => 'upgradestudentsController@statusUpdate']);
   Route::get('/sponsorUpdate', ['as' => 'sponsorUpdate', 'uses' => 'upgradestudentsController@sponsorUpdate']);
   Route::get('/tuitionfreqUpdate', ['as' => 'tuitionfreqUpdate', 'uses' => 'upgradestudentsController@tuitionfreqUpdate']);
+  Route::get('/gradntedDiscountsUpdate', ['as' => 'gradntedDiscountsUpdate', 'uses' => 'upgradestudentsController@gradntedDiscountsUpdate']);
+  Route::get('/exceptedCoursesUpdate', ['as' => 'exceptedCoursesUpdate', 'uses' => 'upgradestudentsController@exceptedCoursesUpdate']);
   Route::get('/studentNoUpdate', ['as' => 'studentNoUpdate', 'uses' => 'upgradestudentsController@studentNoUpdate']);
   Route::get('/applicantUpdate', ['as' => 'applicantUpdate', 'uses' => 'upgradestudentsController@update']);
   

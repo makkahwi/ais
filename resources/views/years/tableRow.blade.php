@@ -1,8 +1,8 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
     
 @foreach($years as $year)
   <tr>
-    <td><b class="theme-main">{{$c}}</b></td> <!-- List Numbering ---------------->
+    <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
     <td>{{ $year->title }}</td>
     <td>
       <div class='btn-group'>
@@ -22,6 +22,4 @@
       </div>
     </td>
   </tr>
-
-  <p hidden>{{$c++}}</p>
 @endforeach

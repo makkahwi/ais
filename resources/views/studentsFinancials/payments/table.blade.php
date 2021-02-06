@@ -10,13 +10,13 @@
     </tfoot>
 
     <tbody>
-      <p hidden>{{$c=1}}</p>
+      <p hidden>{{$c=0}}</p>
       <p hidden>{{ $total = 0 }}</p>
 
       @foreach($student->payments as $payment)
         @can('view', [App\Models\studentsPayments::class, $payment])
           <tr>
-            <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+            <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
             @include('studentsFinancials.payments.tableRow')
             <p hidden>{{ $total += $payment->amount }}</p>
           </tr>

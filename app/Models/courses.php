@@ -94,4 +94,10 @@ class courses extends Model
       ->where('title', 'Course Final Result')
       ->count();
   }
+
+  public function exceptedStudents()
+  {
+    return $this->belongsToMany(student::class, 'courses_exceptions', 'course_id', 'studentNo')
+      ->withTimestamps();
+  }
 }

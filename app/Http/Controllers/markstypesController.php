@@ -59,7 +59,8 @@ class markstypesController extends AppBaseController
 
     $mark = $this->markstypesRepository->find($request['id']);
 
-    if (empty($mark)) {
+    if (empty($mark))
+    {
       Flash::error('The mark was not found بيانات العلامة المطلوبة غير موجودة');
       return redirect(route('marks.index'));
     }
@@ -81,7 +82,8 @@ class markstypesController extends AppBaseController
     
     $markstypes = $this->markstypesRepository->find($id);
 
-    if (empty($markstypes)) {
+    if (empty($markstypes))
+    {
       Flash::error('The mark category was not found بيانات العلامة المطلوبة غير موجودة');
       return redirect(route('marks.index'));
     }

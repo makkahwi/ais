@@ -50,6 +50,7 @@ class studentsFinancialsDiscounts extends Model
 
   public function grantedStudents()
   {
-    return $this->hasMany(student::class);
+    return $this->belongsToMany(student::class, 'granted_discounts', 'discount_id', 'studentNo')
+      ->withTimestamps();
   }
 }

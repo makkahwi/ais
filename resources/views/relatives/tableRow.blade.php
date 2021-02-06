@@ -1,8 +1,8 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
 
 @foreach($relatives as $relative)
   <tr>
-    <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+    <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
     <td>{{ $relative->eName }}</td>
     <td>{{ $relative->aName }}</td>
     <td>

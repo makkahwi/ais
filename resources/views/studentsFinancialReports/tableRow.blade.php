@@ -1,11 +1,11 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
 
 @foreach($levels as $level)
   @foreach($level->classrooms as $classroom)
     @foreach($classroom->students as $student)
       @foreach($student->dues as $due)
         <tr class="text-danger">
-          <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+          <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
           <td>{{$due->sem->title}}, {{$due->sem->year->title}}</td>
           <td>Due مستحق</td>
           <td>{{$level->title}}</td>
@@ -26,7 +26,7 @@
       @endforeach
       @foreach($student->payments as $payment)
         <tr class="text-success">
-          <td><b class="theme-main">{{$c++}}</b></td> <!-- List Numbering ---------------->
+          <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
           <td>{{$payment->sem->title}}, {{$payment->sem->year->title}}</td>
           <td>Payment مدفوع</td>
           <td>{{$level->title}}</td>

@@ -1,8 +1,8 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
 
 @foreach($staff as $staff)
   <tr>
-    <td><b class="theme-main">{{$c}}</b></td> <!-- List Numbering ---------------->
+    <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
     <td>{{ $staff->staffNo }}</td>
     <td>{{ $staff->user->name }}</td>
     <td>{{ $staff->user->role->title }}</td>
@@ -36,6 +36,4 @@
       </div>
     </td>
   </tr>
-
-  <p hidden>{{$c++}}</p>
 @endforeach

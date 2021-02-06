@@ -1,9 +1,8 @@
-<p hidden>{{$c=1}}</p>
+<p hidden>{{$c=0}}</p>
       
 @foreach($days as $day)
-@if ($day->deleted_at == NULL)  <!-- Not to show soft deleted records ---------------->
   <tr>
-    <td><b class="theme-main">{{$c}}</b></td> <!-- List Numbering ---------------->
+    <td><b class="theme-main">{{++$c}}</b></td> <!-- List Numbering ---------------->
     <td>{{ $day->title }}</td>
     <td>
       <div class='btn-group'>
@@ -24,8 +23,4 @@
       </div>
     </td>
   </tr>
-@endif
-
-<p hidden>{{$c++}}</p>
-
 @endforeach
