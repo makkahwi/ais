@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table tableTail" width="100%" id="marks-table">
+  <table class="table table-striped tableTail" width="100%" id="marks-table">
 
     <thead>
       @if (!$marktype->used)

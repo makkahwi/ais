@@ -46,16 +46,18 @@ class marksController extends AppBaseController
     $levels = levels::all();
 
     $courses = courses::all();
+    
+    $csem = $currentSem['id'];
 
     $classrooms = classrooms::
-      with(['level.courses.markstypes' => function($q) {
+      with(['level.courses.markstypes' => function($q) use ($csem)
+      {
         $q->orderBy('deadline', 'asc')
+          ->where('sem_id', $csem)
           ->with('marks.student.user')
-          ->with('sem.year')
-        ;}])
+          ->with('sem.year');
+      }])
       ->get();
-
-    return $classrooms;
 
     return view('marks.index', compact('editby', 'currentSem', 'classrooms', 'levels', 'courses'));
   }
@@ -200,7 +202,43 @@ class marksController extends AppBaseController
 
     $mark->update($request->all());
 
-    Flash::success('The mark was updated successfully<br><br>تم تحديث بيانات العلامة بنجاح');
+    $marktype = markstypes::find($mark->type_id);
+
+    if ($marktype->title == 'Course Final Result')
+    {
+      $coursesResults = marks::where('studentNo', $mark->studentNo)
+        ->whereHas('type', function($q) use($marktype){
+          $q->where('sem_id', $marktype->sem_id)
+            ->where('classroom_id', $marktype->classroom_id)
+            ->where('title', "Course Final Result")
+            ->where('weight', 0);
+          })
+        ->get("markValue");
+
+      $finalresult = 0;
+      $count = 0;
+
+      foreach ($coursesResults as $result)
+      {
+        $finalresult+= $result->markValue;
+        $count++;
+      }
+
+      $semResults = marks::where('studentNo', $mark->studentNo)
+        ->whereHas('type', function($q) use($marktype){
+          $q->where('sem_id', $marktype->sem_id)
+            ->where('classroom_id', $marktype->classroom_id)
+            ->where('title', "Semester Final Result")
+            ->where('weight', 0);
+          })
+        ->update(['markValue' => number_format($finalresult/$count, 2)]);
+
+      Flash::success('The course final result and semester final result of the student '.$mark->studentNo.' were updated successfully<br><br>تم تحديث بيانات النتيجة النهائية للمادة وللفصل الدراسي للطالب '.$mark->studentNo.' بنجاح');
+    }
+    else
+    {
+      Flash::success('The mark was updated successfully<br><br>تم تحديث بيانات العلامة بنجاح');
+    }
 
     return redirect(route('marks.index'));
   }

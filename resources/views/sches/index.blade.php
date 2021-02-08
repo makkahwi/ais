@@ -54,7 +54,9 @@
 
     @include('sches.indexTabs')
 
-    @include('sches.indexNext')
+    @if (!empty($nextSem))
+      @include('sches.indexNext')
+    @endif
   
   @elseif (Auth::user()->role_id == 7 )
 

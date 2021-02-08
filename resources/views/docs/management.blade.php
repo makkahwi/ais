@@ -10,7 +10,7 @@
       <div class="box-body">
           
         <div class="table-responsive">
-          <table class="table tableTail" width="100%">
+          <table class="table table-striped tableTail" width="100%">
             <tbody>
               <tr style="text-align: justify;">
                 <td><h3 style="line-height: 1.5;">Welcome to online information system of<br>{{ config('app.sname') }}</h3></td>

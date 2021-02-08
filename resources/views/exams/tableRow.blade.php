@@ -1,6 +1,6 @@
 <tr>
-  <td>{{ $exam->course->level->title }}</td>
-  <td>{{ $exam->course->title }}</td>
+  <td>{{ $level->title }}</td>
+  <td>{{ $course->title }}</td>
   <td>{{ $exam->title }}</td>
   <td class="table-column">{{ date("d-m-Y", strtotime($exam->date)) }}</td>
   <td class="table-column">{{ $exam->note }}</td>

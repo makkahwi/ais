@@ -13,7 +13,7 @@
     
     <div class="modal-body bg-danger">
       <div class="table-responsive">
-        <table class="table tableTail" width="100%">
+        <table class="table table-striped tableTail" width="100%">
           <thead>
             <tr class="theme-main">
               <th></th>

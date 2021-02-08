@@ -1,5 +1,5 @@
 <tr class="theme-main">
-  <th></th>
+  <th>#</th>
   <th class="table-column">@include('labels.ename')</th>
   <th class="table-column">@include('labels.aname')</th>
   <th class="table-column">Relatives in School<br>الأقرباء في المدرسة</th>

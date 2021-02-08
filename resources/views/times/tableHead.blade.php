@@ -1,5 +1,5 @@
-<tr>
-  <th></th>
+<tr class="theme-main">
+  <th>#</th>
   <th>@include('labels.timeN')</th>
   <th>@include('labels.startt')</th>
   <th>@include('labels.endt')</th>

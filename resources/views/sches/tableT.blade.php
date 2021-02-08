@@ -5,7 +5,7 @@
     </div>
 
     <div class="col-md-12 table-responsive">
-      <table class="table tableTail" width="100%" id="sches-tableT">
+      <table class="table table-striped tableTail" width="100%" id="sches-tableT">
 
         <thead>
           <tr>

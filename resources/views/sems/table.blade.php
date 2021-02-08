@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table tableTail" width="100%" id="sems-table">
+  <table class="table table-striped tableTail" width="100%" id="sems-table">
 
     <thead>
       @include('sems.tableHead')

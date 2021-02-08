@@ -42,7 +42,15 @@ class attendancesController extends AppBaseController
     $sems = sems::with('year')
       ->get();
     
+    $csem = $currentSem['id'];
+    
     $classrooms = Classrooms::with('level')
+      ->with(['students.user.attendances' => function($q) use ($csem)
+      {
+        $q->where('sem_id', $csem)
+          ->with('sem.year')
+          ->with('user');
+      }])
       ->where('status_id', 2)
       ->get();
 

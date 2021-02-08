@@ -1,5 +1,5 @@
 <tr class="theme-main">
-  <th></th>
+  <th>#</th>
   <th>@include('labels.batch')</th>
   <th>@include('labels.frequency')</th>
   <th>@include('labels.ctitle')</th>

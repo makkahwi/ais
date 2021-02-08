@@ -1,5 +1,5 @@
 <tr class="theme-main">
-  <th></th>
+  <th>#</th>
   <th>@include('labels.classroom')</th>
   <th>@include('labels.level')</th>
   <th>@include('labels.roomn')</th>

@@ -42,8 +42,14 @@ class examsController extends AppBaseController
     $this->authorize('viewAny', exams::class);
     
     $currentSem = $this->getCurrentSem();
+    
+    $csem = $currentSem['id'];
 
-    $levels = Levels::with('courses')
+    $levels = Levels::
+      with(['courses.exams' => function($q) use ($csem)
+      {
+        $q->where('sem_id', $csem);
+      }])
       ->get();
 
     return view('exams.index', compact('currentSem', 'levels'));

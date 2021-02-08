@@ -27,7 +27,6 @@ class CreateStudentsTable extends Migration
       $table->timestamps();
       $table->foreign('studentNo')->references('schoolNo')->on('users')->onDelete('cascade');
       $table->foreign('classroom_id')->references('id')->on('classrooms');
-      $table->foreign('visa_id')->references('id')->on('visas');
     });
   }
 

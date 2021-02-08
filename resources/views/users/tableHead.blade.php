@@ -1,5 +1,5 @@
 <tr class="theme-main">
-  <th></th>
+  <th>#</th>
   <th>@include('labels.sno')</th>
   <th>@include('labels.role')</th>
   <th>@include('labels.name')</th>

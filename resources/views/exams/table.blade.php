@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table tableTail" width="100%" id="exams-table-{{$level->id}}">
+  <table class="table table-striped tableTail" width="100%" id="exams-table-{{$level->id}}">
 
     <thead>
       @include('exams.tableHead')

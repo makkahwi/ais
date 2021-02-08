@@ -1,16 +1,12 @@
 <div class="table-responsive">
-  <table class="table tableTail" width="100%" id="days-table">
+  <table class="table table-striped tableTail" width="100%" id="days-table">
 
     <thead>
-      <tr>
-        @include('days.tableHead')
-      </tr>
+      @include('days.tableHead')
     </thead>
 
     <tfoot>
-      <tr>
-        @include('days.tableHead')
-      </tr>
+      @include('days.tableHead')
     </tfoot>
 
     <tbody>

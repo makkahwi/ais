@@ -42,7 +42,8 @@
               <td class="text-success"><b>Issued Already</b></td>
             @else
               <td>
-                <input class="form-check-input" type="checkbox" checked value="{{$level->id}}" name="levels[]"> <p class="text-success"><b>Ready for issuance</b></p>
+                <p class="text-success"><b><u>Ready for issuance</u></b><br></p>
+                <input class="form-check-input" type="checkbox" value="{{$level->id}}" name="levels[]"> <b>Issue</b>
               </td>
             @endif
           @endif

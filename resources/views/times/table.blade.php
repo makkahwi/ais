@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table tableTail" width="100%" id="times-table">
+  <table class="table table-striped tableTail" width="100%" id="times-table">
 
     <thead>
       @include('times.tableHead')

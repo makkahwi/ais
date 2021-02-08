@@ -39,7 +39,7 @@ class resultsController extends AppBaseController
     $currentSem = $this->getCurrentSem();
 
     $sems = sems::with('year')
-      ->where('start', '<=', today())
+      ->where('results', '<=', today())
       ->orderBy('created_at', 'desc')
       ->get();
 

@@ -104,7 +104,7 @@
 
     <br><br>
 
-    <table class="table table-bordered" width="100%">
+    <table class="table table-striped table-bordered" width="100%">
       <tr class="text-center">
         <td colspan="5">Dues</td>
         <td colspan="2">Payments</td>

@@ -1,5 +1,5 @@
 <tr class="theme-main">
-  <th></th>
+  <th>#</th>
   <th>@include('labels.matricno')</th>
   <th>@include('labels.status')</th>
   <th class="table-column">@include('labels.ename')</th>

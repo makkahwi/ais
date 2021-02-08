@@ -13,10 +13,16 @@
     <div class="limiter">
       <div class="container-login100">
         <div class="wrap-login100">
-          <!--
-          <div class="bg-warning text-black p-5 m-3 rounded" style="text-align: justify;"><h4>Dead parents, in case you have any problems to log in, please contact the school vice principal about it. If you have any issues with portal other than login issue, you may use the form that will appear before you after logging in to communicate with system admin.<br><br></h4>
-          <h4 style="direction: rtl;">الأعزاء أولياء الأمور, في حال وجود أي مشكلة في تسجيل الدخول إلى النظام, نرجو التواصل مع نائب مدير المدرسة بخصوصها. في حال وجود مشاكل أخرى لا تتعلق بتسجيل الدخول, بإمكانكم استخدام نموذج التقييم الذي سيظهر أمامكم بعد تسجيل الدخول للتواصل مع مدير النظام.</h4></div>
-          -->
+
+          <!-- <div class="bg-danger text-justify text-white mb-5 p-4" style="border-radius: 25px;">
+            <h5>
+              Please note that on Sunday 7th Feb 2021, the system will not be accessible around noon time for maintenance works.<br><br>
+            </h5>
+            <h5 style="direction: rtl;">
+              نرجو أخذ العلم أن النظام لن يكون متاحاً لتسجيل الدخول يوم الأحد 7 فبراير 2021, في فترة الظهر. ولذلك لإنجاز بعض أعمال الصيانة.
+            </h5>
+          </div> -->
+
           <div class="login100-pic js-tilt" data-tilt>
             <a href="{{ url('/') }}">
               <img src="{{ asset('img/logobg.png') }}" alt="IMG">
