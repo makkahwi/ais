@@ -79,9 +79,13 @@
       <thead class="thead-dark">
         <tr>
           <th>Subject</th>
-          <th>Max. Mark</th>
-          <th>Min. Mark</th>
-          <th>Mark</th>
+          
+        	@if($student->classroom->level_id > 3 && $student->classroom->level_id != 13)
+            <th>Max. Mark</th>
+            <th>Min. Mark</th>
+            <th>Mark</th>
+        	@endif
+
           <th>Grade</th>
         </tr>
       </thead>
@@ -91,9 +95,13 @@
           @if($mark->type->title != 'Semester Final Result')
             <tr>
               <td>{{$mark->type->course->title}}</td>
-              <td>100</td>
-              <td>50</td>
-              <td>{{$mark->markValue}}<p hidden>{{$total += $mark->markValue}}</p></td>
+
+            	@if($student->classroom->level_id > 3 && $student->classroom->level_id != 13)
+                <td>100</td>
+                <td>50</td>
+                <td>{{$mark->markValue}}<p hidden>{{$total += $mark->markValue}}</p></td>
+            	@endif
+
               <td>{{$mark->note}}</td>
             </tr>
           @endif
@@ -103,18 +111,26 @@
       <tfoot class="thead-dark">
         @foreach($marks as $mark)
           @if($mark->type->title == 'Semester Final Result')
-            <tr>
-              <td><b>Total</b></td>
-              <td><b>{{100 * (count($marks)-1)}}</b></td>
-              <td><b>{{50 * (count($marks)-1)}}</b></td>
-              <td><b>{{$total}}</b></td>
-              <td></td>
-            </tr>
+          
+            @if($student->classroom->level_id > 3 && $student->classroom->level_id != 13)
+              <tr>
+                <td><b>Total</b></td>
+                <td><b>{{100 * (count($marks)-1)}}</b></td>
+                <td><b>{{50 * (count($marks)-1)}}</b></td>
+                <td><b>{{$total}}</b></td>
+                <td></td>
+              </tr>
+            @endif
+
             <tr>
               <td><b>Average</b></td>
-              <td></td>
-              <td></td>
-              <td><b>{{$mark->markValue}}</b></td>
+              @if($student->classroom->level_id > 3 && $student->classroom->level_id != 13)
+                <td></td>
+                <td></td>
+                <td>
+                  <b>{{$mark->markValue}}</b>
+                @endif
+              </td>
               <td><b>{{$mark->note}}</b></td>
             </tr>
             @break

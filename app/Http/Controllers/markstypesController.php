@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatemarkstypesRequest;
 use App\Http\Requests\UpdatemarkstypesRequest;
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\markstypesRepository;
+use App\Repositories\marksTypesRepository;
 use Illuminate\Http\Request;
 use Response;
 use Flash;
@@ -25,11 +25,11 @@ use App\Models\classrooms;
 
 class markstypesController extends AppBaseController
 {
-  private $markstypesRepository;
+  private $marksTypesRepository;
 
-  public function __construct(markstypesRepository $markstypesRepo)
+  public function __construct(marksTypesRepository $markstypesRepo)
   {
-    $this->markstypesRepository = $markstypesRepo;
+    $this->marksTypesRepository = $markstypesRepo;
   }
 
   // Create Data ////////////////////////////////////////////
@@ -44,7 +44,7 @@ class markstypesController extends AppBaseController
 
     $input += ['title'=>$title];
 
-    $markstypes = $this->markstypesRepository->create($input);
+    $markstypes = $this->marksTypesRepository->create($input);
 
     Flash::success('The mark type was saved successfully تم حفظ بيانات نوع العلامة بنجاح');
 
@@ -57,7 +57,7 @@ class markstypesController extends AppBaseController
   {
     $this->authorize('update', markstypes::class);
 
-    $mark = $this->markstypesRepository->find($request['id']);
+    $mark = $this->marksTypesRepository->find($request['id']);
 
     if (empty($mark))
     {
@@ -80,7 +80,7 @@ class markstypesController extends AppBaseController
 
     $id = $request['id'];
     
-    $markstypes = $this->markstypesRepository->find($id);
+    $markstypes = $this->marksTypesRepository->find($id);
 
     if (empty($markstypes))
     {
@@ -96,7 +96,7 @@ class markstypesController extends AppBaseController
       app('App\Http\Controllers\marksController')->destroy($mark->id);
     }
 
-    $this->markstypesRepository->delete($id);
+    $this->marksTypesRepository->delete($id);
 
     Flash::success('The mark category was deleted successfully تم حذف بيانات العلامة بنجاح');
 

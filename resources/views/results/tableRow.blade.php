@@ -19,9 +19,13 @@
           @break
         @endif
       @endforeach
-      <td>
-        {{$value}}
-      </td>
+      
+      @if($classroom->id > 3 && $classroom->id != 13)
+        <td>
+          {{$value}}
+        </td>
+      @endif
+
       <td>
         {{$grade}}
       </td>

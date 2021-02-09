@@ -11,7 +11,7 @@ use App\Repositories\BaseRepository;
  * @version February 20, 2020, 12:46 pm UTC
 */
 
-class markstypesRepository extends BaseRepository
+class marksTypesRepository extends BaseRepository
 {
   /**
    * @var array
