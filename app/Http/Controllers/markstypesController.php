@@ -34,7 +34,7 @@ class markstypesController extends AppBaseController
 
   // Create Data ////////////////////////////////////////////
 
-  public function store(CreatemarkstypesRequest $request)
+  public function store(Request $request)
   {
     $this->authorize('create', markstypes::class);
 

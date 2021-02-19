@@ -33,7 +33,7 @@
         <div class='btn-group'>
 
           <!-- Showing Button-->
-          <button data-toggle="modal" id="showing" data-target="#show-modal" data-sem="{{$sem->id}}" data-semester="{{$sem->title}}, {{$sem->year->title}}" data-studentno="{{$student->studentNo}}" data-student="{{$student->studentNo}} | {{$student->user->name}}" data-value="{{$value}}" data-grade="{{$grade}}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
+          <button data-toggle="modal" id="showing" data-target="#show-modal" data-sem="{{$sem->id}}" data-semester="{{$sem->title}}, {{$sem->year->title}}" data-studentno="{{$student->studentNo}}" data-student="{{$student->studentNo}} | {{$student->user->name}}" data-value="@if($classroom->id > 3 && $classroom->id != 13) {{$value}} @else {{$grade}} @endif" data-grade="{{$grade}}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></button>
 
         </div>
       </td>

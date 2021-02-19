@@ -223,6 +223,8 @@ class marksController extends AppBaseController
         $finalresult+= $result->markValue;
         $count++;
       }
+      
+      $note = $this->grade(number_format($semestertotal, 2));
 
       $semResults = marks::where('studentNo', $mark->studentNo)
         ->whereHas('type', function($q) use($marktype){
@@ -231,7 +233,7 @@ class marksController extends AppBaseController
             ->where('title', "Semester Final Result")
             ->where('weight', 0);
           })
-        ->update(['markValue' => number_format($finalresult/$count, 2)]);
+        ->update(['markValue' => number_format($finalresult/$count, 2), 'note' => $note]);
 
       Flash::success('The course final result and semester final result of the student '.$mark->studentNo.' were updated successfully<br><br>تم تحديث بيانات النتيجة النهائية للمادة وللفصل الدراسي للطالب '.$mark->studentNo.' بنجاح');
     }
@@ -241,6 +243,24 @@ class marksController extends AppBaseController
     }
 
     return redirect(route('marks.index'));
+  }
+
+  public function grade($mark)
+  {
+    if($mark >= 90)
+      return 'Excellent';
+    elseif($mark >= 80)
+      return 'Very good';
+    elseif($mark >= 70)
+      return 'Good';
+    elseif($mark >= 60)
+      return 'Average';
+    elseif($mark >= 50)
+      return 'Satisfactory';
+    elseif($mark >= 0)
+      return 'Failed';
+    else
+      return 'Error';
   }
 
   // Destroy Data ////////////////////////////////////////////
