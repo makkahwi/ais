@@ -68,6 +68,7 @@ class marksController extends AppBaseController
 
     $students = student::with('user')
       ->where('classroom_id', $classroom_id)
+      ->orderBy('eName', 'asc')
       ->get();
 
     return Response::json($students);

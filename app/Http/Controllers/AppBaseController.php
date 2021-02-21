@@ -42,6 +42,7 @@ class AppBaseController extends Controller
     return $currentSem = sems::with('year')
       ->where('start', '<=', today())
       ->where('end', '>=', today())
+      // ->orderBy('created_at', 'desc')
       ->first();
   }
 }

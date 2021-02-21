@@ -2,7 +2,9 @@
 <div class="form-group col-md-4">
   <label for="semId">@include('labels.semester')@include('layouts.required')</label>
   <select required class="form-control" name="sem_id" id="semIdCrH">
-  <option value="{{$currentSem->id}}">{{$currentSem->title}}, {{ $currentSem->year->title }}</option>
+    @foreach($sems as $sem)
+      <option value="{{$sem->id}}">{{$sem->title}}, {{ $sem->year->title }}</option>
+    @endforeach
   </select>
 </div>
 
