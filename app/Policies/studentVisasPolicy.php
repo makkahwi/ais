@@ -107,20 +107,6 @@ class studentVisasPolicy
   }
 
   /**
-   * Determine whether the user can update the studentVisa.
-   *
-   * @param  \App\User  $user
-   * @param  \App\Models\studentVisa  $studentVisa
-   * @return mixed
-   */
-  public function upgradestudentVisas(User $user)
-  {
-    return in_array($user->role_id, [
-      1, 2, 3
-    ]);
-  }
-
-  /**
    * Determine whether the user can delete the studentVisa.
    *
    * @param  \App\User  $user
