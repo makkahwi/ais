@@ -124,13 +124,13 @@
 
             <tr>
               <td><b>Average</b></td>
+
               @if($student->classroom->level_id > 3 && $student->classroom->level_id != 13)
                 <td></td>
                 <td></td>
-                <td>
-                  <b>{{$mark->markValue}}</b>
-                @endif
-              </td>
+                <td><b>{{$mark->markValue}}</b></td>
+              @endif
+
               <td><b>{{$mark->note}}</b></td>
             </tr>
             @break

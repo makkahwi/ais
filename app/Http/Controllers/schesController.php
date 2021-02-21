@@ -75,6 +75,9 @@ class schesController extends AppBaseController
     $nextSem = sems::with('year')
       ->where('start', '>', today())
       ->first();
+  
+  	if($nextSem)
+    {
 
     $nsem = $nextSem['id'];
 
@@ -82,6 +85,11 @@ class schesController extends AppBaseController
       ->where('status_id', 2)
       ->where('sem_id', $nsem)
       ->get();
+    }
+  	else
+    {
+    	$schesNext=Null;
+    }
 
     return view('sches.index', compact('currentSem', 'nextSem', 'statuses', 'days', 'schesNext',
                                         'classrooms', 'courses', 'staff',

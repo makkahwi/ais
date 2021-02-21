@@ -40,6 +40,7 @@ class attendancesController extends AppBaseController
     $currentSem = $this->getCurrentSem();
 
     $sems = sems::with('year')
+      ->orderBy('created_at', 'desc')
       ->get();
     
     $csem = $currentSem['id'];
