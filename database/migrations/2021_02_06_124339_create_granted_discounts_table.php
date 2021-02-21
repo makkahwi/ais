@@ -17,6 +17,7 @@ class CreateGrantedDiscountsTable extends Migration
       $table->bigIncrements('id');
       $table->unsignedBigInteger('studentNo');
       $table->unsignedBigInteger('discount_id');
+      $table->softDeletes();
       $table->timestamps();
     });
   }

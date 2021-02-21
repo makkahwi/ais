@@ -1,1 +1,1 @@
-@include('attendances.title')s الحضور والغياب
+<i class="fa fa-fingerprint"></i> @include('attendances.title')s الحضور والغياب

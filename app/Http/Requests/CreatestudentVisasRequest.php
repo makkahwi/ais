@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\markstypes;
+use App\Models\studentVisas;
 
-class CreatemarkstypesRequest extends FormRequest
+class CreatestudentVisasRequest extends FormRequest
 {
 
   /**
@@ -25,6 +25,6 @@ class CreatemarkstypesRequest extends FormRequest
    */
   public function rules()
   {
-    return markstypes::$rules;
+    return studentVisas::$rules;
   }
 }

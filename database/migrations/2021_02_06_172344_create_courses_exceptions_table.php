@@ -17,6 +17,7 @@ class CreateCoursesExceptionsTable extends Migration
       $table->bigIncrements('id');
       $table->unsignedBigInteger('studentNo');
       $table->unsignedBigInteger('course_id');
+      $table->softDeletes();
       $table->timestamps();
     });
   }

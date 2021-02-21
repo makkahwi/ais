@@ -217,13 +217,19 @@
 
 @can ('upgrade', 'App\Models\student')
   <li class="{{ Request::is('upgradestudents*') ? 'active' : '' }}">
-    <a href="{{ url('/upgradestudents') }}"><i class="fa fa-arrow-up"></i> <span>Upgrade Students</span></a>
+    <a href="{{ url('/upgradestudents') }}"><span>@include('upgradestudents.titles')</span></a>
   </li>
 @endcan
 
 @can ('viewAny', 'App\Models\attendances')
   <li class="{{ Request::is('attendances*') ? 'active' : '' }}">
-    <a href="{{ url ('/attendances') }}"><i class="fa fa-fingerprint"></i> <span>@include('attendances.titles')</span></a>
+    <a href="{{ url ('/attendances') }}"><span>@include('attendances.titles')</span></a>
+  </li>
+@endcan
+
+@can ('viewAny', 'App\Models\studentVisas')
+  <li class="{{ Request::is('studentVisas*') ? 'active' : '' }}">
+    <a href="{{ url ('/studentVisas') }}"><span>@include('studentVisas.titles')</span></a>
   </li>
 @endcan
 

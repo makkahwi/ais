@@ -1,1 +1,1 @@
-@include('upgradestudents.title') تحديث الطلاب
+<i class="fa fa-arrow-up"></i> @include('upgradestudents.title') تحديث الطلاب

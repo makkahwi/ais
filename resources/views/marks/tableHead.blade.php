@@ -8,6 +8,6 @@
   @else
     <th>@include('labels.markv')</th>
   @endif
-  <th class="table-column">@include('labels.note')</th>
+  <th>@include('labels.note')</th>
   <th>@include('labels.action')</th>
 </tr>

@@ -167,6 +167,7 @@ return array(
     'App\\Repositories\\examsRepository' => $baseDir . '/app/Repositories/examsRepository.php',
     'App\\Repositories\\levelsRepository' => $baseDir . '/app/Repositories/levelsRepository.php',
     'App\\Repositories\\marksRepository' => $baseDir . '/app/Repositories/marksRepository.php',
+    'App\\Repositories\\marksTypesRepository' => $baseDir . '/app/Repositories/marksTypesRepository.php',
     'App\\Repositories\\notificationsRepository' => $baseDir . '/app/Repositories/notificationsRepository.php',
     'App\\Repositories\\relativesRepository' => $baseDir . '/app/Repositories/relativesRepository.php',
     'App\\Repositories\\rolesRepository' => $baseDir . '/app/Repositories/rolesRepository.php',

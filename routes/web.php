@@ -40,6 +40,7 @@ Route::group(['middleware' => 'verified'], function () {
   Route::resource('markstypes', 'markstypesController');
   Route::resource('sches', 'schesController');
   Route::resource('students', 'studentsController');
+  Route::resource('studentVisas', 'studentVisasController');
   Route::resource('users', 'usersController');
   Route::resource('roles', 'rolesController');
   Route::resource('exams', 'examsController');

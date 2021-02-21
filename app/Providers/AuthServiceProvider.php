@@ -25,6 +25,7 @@ use App\Models\relatives;
 use App\Models\classrooms;
 use App\Models\markstypes;
 use App\Models\attendances;
+use App\Models\studentVisas;
 use App\Models\studentsPayments;
 use App\Models\studentsFinancials;
 use App\Models\studentsFinancialsCategories;
@@ -50,6 +51,7 @@ use App\Policies\relativesPolicy;
 use App\Policies\classroomsPolicy;
 use App\Policies\markstypesPolicy;
 use App\Policies\attendancesPolicy;
+use App\Policies\studentVisasPolicy;
 use App\Policies\studentsPaymentsPolicy;
 use App\Policies\studentsFinancialsPolicy;
 use App\Policies\studentsFinancialsCategoriesPolicy;
@@ -63,30 +65,31 @@ class AuthServiceProvider extends ServiceProvider
    * @var array
    */
   protected $policies = [
-    attendances::class => attendancesPolicy::class,
-    batches::class => batchesPolicy::class,
-    classrooms::class => classroomsPolicy::class,
-    contacts::class => contactsPolicy::class,
-    courses::class => coursesPolicy::class,
+    sems::class => semsPolicy::class,
     days::class => daysPolicy::class,
     exams::class => examsPolicy::class,
-    levels::class => levelsPolicy::class,
     marks::class => marksPolicy::class,
-    markstypes::class => markstypesPolicy::class,
-    relatives::class => relativesPolicy::class,
-    roles::class => rolesPolicy::class,
-    sches::class => schesPolicy::class,
-    sems::class => semsPolicy::class,
-    staff::class => staffPolicy::class,
-    statuses::class => statusesPolicy::class,
-    student::class => studentsPolicy::class,
-    studentsPayments::class => studentsPaymentsPolicy::class,
-    studentsFinancials::class => studentsFinancialsPolicy::class,
-    studentsFinancialsCategories::class => studentsFinancialsCategoriesPolicy::class,
-    studentsFinancialsDiscounts::class => studentsFinancialsDiscountsPolicy::class,
     times::class => timesPolicy::class,
     users::class => usersPolicy::class,
     years::class => yearsPolicy::class,
+    staff::class => staffPolicy::class,
+    roles::class => rolesPolicy::class,
+    sches::class => schesPolicy::class,
+    levels::class => levelsPolicy::class,
+    batches::class => batchesPolicy::class,
+    courses::class => coursesPolicy::class,
+    student::class => studentsPolicy::class,
+    contacts::class => contactsPolicy::class,
+    statuses::class => statusesPolicy::class,
+    relatives::class => relativesPolicy::class,
+    markstypes::class => markstypesPolicy::class,
+    classrooms::class => classroomsPolicy::class,
+    attendances::class => attendancesPolicy::class,
+    studentVisas::class => studentVisasPolicy::class,
+    studentsPayments::class => studentsPaymentsPolicy::class,
+    studentsFinancials::class => studentsFinancialsPolicy::class,
+    studentsFinancialsDiscounts::class => studentsFinancialsDiscountsPolicy::class,
+    studentsFinancialsCategories::class => studentsFinancialsCategoriesPolicy::class,
   ];
 
   /**

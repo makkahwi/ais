@@ -34,7 +34,7 @@ class markstypesController extends AppBaseController
 
   // Create Data ////////////////////////////////////////////
 
-  public function store(Request $request)
+  public function store(CreatemarkstypesRequest $request)
   {
     $this->authorize('create', markstypes::class);
 
@@ -53,7 +53,7 @@ class markstypesController extends AppBaseController
 
   // Update Data ////////////////////////////////////////////
 
-  public function update(Request $request) // Updating with Modal
+  public function update(UpdatemarkstypesRequest $request) // Updating with Modal
   {
     $this->authorize('update', markstypes::class);
 

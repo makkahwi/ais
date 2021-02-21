@@ -653,6 +653,7 @@ class ComposerStaticInitc328b46b85263e6a61c99480657bb50c
         'App\\Repositories\\examsRepository' => __DIR__ . '/../..' . '/app/Repositories/examsRepository.php',
         'App\\Repositories\\levelsRepository' => __DIR__ . '/../..' . '/app/Repositories/levelsRepository.php',
         'App\\Repositories\\marksRepository' => __DIR__ . '/../..' . '/app/Repositories/marksRepository.php',
+        'App\\Repositories\\marksTypesRepository' => __DIR__ . '/../..' . '/app/Repositories/marksTypesRepository.php',
         'App\\Repositories\\notificationsRepository' => __DIR__ . '/../..' . '/app/Repositories/notificationsRepository.php',
         'App\\Repositories\\relativesRepository' => __DIR__ . '/../..' . '/app/Repositories/relativesRepository.php',
         'App\\Repositories\\rolesRepository' => __DIR__ . '/../..' . '/app/Repositories/rolesRepository.php',
