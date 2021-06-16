@@ -19,7 +19,7 @@ class markstypesPolicy
   public function viewAny(User $user)
   {
     return in_array($user->role_id, [
-      1, 2, 3, 6
+      1, 2, 3, 4, 6
     ]);
   }
 

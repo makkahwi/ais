@@ -43,7 +43,7 @@ class studentsPolicy
     if ($user->schoolNo == $student->studentNo && $student->user->status_id == 2)
       return $student;
     else return in_array($user->role_id, [
-      1, 2, 3, 5, 6
+      1, 2, 3, 4, 5, 6
     ]);
   }
 

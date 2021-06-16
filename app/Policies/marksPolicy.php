@@ -20,7 +20,7 @@ class marksPolicy
   {
     if (!($user->status_id != 2 && $user->role_id == 6))
       return in_array($user->role_id, [
-        1, 2, 3, 6, 7
+        1, 2, 3, 4, 6, 7
       ]);
   }
 
@@ -33,7 +33,7 @@ class marksPolicy
    */
   public function view(User $user, marks $marks)
   {
-    if (in_array($user->role_id, [1, 2, 3, 6]))
+    if (in_array($user->role_id, [1, 2, 3, 4, 6]))
       return $marks;
     else if ($marks->studentNo == $user->schoolNo)
       return $marks;
