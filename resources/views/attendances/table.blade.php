@@ -2,7 +2,6 @@
   <table class="table table-striped tableTail" width="100%" id="attendances-table-{{$classroom->id}}">
 
     <thead>
-      @include('attendances.tableFilters')
       @include('attendances.tableHead')
     </thead>
 

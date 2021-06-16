@@ -25,6 +25,5 @@
 <!-- Transcript Field -->
 <div class="form-group col-md-12">
   <br><br>
-  <button type="submit" class="btn btn-success submitbutton btn-block">Generate Transcript إصدار كشف العلامات</button>
-  <div class="loader" hidden><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+  <button type="submit" class="btn btn-success btn-block">Generate Transcript إصدار كشف العلامات</button>
 </div>

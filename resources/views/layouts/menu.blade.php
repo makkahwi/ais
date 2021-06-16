@@ -227,11 +227,13 @@
   </li>
 @endcan
 
+<!--
 @can ('viewAny', 'App\Models\studentVisas')
   <li class="{{ Request::is('studentVisas*') ? 'active' : '' }}">
     <a href="{{ url ('/studentVisas') }}"><span>@include('studentVisas.titles')</span></a>
   </li>
 @endcan
+-->
 
 @can ('viewAny', 'App\Models\studentsFinancials')
   <li class="treeview {{ Request::is('sFinancials*') ? 'active' : '' }} {{ Request::is('sfCategories*') ? 'active' : '' }} {{ Request::is('sfDiscounts*') ? 'active' : '' }} {{ Request::is('sfReports*') ? 'active' : '' }} {{ Request::is('calculator*') ? 'active' : '' }}">
@@ -314,11 +316,13 @@
   </li>
 @endcan
 
-<!--@if(Auth::user()->status_id == 2)
+<!--
+@if(Auth::user()->status_id == 2)
   <li class="{{ Request::is('evaluation*') ? 'active' : '' }}">
       <a href="{{ url('evaluate') }}"><i class="fa fa-star"></i> <span>System Evaluation تقييم النظام</span></a>
   </li>
-@endif-->
+@endif
+-->
 
 <li class="treeview {{ Request::is('Docadmin*') ? 'active' : '' }} {{ Request::is('Docmanagement*') ? 'active' : '' }} {{ Request::is('Docstaff*') ? 'active' : '' }} {{ Request::is('Docstudents*') ? 'active' : '' }} {{ Request::is('Docapplicants*') ? 'active' : '' }}">
   <a href="#">

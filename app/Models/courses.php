@@ -74,10 +74,18 @@ class courses extends Model
   {
     return $this->hasMany(exams::class, 'course_id');
   }
+  
+  public function currentSem()
+  {
+    return sems::where('start', '<=', today())
+      ->where('end', '>=', today())
+      ->first();
+  }
 
   public function getmarkstypesWeightsAttribute()
   {
     return $this->markstypes()
+    ->where('sem_id', $this->currentSem('id'))
       ->sum('weight');
   }
 
@@ -91,7 +99,8 @@ class courses extends Model
   public function getIssuedResultsAttribute()
   {
     return $this->markstypes()
-      ->where('title', 'Course Final Result')
+    ->where('title', 'Course Final Result')
+    ->where('sem_id', $this->currentSem('id'))
       ->count();
   }
 
